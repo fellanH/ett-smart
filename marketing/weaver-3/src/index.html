@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Weaver | Data Analysis</title>
+
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/terminal.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-shapes"></i>
+                <span>Weaver</span>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" id="btn-dashboard">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </button>
+                <button class="nav-item" id="btn-upload">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Upload</span>
+                </button>
+                <button class="nav-item" id="btn-terminal">
+                    <i class="fa-solid fa-terminal"></i>
+                    <span>Terminal</span>
+                </button>
+                <button class="nav-item" id="btn-settings">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </button>
+            </nav>
+
+            <div class="user-profile">
+                <div class="avatar">
+                    <i class="fa-regular fa-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="name">Admin User</span>
+                    <span class="role">Analyst</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-bar">
+                <div class="breadcrumbs">
+                    <span id="breadcrumb-text">Home / Analysis</span>
+                </div>
+                <div class="top-actions">
+                    <button class="icon-btn theme-toggle">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="fa-regular fa-bell"></i>
+                    </button>
+                </div>
+            </header>
+
+            <div id="view-empty" class="view-state">
+                <div class="upload-zone" id="drop-zone">
+                    <div class="icon-container">
+                        <i class="fa-solid fa-file-csv"></i>
+                    </div>
+                    <h2>Upload your Data</h2>
+                    <p>Drag & drop your CSV file here or click to browse</p>
+                    <input type="file" id="file-input" accept=".csv" hidden>
+                    <button class="primary-btn pulse" onclick="document.getElementById('file-input').click()">
+                        Select File
+                    </button>
+                </div>
+            </div>
+
+            <div id="view-terminal" class="view-state hidden">
+                <div class="terminal-container">
+                    <h1>Weaver Terminal</h1>
+                    <p class="subtitle">Execute Claude Code CLI commands directly</p>
+
+                    <div class="terminal-window">
+                        <div class="terminal-output" id="terminal-output">
+                            <div class="line system">Welcome to Weaver Terminal v1.0.0</div>
+                            <div class="line system">Connected to local server...</div>
+                            <div class="line system">Ready for input.</div>
+                        </div>
+                        <div class="terminal-input-area">
+                            <span class="prompt">$</span>
+                            <input type="text" id="terminal-input"
+                                placeholder="Enter command (e.g. claude -p 'analyze data/*.csv')...">
+                            <button id="btn-run-command" class="primary-btn small">Run</button>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="secondary-btn"
+                                onclick="setCommand('claude -p \'Analyze the CSV files in data/ and suggest improvements\'')">
+                                Analyze Data
+                            </button>
+                            <button class="secondary-btn" onclick="setCommand('ls -la data/')">
+                                List Data Files
+                            </button>
+                            <button class="secondary-btn" onclick="setCommand('claude --help')">
+                                Help
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="view-dashboard" class="view-state hidden">
+                <div class="dashboard-header">
+                    <div class="header-text">
+                        <h1 id="file-name">Analysis Report</h1>
+                        <p id="record-count">0 records loaded</p>
+                    </div>
+                    <div class="header-actions">
+                        <div class="search-box">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <input type="text" id="search-input" placeholder="Search data...">
+                        </div>
+                        <button class="secondary-btn" id="btn-export">
+                            <i class="fa-solid fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="stats-grid" id="stats-container">
+                    <!-- Populated by JS -->
+                </div>
+
+                <!-- Data Table -->
+                <div class="table-container glass-panel">
+                    <table id="data-table">
+                        <thead>
+                            <!-- Populated by JS -->
+                        </thead>
+                        <tbody>
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" id="pagination">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="scripts/app.js"></script>
+</body>
+
+</html>

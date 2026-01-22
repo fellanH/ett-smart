@@ -1,0 +1,12 @@
+Note
+
+Client (dag hellström - ett smart hotell) gave me a list of companies that have applied and gotten approved for migration work permits for one or more of their employees, the theory is that these companies would be in need of temporary long-term rental apartments in Stockholm. With ett smart hotell can provide. We should be able to use this list to identify key target audiences for ett smart hotell. 
+
+Looking for people who are regularly booking temporary apartments for their employees, 3-12+ months, for work related reasons. They might be on a project in Stockholm and live somewhere else.Files:
+Raw data csv export file from “Migrationsverket” database, companies in Sweden that have applied and gotten approved for work-permits for their employees.
+What we were asked to extract:
+- Company Turn-over
+- Company Localtion
+- Names of employees, project managers, HR, management.
+
+Reason for task.Client is preparing for a meeting with their marketing agency, and wants to come prepared with clear directions of what segments and companies the marketing agency should target. "Identify companies with temporary accommodation requirements. Define target segments.”

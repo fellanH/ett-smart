@@ -1,0 +1,11 @@
+# Ralph Agent Configuration
+.ralph.config
+
+# Logs
+.logs/
+*.log
+
+# OS files
+.DS_Store
+*.swp
+*~

@@ -1,0 +1,47 @@
+﻿priority,company_name,work_permits,city,employees,revenue_msek,segment,notes
+Tier 1 - High Priority,Ericsson Ab,1290,Kista,13529.0,139441.0,Telecom,HQ in Kista - perfect location
+Tier 1 - High Priority,Tata Consultancy Services Sverige,1117,Stockholm,1000.0,5630.0,IT Consulting,Indian IT giant
+Tier 1 - High Priority,H & M Hennes & Mauritz Gbc Ab,444,Stockholm,,,Retail HQ,Global HQ
+Tier 1 - High Priority,Klarna Bank Ab,299,Stockholm,851.0,3162.0,Fintech,Unicorn
+Tier 1 - High Priority,Swedbank Ab,176,Sundbyberg,7500.0,,Banking,Major bank
+Tier 1 - High Priority,Capgemini Sverige Ab,176,Stockholm,2336.0,6483.0,IT Consulting,Global consulting
+Tier 1 - High Priority,Spotify Ab,150,Stockholm,1397.0,108132.0,Tech,Music streaming HQ
+Tier 1 - High Priority,"Nordea Bank Abp, Filial I Sverige",134,Stockholm,5000.0,,Banking,Nordic bank
+Tier 1 - High Priority,Aktiebolaget Electrolux,116,Stockholm,,,Industrial HQ,Appliances HQ
+Tier 1 - High Priority,Skandinaviska Enskilda Banken Ab,111,Stockholm,5000.0,,Banking,SEB
+Tier 2 - Medium Priority,Midasplayer Ab,93,Stockholm,714.0,7636.0,Gaming,King - Candy Crush
+Tier 2 - Medium Priority,Kindred People Ab,91,Stockholm,375.0,1637.0,Gaming/Betting,Unibet owner
+Tier 2 - Medium Priority,Ea Digital Illusions Ce Ab,83,Stockholm,699.0,1761.0,Gaming,EA DICE - Battlefield
+Tier 2 - Medium Priority,Accenture Ab,76,Stockholm,1179.0,6416.0,IT Consulting,Global consulting
+Tier 2 - Medium Priority,Electrolux It Solutions Aktiebolag,74,Stockholm,,,IT Services,Electrolux IT arm
+Tier 2 - Medium Priority,Broadridge Trading And Connectivity Solutions Ab,69,Stockholm,106.0,1845.0,Fintech,Trading tech
+Tier 2 - Medium Priority,Gears Of Leo Ab,66,Stockholm,283.0,794.0,Gaming,Mobile gaming
+Tier 2 - Medium Priority,True Software Scandinavia Ab,59,Stockholm,,,Tech,Truecaller
+Tier 2 - Medium Priority,Mw Field Service Ab,59,Stockholm,,,IT Services,Field services
+Tier 2 - Medium Priority,Ltimindtree Sverige,58,Stockholm,,,IT Consulting,Indian IT
+Tier 2 - Medium Priority,Fatalist Development Ab,58,Stockholm,473.0,827.0,Gaming,Avalanche Studios
+Tier 2 - Medium Priority,Paradox Development Studio Ab,58,Stockholm,266.0,589.0,Gaming,Strategy games
+Tier 2 - Medium Priority,Cognizant Technology Solutions Sweden Ab,50,Stockholm,,,IT Consulting,Global IT
+Tier 3 - Standard,Atlas Copco Industrial Technique Aktiebolag,49,Stockholm,,,Industrial,Industrial tools
+Tier 3 - Standard,Hcl Technologies Sweden Ab,48,Stockholm,,,IT Consulting,Indian IT
+Tier 3 - Standard,Cgi Sverige Ab,47,Solna,3406.0,5535.0,IT Consulting,Canadian IT giant
+Tier 3 - Standard,Epidemic Sound Ab,47,Stockholm,467.0,1578.0,Tech,Music licensing
+Tier 3 - Standard,Viaplay Group Sweden Ab,43,Stockholm,,,Media/Tech,Streaming
+Tier 3 - Standard,Kambi Sweden Ab,41,Stockholm,309.0,720.0,Gaming/Betting,B2B betting tech
+Tier 3 - Standard,"Paypal Limited, Filial Sweden",40,Stockholm,,,Fintech,Payments
+Tier 3 - Standard,Mentimeter Ab,39,Stockholm,378.0,536.0,SaaS,Presentation tool
+Tier 3 - Standard,Wipro Sweden Filial,39,Stockholm,,,IT Consulting,Indian IT
+Tier 3 - Standard,Postnord Group Ab,38,Solna,,,Logistics HQ,Nordic postal
+Tier 3 - Standard,Sogeti Sverige Ab,37,Stockholm,,,IT Consulting,Capgemini subsidiary
+Tier 3 - Standard,Tele2 Sverige Aktiebolag,35,Stockholm,,,Telecom,Mobile operator
+Tier 3 - Standard,Embark Studios Ab,32,Stockholm,287.0,422.0,Gaming,AAA gaming
+Tier 3 - Standard,Rovio Sweden Ab,31,Stockholm,,,Gaming,Angry Birds
+Tier 3 - Standard,Hyper Core Ab,31,Stockholm,,,Gaming,Mobile gaming
+Tier 3 - Standard,Åf Digital Solutions Ab,30,Stockholm,,,IT Consulting,Engineering/IT
+Tier 3 - Standard,"Amazon Web Services Emea Sarl, Sverige Filial",29,Stockholm,,,Cloud,AWS
+Tier 3 - Standard,Vattenfall Ab,29,Solna,,,Energy HQ,State-owned energy
+Tier 3 - Standard,Länsförsäkringar Ab,29,Stockholm,,,Insurance,Insurance group
+Tier 3 - Standard,Tink Ab,28,Stockholm,,,Fintech,Open banking
+Tier 3 - Standard,L&T Technology Services Sverige Filial,28,Stockholm,,,IT Consulting,Indian IT
+Tier 3 - Standard,Hi3g Access Ab,27,Stockholm,,,Telecom,Tre/3
+Tier 3 - Standard,Nasdaq Technology Ab,27,Stockholm,,,Fintech,Exchange tech

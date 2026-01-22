@@ -1,0 +1,21 @@
+{
+  "name": "weaver-3",
+  "version": "1.0.0",
+  "description": "This is a static web application designed to analyze and visualize CSV data, specifically tailored for company analysis tasks.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "body-parser": "^2.2.2",
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  }
+}

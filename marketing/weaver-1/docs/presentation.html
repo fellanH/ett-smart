@@ -1,0 +1,1775 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ett Smart Hotell - Target Market Analysis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            color: #1a1a1a;
+            overflow: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .slide {
+            display: none;
+            min-height: 100vh;
+            padding: 50px 80px 80px;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Language Toggle */
+        .lang-toggle {
+            position: fixed;
+            top: 24px;
+            right: 40px;
+            display: flex;
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 4px;
+            z-index: 200;
+            gap: 4px;
+        }
+
+        .lang-toggle button {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: #888;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .lang-toggle button.active {
+            background: #fff;
+            color: #1a1a1a;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        }
+
+        .lang-toggle button:hover:not(.active) {
+            color: #555;
+        }
+
+        /* Title Slide */
+        .slide-title {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+        }
+
+        .slide-title .logo {
+            width: 80px;
+            height: 80px;
+            background: #1a1a1a;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 32px;
+            font-size: 2rem;
+            color: #fff;
+        }
+
+        .slide-title h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+            letter-spacing: -1.5px;
+        }
+
+        .slide-title h2 {
+            font-size: 1.35rem;
+            font-weight: 400;
+            color: #666;
+            margin-bottom: 48px;
+            max-width: 500px;
+        }
+
+        .slide-title .meta {
+            font-size: 0.85rem;
+            color: #aaa;
+            display: flex;
+            gap: 24px;
+        }
+
+        .slide-title .meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Content Slides */
+        .slide-content {
+            background: #ffffff;
+        }
+
+        .slide-header {
+            margin-bottom: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        .slide-header-text {
+            flex: 1;
+        }
+
+        .slide-header h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .slide-header .subtitle {
+            font-size: 1rem;
+            color: #888;
+            font-weight: 400;
+        }
+
+        .slide-number {
+            font-size: 0.8rem;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            border: 1px solid #eee;
+            border-radius: 16px;
+            padding: 28px;
+            text-align: center;
+            transition: all 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #1a1a1a 0%, #444 100%);
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .stat-card:hover::before {
+            opacity: 1;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .stat-card .number {
+            font-size: 2.75rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            letter-spacing: -1px;
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: #888;
+            margin-top: 6px;
+        }
+
+        /* Tables */
+        .table-container {
+            background: #fafafa;
+            border-radius: 16px;
+            padding: 4px;
+            border: 1px solid #eee;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: transparent;
+            padding: 14px 18px;
+            text-align: left;
+            font-weight: 500;
+            color: #888;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .data-table td {
+            padding: 14px 18px;
+            font-size: 0.9rem;
+            color: #555;
+            background: #fff;
+        }
+
+        .data-table tbody tr:first-child td:first-child {
+            border-radius: 12px 0 0 0;
+        }
+
+        .data-table tbody tr:first-child td:last-child {
+            border-radius: 0 12px 0 0;
+        }
+
+        .data-table tbody tr:last-child td:first-child {
+            border-radius: 0 0 0 12px;
+        }
+
+        .data-table tbody tr:last-child td:last-child {
+            border-radius: 0 0 12px 0;
+        }
+
+        .data-table tbody tr {
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .data-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .data-table tbody tr:hover td {
+            background: #f8f8f8;
+        }
+
+        .data-table .company-name {
+            font-weight: 500;
+            color: #1a1a1a;
+        }
+
+        .data-table .highlight {
+            color: #1a1a1a;
+            font-weight: 600;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+        }
+
+        .data-table .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .badge-primary {
+            background: #1a1a1a;
+            color: #fff;
+        }
+
+        .badge-secondary {
+            background: #e8e8e8;
+            color: #555;
+        }
+
+        .badge-tertiary {
+            background: #f5f5f5;
+            color: #888;
+        }
+
+        /* Segment Cards */
+        .segment-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .segment-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .segment-card:hover {
+            border-color: #ddd;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .segment-card .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
+        }
+
+        .segment-card h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .segment-card .tag {
+            display: inline-block;
+            background: #f5f5f5;
+            color: #666;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .segment-card .stats-row {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .segment-card .mini-stat {
+            text-align: center;
+        }
+
+        .segment-card .mini-stat .value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .segment-card .mini-stat .label {
+            font-size: 0.7rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        .segment-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 0.875rem;
+        }
+
+        .segment-card .companies {
+            margin-top: 16px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .segment-card .companies span {
+            display: inline-block;
+            background: #f8f8f8;
+            border: 1px solid #eee;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: #555;
+            transition: all 0.15s ease;
+        }
+
+        .segment-card .companies span:hover {
+            background: #f0f0f0;
+            border-color: #ddd;
+        }
+
+        /* Persona Cards */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .persona-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .persona-card .icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #eee 100%);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 1.4rem;
+        }
+
+        .persona-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1a1a1a;
+        }
+
+        .persona-card .role {
+            color: #999;
+            font-size: 0.75rem;
+            margin-bottom: 12px;
+        }
+
+        .persona-card p {
+            color: #666;
+            font-size: 0.8rem;
+            line-height: 1.5;
+        }
+
+        /* Location Slide */
+        .location-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .location-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 32px;
+            transition: all 0.2s ease;
+        }
+
+        .location-card:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+        }
+
+        .location-card h3 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1a1a1a;
+        }
+
+        .location-card h3 .pin {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #f5f5f5 0%, #eee 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .location-card ul {
+            list-style: none;
+        }
+
+        .location-card li {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #555;
+            font-size: 0.875rem;
+        }
+
+        .location-card li:last-child {
+            border-bottom: none;
+        }
+
+        .location-card li::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: #ccc;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .location-card .big-number {
+            font-size: 2.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .location-card .big-number span {
+            font-size: 0.85rem;
+            font-weight: 400;
+            color: #888;
+            display: block;
+            margin-top: 4px;
+        }
+
+        /* Strategy Tiers */
+        .tier-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .tier-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .tier-card .tier-badge {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            margin-bottom: 16px;
+        }
+
+        .tier-card h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #1a1a1a;
+        }
+
+        .tier-card .metric {
+            color: #1a1a1a;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 8px 0;
+        }
+
+        .tier-card .metric-label {
+            font-size: 0.75rem;
+            color: #999;
+        }
+
+        .tier-card .strategy {
+            background: #f8f8f8;
+            padding: 14px;
+            border-radius: 10px;
+            margin-top: 16px;
+        }
+
+        .tier-card .strategy-label {
+            font-size: 0.65rem;
+            color: #999;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .tier-card .strategy-text {
+            color: #555;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        /* Action Plan */
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            flex: 1;
+        }
+
+        .timeline-item {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+        }
+
+        .timeline-item .phase-badge {
+            display: inline-block;
+            background: #f5f5f5;
+            color: #666;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 16px;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #1a1a1a;
+        }
+
+        .timeline-item .period {
+            color: #999;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        .timeline-item ul {
+            list-style: none;
+        }
+
+        .timeline-item li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+            color: #555;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .timeline-item li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .timeline-item li .num {
+            background: #f0f0f0;
+            color: #666;
+            width: 22px;
+            height: 22px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* Final Slide */
+        .slide-final {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(180deg, #fafafa 0%, #fff 100%);
+        }
+
+        .final-stat {
+            margin-bottom: 40px;
+        }
+
+        .final-stat .big {
+            font-size: 5rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            line-height: 1;
+            letter-spacing: -3px;
+        }
+
+        .final-stat .label {
+            font-size: 1.25rem;
+            color: #888;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        .bottom-line {
+            max-width: 650px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #666;
+        }
+
+        .bottom-line strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .highlight-box {
+            background: #fff;
+            border: 2px solid #1a1a1a;
+            border-radius: 12px;
+            padding: 20px 36px;
+            margin-top: 36px;
+            font-size: 1.05rem;
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            bottom: 28px;
+            right: 40px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+
+        .nav button {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            background: #fff;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+
+        .nav button:hover {
+            background: #1a1a1a;
+            color: #fff;
+            border-color: #1a1a1a;
+        }
+
+        .progress {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #1a1a1a;
+            transition: width 0.3s ease;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 36px;
+            left: 40px;
+            font-size: 0.8rem;
+            color: #ccc;
+            font-weight: 500;
+        }
+
+        /* Insights Grid */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            flex: 1;
+        }
+
+        .insight-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 16px;
+            padding: 24px 20px;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.2s ease;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .insight-card .num {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+        }
+
+        .insight-card h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+            line-height: 1.3;
+        }
+
+        .insight-card p {
+            font-size: 0.75rem;
+            color: #888;
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        /* Occupation Chart */
+        .occupation-grid {
+            display: grid;
+            grid-template-columns: 5fr 2fr;
+            gap: 40px;
+            flex: 1;
+            align-items: center;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .bar-item .label {
+            width: 160px;
+            font-size: 0.85rem;
+            color: #555;
+            text-align: right;
+        }
+
+        .bar-item .bar-container {
+            flex: 1;
+            height: 28px;
+            background: #f5f5f5;
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .bar-item .bar {
+            height: 100%;
+            background: #1a1a1a;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 12px;
+            font-weight: 500;
+            font-size: 0.75rem;
+            color: #fff;
+            transition: width 0.6s ease;
+        }
+
+        .bar-item.highlight .bar {
+            background: linear-gradient(90deg, #1a1a1a 0%, #444 100%);
+        }
+
+        .donut-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: conic-gradient(#1a1a1a 0% 35%,
+                    #e8e8e8 35% 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .donut::before {
+            content: '';
+            width: 100px;
+            height: 100px;
+            background: #fff;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .donut .center-text {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .donut .center-text .big {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .donut .center-text .small {
+            font-size: 0.7rem;
+            color: #888;
+        }
+
+        .donut-label {
+            margin-top: 14px;
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        /* Keyboard hint */
+        .keyboard-hint {
+            position: fixed;
+            bottom: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .keyboard-hint kbd {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-family: inherit;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Language Toggle -->
+    <div class="lang-toggle">
+        <button class="active" data-lang="en">EN</button>
+        <button data-lang="sv">SV</button>
+    </div>
+
+    <!-- Slide 1: Title -->
+    <section class="slide slide-title active" data-slide="1">
+        <div class="logo">ES</div>
+        <h1>Ett Smart Hotell</h1>
+        <h2 data-en="Target Market Analysis" data-sv="Målgruppsanalys">Target Market Analysis</h2>
+        <p class="meta">
+            <span data-en="Corporate Housing Strategy" data-sv="Strategi för företagsboende">Corporate Housing
+                Strategy</span>
+            <span>|</span>
+            <span data-en="January 2025" data-sv="Januari 2025">January 2025</span>
+        </p>
+    </section>
+
+    <!-- Slide 2: Key Numbers -->
+    <section class="slide slide-content" data-slide="2">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="The Opportunity" data-sv="Möjligheten">The Opportunity</h2>
+                <p class="subtitle" data-en="Companies with verified housing needs in Stockholm"
+                    data-sv="Företag med verifierade bostadsbehov i Stockholm">Companies with verified housing needs in
+                    Stockholm</p>
+            </div>
+            <span class="slide-number">01</span>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="number">6,551</div>
+                <div class="label" data-en="Companies Analyzed" data-sv="Analyserade företag">Companies Analyzed</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">21,785</div>
+                <div class="label" data-en="Work Permits" data-sv="Arbetstillstånd">Work Permits</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">225</div>
+                <div class="label" data-en="Target Companies" data-sv="Målföretag">Target Companies</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">90%+</div>
+                <div class="label" data-en="In Stockholm Metro" data-sv="I Stockholmsområdet">In Stockholm Metro</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th data-en="Market Segment" data-sv="Marknadssegment">Market Segment</th>
+                        <th data-en="Companies" data-sv="Företag">Companies</th>
+                        <th data-en="Work Permits" data-sv="Arbetstillstånd">Work Permits</th>
+                        <th data-en="Priority" data-sv="Prioritet">Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="company-name" data-en="IT & Tech (Large)" data-sv="IT & Tech (Stora)">IT & Tech
+                            (Large)</td>
+                        <td>46</td>
+                        <td><span class="highlight">5,731</span></td>
+                        <td><span class="badge badge-primary" data-en="Primary" data-sv="Primär">Primary</span></td>
+                    </tr>
+                    <tr>
+                        <td class="company-name" data-en="Engineering" data-sv="Teknik/Ingenjör">Engineering</td>
+                        <td>36</td>
+                        <td>2,528</td>
+                        <td><span class="badge badge-secondary" data-en="Secondary" data-sv="Sekundär">Secondary</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="company-name" data-en="Small IT/Tech (5-15 permits)"
+                            data-sv="Små IT/Tech (5-15 tillstånd)">Small IT/Tech (5-15 permits)</td>
+                        <td>143</td>
+                        <td>1,175</td>
+                        <td><span class="badge badge-tertiary" data-en="High Potential" data-sv="Hög potential">High
+                                Potential</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Slide 3: Top 10 Targets -->
+    <section class="slide slide-content" data-slide="3">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Top 10 Target Companies" data-sv="Topp 10 målföretag">Top 10 Target Companies</h2>
+                <p class="subtitle" data-en="Highest volume of international employees in Stockholm"
+                    data-sv="Högst volym internationella anställda i Stockholm">Highest volume of international
+                    employees in Stockholm</p>
+            </div>
+            <span class="slide-number">02</span>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th data-en="Company" data-sv="Företag">Company</th>
+                        <th data-en="Permits" data-sv="Tillstånd">Permits</th>
+                        <th data-en="Segment" data-sv="Segment">Segment</th>
+                        <th data-en="Why They're a Fit" data-sv="Varför de passar">Why They're a Fit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="company-name">Ericsson</td>
+                        <td><span class="highlight">1,290</span></td>
+                        <td>Telecom</td>
+                        <td data-en="HQ in Kista - next to your property" data-sv="HK i Kista - bredvid er fastighet">HQ
+                            in Kista - next to your property</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="company-name">Tata Consultancy</td>
+                        <td><span class="highlight">1,117</span></td>
+                        <td>IT Consulting</td>
+                        <td data-en="Constantly rotating consultants" data-sv="Ständigt roterande konsulter">Constantly
+                            rotating consultants</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td class="company-name">H&M</td>
+                        <td>444</td>
+                        <td>Retail HQ</td>
+                        <td data-en="Global HQ in Stockholm" data-sv="Globalt HK i Stockholm">Global HQ in Stockholm
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td class="company-name">Klarna</td>
+                        <td>299</td>
+                        <td>Fintech</td>
+                        <td data-en="Fast-growing, high growth ratio" data-sv="Snabbväxande, hög tillväxttakt">
+                            Fast-growing, high growth ratio</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td class="company-name">Capgemini</td>
+                        <td>176</td>
+                        <td>IT Consulting</td>
+                        <td data-en="Project-based consultants" data-sv="Projektbaserade konsulter">Project-based
+                            consultants</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td class="company-name">Swedbank</td>
+                        <td>176</td>
+                        <td data-en="Banking" data-sv="Bank">Banking</td>
+                        <td data-en="Established corporate programs" data-sv="Etablerade företagsprogram">Established
+                            corporate programs</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td class="company-name">Spotify</td>
+                        <td>150</td>
+                        <td>Tech</td>
+                        <td data-en="Strong employer brand" data-sv="Starkt arbetsgivarvarumärke">Strong employer brand
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td class="company-name">Nordea</td>
+                        <td>134</td>
+                        <td data-en="Banking" data-sv="Bank">Banking</td>
+                        <td data-en="Nordic bank HQ" data-sv="Nordisk bank HK">Nordic bank HQ</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td class="company-name">Electrolux</td>
+                        <td>116</td>
+                        <td data-en="Industrial" data-sv="Industri">Industrial</td>
+                        <td data-en="Industrial HQ" data-sv="Industri HK">Industrial HQ</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td class="company-name">SEB</td>
+                        <td>111</td>
+                        <td data-en="Banking" data-sv="Bank">Banking</td>
+                        <td data-en="Major bank" data-sv="Storbank">Major bank</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Slide 4: Market Segments -->
+    <section class="slide slide-content" data-slide="4">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Four Customer Segments" data-sv="Fyra kundsegment">Four Customer Segments</h2>
+                <p class="subtitle" data-en="Each with distinct needs and booking patterns"
+                    data-sv="Var och en med unika behov och bokningsmönster">Each with distinct needs and booking
+                    patterns</p>
+            </div>
+            <span class="slide-number">03</span>
+        </div>
+
+        <div class="segment-grid">
+            <div class="segment-card">
+                <div class="card-header">
+                    <h3 data-en="IT Consulting Firms" data-sv="IT-konsultföretag">IT Consulting Firms</h3>
+                    <span class="tag" data-en="Highest Value" data-sv="Högst värde">Highest Value</span>
+                </div>
+                <div class="stats-row">
+                    <div class="mini-stat">
+                        <div class="value">9</div>
+                        <div class="label" data-en="Companies" data-sv="Företag">Companies</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="value">~600</div>
+                        <div class="label" data-en="Permits" data-sv="Tillstånd">Permits</div>
+                    </div>
+                </div>
+                <p data-en="Rotating consultants on 3-12 month projects. Bulk bookings, recurring revenue."
+                    data-sv="Roterande konsulter på 3-12 månaders projekt. Volymbokning, återkommande intäkter.">
+                    Rotating consultants on 3-12 month projects. Bulk bookings, recurring revenue.</p>
+                <div class="companies">
+                    <span>TCS</span>
+                    <span>Capgemini</span>
+                    <span>Accenture</span>
+                    <span>CGI</span>
+                    <span>Wipro</span>
+                    <span>HCL</span>
+                </div>
+            </div>
+
+            <div class="segment-card">
+                <div class="card-header">
+                    <h3 data-en="Gaming & Tech Studios" data-sv="Spel- & Techstudios">Gaming & Tech Studios</h3>
+                    <span class="tag" data-en="Fastest Growing" data-sv="Snabbast växande">Fastest Growing</span>
+                </div>
+                <div class="stats-row">
+                    <div class="mini-stat">
+                        <div class="value">12</div>
+                        <div class="label" data-en="Companies" data-sv="Företag">Companies</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="value">~700</div>
+                        <div class="label" data-en="Permits" data-sv="Tillstånd">Permits</div>
+                    </div>
+                </div>
+                <p data-en="Rapidly hiring international talent. Need housing during relocation."
+                    data-sv="Rekryterar snabbt internationella talanger. Behöver boende vid flytt.">Rapidly hiring
+                    international talent. Need housing during relocation.</p>
+                <div class="companies">
+                    <span>King</span>
+                    <span>EA DICE</span>
+                    <span>Spotify</span>
+                    <span>Paradox</span>
+                    <span>Embark</span>
+                    <span>Avalanche</span>
+                </div>
+            </div>
+
+            <div class="segment-card">
+                <div class="card-header">
+                    <h3 data-en="Banks & Fintech" data-sv="Banker & Fintech">Banks & Fintech</h3>
+                    <span class="tag" data-en="Higher Budgets" data-sv="Högre budget">Higher Budgets</span>
+                </div>
+                <div class="stats-row">
+                    <div class="mini-stat">
+                        <div class="value">8</div>
+                        <div class="label" data-en="Companies" data-sv="Företag">Companies</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="value">~800</div>
+                        <div class="label" data-en="Permits" data-sv="Tillstånd">Permits</div>
+                    </div>
+                </div>
+                <p data-en="Established corporate programs, formal procurement."
+                    data-sv="Etablerade företagsprogram, formell upphandling.">Established corporate programs, formal
+                    procurement.</p>
+                <div class="companies">
+                    <span>Klarna</span>
+                    <span>Swedbank</span>
+                    <span>Nordea</span>
+                    <span>SEB</span>
+                    <span>PayPal</span>
+                    <span>Tink</span>
+                </div>
+            </div>
+
+            <div class="segment-card">
+                <div class="card-header">
+                    <h3 data-en="Telecom (Kista Focus)" data-sv="Telekom (Kista-fokus)">Telecom (Kista Focus)</h3>
+                    <span class="tag" data-en="Location Advantage" data-sv="Lägesfördel">Location Advantage</span>
+                </div>
+                <div class="stats-row">
+                    <div class="mini-stat">
+                        <div class="value">3</div>
+                        <div class="label" data-en="Companies" data-sv="Företag">Companies</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="value">~1,350</div>
+                        <div class="label" data-en="Permits" data-sv="Tillstånd">Permits</div>
+                    </div>
+                </div>
+                <p data-en="Your Kista property is perfectly located for Ericsson employees."
+                    data-sv="Er Kista-fastighet har perfekt läge för Ericssons anställda.">Your Kista property is
+                    perfectly located for Ericsson employees.</p>
+                <div class="companies">
+                    <span>Ericsson (HQ)</span>
+                    <span>Huawei</span>
+                    <span>Tele2</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: Who's Coming to Sweden -->
+    <section class="slide slide-content" data-slide="5">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Who's Coming to Sweden?" data-sv="Vilka kommer till Sverige?">Who's Coming to Sweden?</h2>
+                <p class="subtitle" data-en="Top occupations receiving work permits"
+                    data-sv="Vanligaste yrkena som får arbetstillstånd">Top occupations receiving work permits</p>
+            </div>
+            <span class="slide-number">04</span>
+        </div>
+
+        <div class="occupation-grid">
+            <div class="bar-chart">
+                <div class="bar-item highlight">
+                    <span class="label" data-en="Software Developers" data-sv="Mjukvaruutvecklare">Software
+                        Developers</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 100%">4,986 (23%)</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <span class="label" data-en="System Analysts" data-sv="Systemanalytiker">System Analysts</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 16%">781</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <span class="label" data-en="Other IT Specialists" data-sv="Övriga IT-specialister">Other IT
+                        Specialists</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 12%">618</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <span class="label" data-en="Mechanical Engineers" data-sv="Maskiningenjörer">Mechanical
+                        Engineers</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 11%">545</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <span class="label" data-en="Electrical Engineers" data-sv="Elingenjörer">Electrical
+                        Engineers</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 9%">442</div>
+                    </div>
+                </div>
+                <div class="bar-item">
+                    <span class="label" data-en="IT Support" data-sv="IT-support">IT Support</span>
+                    <div class="bar-container">
+                        <div class="bar" style="width: 7%">351</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="donut-container">
+                <div class="donut">
+                    <div class="center-text">
+                        <div class="big">35%+</div>
+                        <div class="small" data-en="of permits" data-sv="av tillstånd">of permits</div>
+                    </div>
+                </div>
+                <p class="donut-label" data-en="IT-related roles combined" data-sv="IT-relaterade roller totalt">
+                    IT-related roles combined</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Key Insights -->
+    <section class="slide slide-content" data-slide="6">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Five Key Insights" data-sv="Fem viktiga insikter">Five Key Insights</h2>
+                <p class="subtitle" data-en="Strategic findings from the data"
+                    data-sv="Strategiska slutsatser från datan">Strategic findings from the data</p>
+            </div>
+            <span class="slide-number">05</span>
+        </div>
+
+        <div class="insights-grid">
+            <div class="insight-card">
+                <div class="num">1</div>
+                <h2 data-en="Gaming Studios Scale Fastest" data-sv="Spelstudios växer snabbast">Gaming Studios Scale
+                    Fastest</h2>
+                <p data-en="Klarna, Kindred, Paradox have highest permit-to-employee ratios. Most urgent housing needs."
+                    data-sv="Klarna, Kindred, Paradox har högst tillstånd-per-anställd. Mest akuta bostadsbehov.">
+                    Klarna, Kindred, Paradox have highest permit-to-employee ratios. Most urgent housing needs.</p>
+            </div>
+            <div class="insight-card">
+                <div class="num">2</div>
+                <h2 data-en="Developers Dominate" data-sv="Utvecklare dominerar">Developers Dominate</h2>
+                <p data-en="4,986 permits (23%) are for software developers. IT roles = 35%+ of all permits."
+                    data-sv="4 986 tillstånd (23%) är för mjukvaruutvecklare. IT-roller = 35%+ av alla tillstånd.">4,986
+                    permits (23%) are for software developers. IT roles = 35%+ of all permits.</p>
+            </div>
+            <div class="insight-card">
+                <div class="num">3</div>
+                <h2 data-en="Kista Location Perfect" data-sv="Kista-läget perfekt">Kista Location Perfect</h2>
+                <p data-en="Ericsson (1,290) + Huawei (80) are in Kista, next to your property."
+                    data-sv="Ericsson (1 290) + Huawei (80) ligger i Kista, bredvid er fastighet.">Ericsson (1,290) +
+                    Huawei (80) are in Kista, next to your property.</p>
+            </div>
+            <div class="insight-card">
+                <div class="num">4</div>
+                <h2 data-en="Scania Is Reachable" data-sv="Scania är nåbart">Scania Is Reachable</h2>
+                <p data-en="1,162 permits in Södertälje, only 35km from Sollentuna."
+                    data-sv="1 162 tillstånd i Södertälje, bara 35 km från Sollentuna.">1,162 permits in Södertälje,
+                    only 35km from Sollentuna.</p>
+            </div>
+            <div class="insight-card">
+                <div class="num">5</div>
+                <h2 data-en="143 Small Cos Untapped" data-sv="143 småföretag outnyttjade">143 Small Cos Untapped</h2>
+                <p data-en="Companies with 5-15 permits: big enough for needs, too small for formal programs."
+                    data-sv="Företag med 5-15 tillstånd: stora nog för behov, för små för formella program.">Companies
+                    with 5-15 permits: big enough for needs, too small for formal programs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Decision Makers -->
+    <section class="slide slide-content" data-slide="7">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Who Makes the Booking Decision?" data-sv="Vem fattar bokningsbeslutet?">Who Makes the
+                    Booking Decision?</h2>
+                <p class="subtitle" data-en="Target personas by company type"
+                    data-sv="Målgruppspersonas per företagstyp">Target personas by company type</p>
+            </div>
+            <span class="slide-number">06</span>
+        </div>
+
+        <div class="persona-grid">
+            <div class="persona-card">
+                <div class="icon">🌐</div>
+                <h3>Global Mobility Manager</h3>
+                <p class="role" data-en="Large enterprises, IT consulting" data-sv="Storföretag, IT-konsulting">Large
+                    enterprises, IT consulting</p>
+                <p data-en="Cares about vendor reliability, corporate rates, and managing multiple relocations efficiently."
+                    data-sv="Bryr sig om leverantörssäkerhet, företagspriser och effektiv hantering av flera flyttar.">
+                    Cares about vendor reliability, corporate rates, and managing multiple relocations efficiently.</p>
+            </div>
+            <div class="persona-card">
+                <div class="icon">👥</div>
+                <h3>HR / People Ops</h3>
+                <p class="role" data-en="Tech & gaming companies" data-sv="Tech- & spelföretag">Tech & gaming companies
+                </p>
+                <p data-en="Focuses on employee experience, easy onboarding, and making new hires feel welcome."
+                    data-sv="Fokuserar på medarbetarupplevelse, enkel onboarding och att få nyanställda att känna sig välkomna.">
+                    Focuses on employee experience, easy onboarding, and making new hires feel welcome.</p>
+            </div>
+            <div class="persona-card">
+                <div class="icon">📋</div>
+                <h3 data-en="Executive Assistant" data-sv="Executive Assistant">Executive Assistant</h3>
+                <p class="role" data-en="Smaller firms" data-sv="Mindre företag">Smaller firms</p>
+                <p data-en="Values speed, simplicity, and responsive support. Often handling ad-hoc requests."
+                    data-sv="Värderar snabbhet, enkelhet och snabb support. Hanterar ofta ad hoc-förfrågningar.">Values
+                    speed, simplicity, and responsive support. Often handling ad-hoc requests.</p>
+            </div>
+            <div class="persona-card">
+                <div class="icon">📊</div>
+                <h3 data-en="Project Manager" data-sv="Projektledare">Project Manager</h3>
+                <p class="role" data-en="Consulting firms" data-sv="Konsultföretag">Consulting firms</p>
+                <p data-en="Needs location near client sites, flexibility for team changes, and bulk pricing options."
+                    data-sv="Behöver läge nära kundkontor, flexibilitet för teamförändringar och volympriser.">Needs
+                    location near client sites, flexibility for team changes, and bulk pricing options.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: Location Advantage -->
+    <section class="slide slide-content" data-slide="8">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Location Advantage" data-sv="Lägesfördel">Location Advantage</h2>
+                <p class="subtitle" data-en="Your properties are perfectly positioned"
+                    data-sv="Era fastigheter har perfekt läge">Your properties are perfectly positioned</p>
+            </div>
+            <span class="slide-number">07</span>
+        </div>
+
+        <div class="location-grid">
+            <div class="location-card">
+                <h3><span class="pin">📍</span> <span data-en="Kista Property" data-sv="Kista-fastigheten">Kista
+                        Property</span></h3>
+                <ul>
+                    <li data-en="Ericsson HQ is in Kista (1,290 work permits)"
+                        data-sv="Ericssons HK ligger i Kista (1 290 arbetstillstånd)">Ericsson HQ is in Kista (1,290
+                        work permits)</li>
+                    <li data-en="Huawei R&D is in Kista (80 work permits)"
+                        data-sv="Huaweis FoU ligger i Kista (80 arbetstillstånd)">Huawei R&D is in Kista (80 work
+                        permits)</li>
+                    <li data-en="Kista Science City tech hub" data-sv="Kista Science City tech-hubb">Kista Science City
+                        tech hub</li>
+                    <li data-en="Perfect for telecom, IT consultants, tech workers"
+                        data-sv="Perfekt för telekom, IT-konsulter, tech-arbetare">Perfect for telecom, IT consultants,
+                        tech workers</li>
+                </ul>
+                <div class="big-number">1,370 <span data-en="permits next door" data-sv="tillstånd i närheten">permits
+                        next door</span></div>
+            </div>
+
+            <div class="location-card">
+                <h3><span class="pin">📍</span> <span data-en="Sollentuna Property"
+                        data-sv="Sollentuna-fastigheten">Sollentuna Property</span></h3>
+                <ul>
+                    <li data-en="12 min commuter train to central Stockholm"
+                        data-sv="12 min pendeltåg till centrala Stockholm">12 min commuter train to central Stockholm
+                    </li>
+                    <li data-en="Near Arlanda Airport (frequent travelers)"
+                        data-sv="Nära Arlanda flygplats (frekventa resenärer)">Near Arlanda Airport (frequent travelers)
+                    </li>
+                    <li data-en="Södertälje/Scania is 35km away (commutable)"
+                        data-sv="Södertälje/Scania är 35 km bort (pendlingsbart)">Södertälje/Scania is 35km away
+                        (commutable)</li>
+                    <li data-en="Suburban feel for relocating employees"
+                        data-sv="Förortskänsla för flyttande anställda">Suburban feel for relocating employees</li>
+                </ul>
+                <div class="big-number">1,162 <span data-en="permits at Scania (35km)"
+                        data-sv="tillstånd hos Scania (35 km)">permits at Scania (35km)</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: Strategy Tiers -->
+    <section class="slide slide-content" data-slide="9">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Marketing Strategy by Tier" data-sv="Marknadsföringsstrategi per segment">Marketing
+                    Strategy by Tier</h2>
+                <p class="subtitle" data-en="Right approach for each company size"
+                    data-sv="Rätt approach för varje företagsstorlek">Right approach for each company size</p>
+            </div>
+            <span class="slide-number">08</span>
+        </div>
+
+        <div class="tier-grid">
+            <div class="tier-card">
+                <span class="tier-badge">Tier 1</span>
+                <h3>Enterprise</h3>
+                <div class="metric">10</div>
+                <div class="metric-label" data-en="companies • 100+ permits each"
+                    data-sv="företag • 100+ tillstånd var">companies • 100+ permits each</div>
+                <div class="strategy">
+                    <div class="strategy-label" data-en="Approach" data-sv="Approach">Approach</div>
+                    <div class="strategy-text" data-en="Direct sales outreach to Global Mobility & HR Directors"
+                        data-sv="Direktförsäljning till Global Mobility & HR-direktörer">Direct sales outreach to Global
+                        Mobility & HR Directors</div>
+                </div>
+            </div>
+
+            <div class="tier-card">
+                <span class="tier-badge">Tier 2</span>
+                <h3>Mid-Market</h3>
+                <div class="metric">13</div>
+                <div class="metric-label" data-en="companies • 50-99 permits each"
+                    data-sv="företag • 50-99 tillstånd var">companies • 50-99 permits each</div>
+                <div class="strategy">
+                    <div class="strategy-label" data-en="Approach" data-sv="Approach">Approach</div>
+                    <div class="strategy-text" data-en="LinkedIn ads + email campaigns targeting HR"
+                        data-sv="LinkedIn-annonser + e-postkampanjer mot HR">LinkedIn ads + email campaigns targeting HR
+                    </div>
+                </div>
+            </div>
+
+            <div class="tier-card">
+                <span class="tier-badge">Tier 3</span>
+                <h3 data-en="Growing" data-sv="Växande">Growing</h3>
+                <div class="metric">23</div>
+                <div class="metric-label" data-en="companies • <50 permits each" data-sv="företag • <50 tillstånd var">
+                    companies • <50 permits each</div>
+                        <div class="strategy">
+                            <div class="strategy-label" data-en="Approach" data-sv="Approach">Approach</div>
+                            <div class="strategy-text" data-en="SEO & Google Ads for inbound leads"
+                                data-sv="SEO & Google Ads för inkommande leads">SEO & Google Ads for inbound leads</div>
+                        </div>
+                </div>
+
+                <div class="tier-card">
+                    <span class="tier-badge" data-en="Small" data-sv="Små">Small</span>
+                    <h3 data-en="Hidden Gems" data-sv="Hög Potential">Hidden Gems</h3>
+                    <div class="metric">143</div>
+                    <div class="metric-label" data-en="companies • 5-15 permits each"
+                        data-sv="företag • 5-15 tillstånd var">companies • 5-15 permits each</div>
+                    <div class="strategy">
+                        <div class="strategy-label" data-en="Approach" data-sv="Approach">Approach</div>
+                        <div class="strategy-text" data-en="Targeted digital campaigns to HR & Office Managers"
+                            data-sv="Riktade digitala kampanjer mot HR & kontorschefer">Targeted digital campaigns to HR
+                            & Office Managers</div>
+                    </div>
+                </div>
+            </div>
+    </section>
+
+    <!-- Slide 10: Action Plan -->
+    <section class="slide slide-content" data-slide="10">
+        <div class="slide-header">
+            <div class="slide-header-text">
+                <h2 data-en="Action Plan" data-sv="Handlingsplan">Action Plan</h2>
+                <p class="subtitle" data-en="Recommended next steps" data-sv="Rekommenderade nästa steg">Recommended
+                    next steps</p>
+            </div>
+            <span class="slide-number">09</span>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <span class="phase-badge" data-en="Phase 1" data-sv="Fas 1">Phase 1</span>
+                <h3 data-en="Immediate" data-sv="Omedelbart">Immediate</h3>
+                <p class="period" data-en="Week 1-2" data-sv="Vecka 1-2">Week 1-2</p>
+                <ul>
+                    <li><span class="num">1</span> <span data-en="Share prospect list with marketing agency"
+                            data-sv="Dela prospektlista med marknadsföringsbyrån">Share prospect list with marketing
+                            agency</span></li>
+                    <li><span class="num">2</span> <span data-en="Research LinkedIn contacts at Top 10 companies"
+                            data-sv="Researcha LinkedIn-kontakter på Topp 10-företagen">Research LinkedIn contacts at
+                            Top 10 companies</span></li>
+                    <li><span class="num">3</span> <span data-en="Develop corporate rate card for bulk bookings"
+                            data-sv="Utveckla företagsprislista för volymbokning">Develop corporate rate card for bulk
+                            bookings</span></li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <span class="phase-badge" data-en="Phase 2" data-sv="Fas 2">Phase 2</span>
+                <h3 data-en="Short-term" data-sv="Kortsiktigt">Short-term</h3>
+                <p class="period" data-en="Month 1" data-sv="Månad 1">Month 1</p>
+                <ul>
+                    <li><span class="num">4</span> <span data-en="Direct outreach to Tier 1 companies (10 targets)"
+                            data-sv="Direktkontakt med Tier 1-företag (10 mål)">Direct outreach to Tier 1 companies (10
+                            targets)</span></li>
+                    <li><span class="num">5</span> <span data-en="Launch LinkedIn campaign for gaming cluster"
+                            data-sv="Starta LinkedIn-kampanj för spelklustret">Launch LinkedIn campaign for gaming
+                            cluster</span></li>
+                    <li><span class="num">6</span> <span data-en="Create case study from existing corporate clients"
+                            data-sv="Skapa fallstudie från befintliga företagskunder">Create case study from existing
+                            corporate clients</span></li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <span class="phase-badge" data-en="Phase 3" data-sv="Fas 3">Phase 3</span>
+                <h3 data-en="Medium-term" data-sv="Medellång sikt">Medium-term</h3>
+                <p class="period" data-en="Month 2-3" data-sv="Månad 2-3">Month 2-3</p>
+                <ul>
+                    <li><span class="num">7</span> <span data-en="Expand to Tier 2 companies"
+                            data-sv="Expandera till Tier 2-företag">Expand to Tier 2 companies</span></li>
+                    <li><span class="num">8</span> <span data-en="Target small company segment (143 IT/Tech)"
+                            data-sv="Rikta in på småföretagssegmentet (143 IT/Tech)">Target small company segment (143
+                            IT/Tech)</span></li>
+                    <li><span class="num">9</span> <span data-en='SEO for "corporate apartments Stockholm Kista"'
+                            data-sv='SEO för "företagslägenheter Stockholm Kista"'>SEO for "corporate apartments
+                            Stockholm Kista"</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Final Summary -->
+    <section class="slide slide-final" data-slide="11">
+        <div class="final-stat">
+            <div class="big">9,434</div>
+            <div class="label" data-en="Work Permits in Your Target Market" data-sv="Arbetstillstånd i er målmarknad">
+                Work Permits in Your Target Market</div>
+        </div>
+
+        <p class="bottom-line"
+            data-en="<strong>225 companies</strong> are actively bringing international workers to Stockholm who need housing for 3-12+ months. Your Kista property is next to <strong>Ericsson's HQ</strong> (1,290 permits). Gaming and fintech are scaling fastest."
+            data-sv="<strong>225 företag</strong> tar aktivt in internationella arbetare till Stockholm som behöver boende i 3-12+ månader. Er Kista-fastighet ligger bredvid <strong>Ericssons HK</strong> (1 290 tillstånd). Spel och fintech växer snabbast.">
+            <strong>225 companies</strong> are actively bringing international workers to Stockholm who need housing for
+            3-12+ months. Your Kista property is next to <strong>Ericsson's HQ</strong> (1,290 permits). Gaming and
+            fintech are scaling fastest.
+        </p>
+
+        <div class="highlight-box"
+            data-en="Even capturing <strong>5%</strong> of this market = significant recurring revenue."
+            data-sv="Att ta bara <strong>5%</strong> av denna marknad = betydande återkommande intäkter.">Even capturing
+            <strong>5%</strong> of this market = significant recurring revenue.
+        </div>
+    </section>
+
+    <!-- Navigation -->
+    <div class="nav">
+        <button onclick="prevSlide()">←</button>
+        <button onclick="nextSlide()">→</button>
+    </div>
+
+    <div class="progress" id="progress"></div>
+    <div class="slide-counter"><span id="current">1</span> / <span id="total">11</span></div>
+    <div class="keyboard-hint"><kbd>←</kbd> <kbd>→</kbd> <span data-en="to navigate" data-sv="för att navigera">to
+            navigate</span></div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+        let currentLang = 'en';
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+
+            slides.forEach(slide => slide.classList.remove('active'));
+            document.querySelector(`[data-slide="${currentSlide}"]`).classList.add('active');
+
+            document.getElementById('current').textContent = currentSlide;
+            document.getElementById('progress').style.width = `${(currentSlide / totalSlides) * 100}%`;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function prevSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        // Language toggle
+        function setLanguage(lang) {
+            currentLang = lang;
+
+            // Update toggle buttons
+            document.querySelectorAll('.lang-toggle button').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.lang === lang);
+            });
+
+            // Update all translatable elements
+            document.querySelectorAll('[data-en][data-sv]').forEach(el => {
+                const text = el.getAttribute(`data-${lang}`);
+                if (el.innerHTML.includes('<strong>') || el.innerHTML.includes('<span>')) {
+                    el.innerHTML = text;
+                } else {
+                    el.textContent = text;
+                }
+            });
+
+            // Update document language
+            document.documentElement.lang = lang;
+        }
+
+        // Language toggle click handlers
+        document.querySelectorAll('.lang-toggle button').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            }
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            }
+        });
+
+        // Touch navigation
+        let touchStartX = 0;
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+        document.addEventListener('touchend', (e) => {
+            const touchEndX = e.changedTouches[0].clientX;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) nextSlide();
+                else prevSlide();
+            }
+        });
+
+        showSlide(currentSlide);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+{
+  "total": 3,
+  "successful": 0,
+  "failed": 3,
+  "blocked": 0,
+  "results": [
+    {
+      "url": "https://www.allabolag.se/what/Delta+Group+Ab",
+      "normalized_url": "https://www.allabolag.se/what/Delta+Group+Ab",
+      "success": false,
+      "status_code": null,
+      "error": "Connection error: HTTPSConnectionPool(host='www.allabolag.se', port=443): Max retries exceeded with url: /what/Delta+Group+Ab (Caused by SSLError(PermissionError(1, 'Operation not permitted')))",
+      "content_length": null,
+      "content_type": null,
+      "final_url": null
+    },
+    {
+      "url": "https://www.allabolag.se/what/Destroy+Rebuilding+Company+Aktiebolag",
+      "normalized_url": "https://www.allabolag.se/what/Destroy+Rebuilding+Company+Aktiebolag",
+      "success": false,
+      "status_code": null,
+      "error": "Connection error: HTTPSConnectionPool(host='www.allabolag.se', port=443): Max retries exceeded with url: /what/Destroy+Rebuilding+Company+Aktiebolag (Caused by SSLError(PermissionError(1, 'Operation not permitted')))",
+      "content_length": null,
+      "content_type": null,
+      "final_url": null
+    },
+    {
+      "url": "https://www.allabolag.se/what/Diamond+Express+%C3%85keri+Ab",
+      "normalized_url": "https://www.allabolag.se/what/Diamond+Express+%C3%85keri+Ab",
+      "success": false,
+      "status_code": null,
+      "error": "Connection error: HTTPSConnectionPool(host='www.allabolag.se', port=443): Max retries exceeded with url: /what/Diamond+Express+%C3%85keri+Ab (Caused by SSLError(PermissionError(1, 'Operation not permitted')))",
+      "content_length": null,
+      "content_type": null,
+      "final_url": null
+    }
+  ]
+}
