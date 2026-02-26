@@ -1,48 +1,58 @@
 {
-  "total": 4,
-  "successful": 4,
+  "total": 5,
+  "successful": 5,
   "failed": 0,
   "blocked": 0,
   "results": [
     {
-      "url": "https://www.allabolag.se/foretag/dne-bygg-ab/stockholm/byggm%C3%A4stare/2KGPX2WI5YDDT",
-      "normalized_url": "https://www.allabolag.se/foretag/dne-bygg-ab/stockholm/byggm%C3%A4stare/2KGPX2WI5YDDT",
+      "url": "https://www.allabolag.se/foretag/grand-construction-stockholm-ab/h%C3%A4gersten/byggm%C3%A4stare/2K45ZZII5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/grand-construction-stockholm-ab/h%C3%A4gersten/byggm%C3%A4stare/2K45ZZII5YDDT",
       "success": true,
       "status_code": 200,
       "error": null,
-      "content_length": 53408,
+      "content_length": 54139,
       "content_type": "text/html; charset=utf-8",
-      "final_url": "https://www.allabolag.se/foretag/dne-bygg-ab/stockholm/byggm%C3%A4stare/2KGPX2WI5YDDT"
+      "final_url": "https://www.allabolag.se/foretag/grand-construction-stockholm-ab/h%C3%A4gersten/byggm%C3%A4stare/2K45ZZII5YDDT"
     },
     {
-      "url": "https://www.allabolag.se/foretag/dp-pl%C3%A5t-bygg-ab/skog%C3%A5s/byggm%C3%A4stare/2KHLH2FI5YDDT",
-      "normalized_url": "https://www.allabolag.se/foretag/dp-pl%C3%A5t-bygg-ab/skog%C3%A5s/byggm%C3%A4stare/2KHLH2FI5YDDT",
+      "url": "https://www.allabolag.se/foretag/grem-stockholm-bygg-ab/sundbyberg/byggm%C3%A4stare/2KH5GIZI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/grem-stockholm-bygg-ab/sundbyberg/byggm%C3%A4stare/2KH5GIZI5YDDT",
       "success": true,
       "status_code": 200,
       "error": null,
-      "content_length": 54566,
+      "content_length": 53226,
       "content_type": "text/html; charset=utf-8",
-      "final_url": "https://www.allabolag.se/foretag/dp-pl%C3%A5t-bygg-ab/skog%C3%A5s/byggm%C3%A4stare/2KHLH2FI5YDDT"
+      "final_url": "https://www.allabolag.se/foretag/grem-stockholm-bygg-ab/sundbyberg/byggm%C3%A4stare/2KH5GIZI5YDDT"
     },
     {
-      "url": "https://www.allabolag.se/foretag/dsmo-center-ab/upplands-v%C3%A4sby/mc-mopeder-skotrar/2K40UCYI5YG7P",
-      "normalized_url": "https://www.allabolag.se/foretag/dsmo-center-ab/upplands-v%C3%A4sby/mc-mopeder-skotrar/2K40UCYI5YG7P",
+      "url": "https://www.allabolag.se/foretag/grindstugans-bygg-och-platt-ab/tullinge/byggm%C3%A4stare/2KG9HSQI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/grindstugans-bygg-och-platt-ab/tullinge/byggm%C3%A4stare/2KG9HSQI5YDDT",
       "success": true,
       "status_code": 200,
       "error": null,
-      "content_length": 53895,
+      "content_length": 53987,
       "content_type": "text/html; charset=utf-8",
-      "final_url": "https://www.allabolag.se/foretag/dsmo-center-ab/upplands-v%C3%A4sby/mc-mopeder-skotrar/2K40UCYI5YG7P"
+      "final_url": "https://www.allabolag.se/foretag/grindstugans-bygg-och-platt-ab/tullinge/byggm%C3%A4stare/2KG9HSQI5YDDT"
     },
     {
-      "url": "https://www.allabolag.se/foretag/dts-i-stockholm-ab/bandhagen/livsmedel/2KI6BL4I5YFWD",
-      "normalized_url": "https://www.allabolag.se/foretag/dts-i-stockholm-ab/bandhagen/livsmedel/2KI6BL4I5YFWD",
+      "url": "https://www.allabolag.se/foretag/gripsholms-prefab-ab/mariefred/byggm%C3%A4stare/2KIUDFWI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/gripsholms-prefab-ab/mariefred/byggm%C3%A4stare/2KIUDFWI5YDDT",
       "success": true,
       "status_code": 200,
       "error": null,
-      "content_length": 52996,
+      "content_length": 52306,
       "content_type": "text/html; charset=utf-8",
-      "final_url": "https://www.allabolag.se/foretag/dts-i-stockholm-ab/bandhagen/livsmedel/2KI6BL4I5YFWD"
+      "final_url": "https://www.allabolag.se/foretag/gripsholms-prefab-ab/mariefred/byggm%C3%A4stare/2KIUDFWI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/gr%C3%B6na-hem-ab/kista/byggm%C3%A4stare/2KIDZJBI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/gr%C3%B6na-hem-ab/kista/byggm%C3%A4stare/2KIDZJBI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 52926,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/gr%C3%B6na-hem-ab/kista/byggm%C3%A4stare/2KIDZJBI5YDDT"
     }
   ]
 }

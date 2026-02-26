@@ -1,0 +1,58 @@
+{
+  "total": 5,
+  "successful": 5,
+  "failed": 0,
+  "blocked": 0,
+  "results": [
+    {
+      "url": "https://www.allabolag.se/foretag/v-s-m-bygg-pl%C3%A5t-smide-aktiebolag/%C3%A4lta/byggm%C3%A4stare/2K1EUQOI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/v-s-m-bygg-pl%C3%A5t-smide-aktiebolag/%C3%A4lta/byggm%C3%A4stare/2K1EUQOI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53070,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/v-s-m-bygg-pl%C3%A5t-smide-aktiebolag/%C3%A4lta/byggm%C3%A4stare/2K1EUQOI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/valenta-kan-ab/johanneshov/byggm%C3%A4stare/2K3HATHI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/valenta-kan-ab/johanneshov/byggm%C3%A4stare/2K3HATHI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53699,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/valenta-kan-ab/johanneshov/byggm%C3%A4stare/2K3HATHI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/valesco-teknik-sverige-ab/sp%C3%A5nga/byggm%C3%A4stare/2K3DEKYI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/valesco-teknik-sverige-ab/sp%C3%A5nga/byggm%C3%A4stare/2K3DEKYI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53508,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/valesco-teknik-sverige-ab/sp%C3%A5nga/byggm%C3%A4stare/2K3DEKYI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/vallhorns-livs-ab/bandhagen/livsmedel/2KGHXIKI5YFWD",
+      "normalized_url": "https://www.allabolag.se/foretag/vallhorns-livs-ab/bandhagen/livsmedel/2KGHXIKI5YFWD",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53390,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/vallhorns-livs-ab/bandhagen/livsmedel/2KGHXIKI5YFWD"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/vass-ab/upplands-v%C3%A4sby/reparat%C3%B6rer/2KHYE3HI63IK7",
+      "normalized_url": "https://www.allabolag.se/foretag/vass-ab/upplands-v%C3%A4sby/reparat%C3%B6rer/2KHYE3HI63IK7",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53683,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/vass-ab/upplands-v%C3%A4sby/reparat%C3%B6rer/2KHYE3HI63IK7"
+    }
+  ]
+}

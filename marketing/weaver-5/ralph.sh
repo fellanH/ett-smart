@@ -2,7 +2,7 @@
 set -uo pipefail
 
 # Configuration
-MAX_LOOPS=100
+MAX_LOOPS=150
 BATCH_SIZE=5
 START_ROW="${1:-155}"  # Starting row, can override via CLI arg
 PROMPT_FILE="PROMPT.md"

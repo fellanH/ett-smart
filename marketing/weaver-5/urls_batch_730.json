@@ -1,0 +1,38 @@
+{
+  "total": 3,
+  "successful": 3,
+  "failed": 0,
+  "blocked": 0,
+  "results": [
+    {
+      "url": "https://www.allabolag.se/foretag/%C3%A4lvsj%C3%B6-tak-ab/stockholm/byggm%C3%A4stare/2K38RS2I5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/%C3%A4lvsj%C3%B6-tak-ab/stockholm/byggm%C3%A4stare/2K38RS2I5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 54161,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/%C3%A4lvsj%C3%B6-tak-ab/stockholm/byggm%C3%A4stare/2K38RS2I5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/%C3%B6rnsk%C3%B6ldsviks-stadsbudskontor-aktiebolag/jordbro/%C3%A5kerier/2JZVJ5TI5YIR3",
+      "normalized_url": "https://www.allabolag.se/foretag/%C3%B6rnsk%C3%B6ldsviks-stadsbudskontor-aktiebolag/jordbro/%C3%A5kerier/2JZVJ5TI5YIR3",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 55118,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/%C3%B6rnsk%C3%B6ldsviks-stadsbudskontor-aktiebolag/jordbro/%C3%A5kerier/2JZVJ5TI5YIR3"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/%C3%B6rstig-m%C3%A5leri-ab/nyk%C3%B6ping/byggm%C3%A4stare/2KGOOV3I5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/%C3%B6rstig-m%C3%A5leri-ab/nyk%C3%B6ping/byggm%C3%A4stare/2KGOOV3I5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53391,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/%C3%B6rstig-m%C3%A5leri-ab/nyk%C3%B6ping/byggm%C3%A4stare/2KGOOV3I5YDDT"
+    }
+  ]
+}

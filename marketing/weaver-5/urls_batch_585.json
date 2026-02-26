@@ -1,0 +1,58 @@
+{
+  "total": 5,
+  "successful": 5,
+  "failed": 0,
+  "blocked": 0,
+  "results": [
+    {
+      "url": "https://www.allabolag.se/foretag/sthlm-villarenovering-ab/%C3%A5kersberga/byggm%C3%A4stare/2KGE8NTI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/sthlm-villarenovering-ab/%C3%A5kersberga/byggm%C3%A4stare/2KGE8NTI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53181,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sthlm-villarenovering-ab/%C3%A5kersberga/byggm%C3%A4stare/2KGE8NTI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/stiven-bilverkstad-ab/handen/bilar/2K3VEW8I5YCZW",
+      "normalized_url": "https://www.allabolag.se/foretag/stiven-bilverkstad-ab/handen/bilar/2K3VEW8I5YCZW",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53052,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/stiven-bilverkstad-ab/handen/bilar/2K3VEW8I5YCZW"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/stockholm-dmc-ab/saltsj%C3%B6-boo/byggm%C3%A4stare/2KGHOFAI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/stockholm-dmc-ab/saltsj%C3%B6-boo/byggm%C3%A4stare/2KGHOFAI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53588,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/stockholm-dmc-ab/saltsj%C3%B6-boo/byggm%C3%A4stare/2KGHOFAI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/stockholm-eventsco-services-ab/tumba/passagerartransporter/2KH97Y3I63IJZ",
+      "normalized_url": "https://www.allabolag.se/foretag/stockholm-eventsco-services-ab/tumba/passagerartransporter/2KH97Y3I63IJZ",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53999,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/stockholm-eventsco-services-ab/tumba/passagerartransporter/2KH97Y3I63IJZ"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/stockholm-exergi-ab/stockholm/fj%C3%A4rrv%C3%A4rme/2JYDPXJI63IG2",
+      "normalized_url": "https://www.allabolag.se/foretag/stockholm-exergi-ab/stockholm/fj%C3%A4rrv%C3%A4rme/2JYDPXJI63IG2",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 57072,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/stockholm-exergi-ab/stockholm/fj%C3%A4rrv%C3%A4rme/2JYDPXJI63IG2"
+    }
+  ]
+}

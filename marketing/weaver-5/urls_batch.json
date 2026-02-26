@@ -1,0 +1,58 @@
+{
+  "total": 5,
+  "successful": 5,
+  "failed": 0,
+  "blocked": 0,
+  "results": [
+    {
+      "url": "https://www.allabolag.se/foretag/spad-bygg-ab/v%C3%A4sterhaninge/byggm%C3%A4stare/2KGWI83I5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/spad-bygg-ab/v%C3%A4sterhaninge/byggm%C3%A4stare/2KGWI83I5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53247,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/spad-bygg-ab/v%C3%A4sterhaninge/byggm%C3%A4stare/2KGWI83I5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/specialbetong-sverige-ab/kungs%C3%A4ngen/byggm%C3%A4stare/2K3SATRI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/specialbetong-sverige-ab/kungs%C3%A4ngen/byggm%C3%A4stare/2K3SATRI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 55337,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/specialbetong-sverige-ab/kungs%C3%A4ngen/byggm%C3%A4stare/2K3SATRI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/sp%C3%A5nga-mur-puts-ab/sp%C3%A5nga/byggm%C3%A4stare/2KH6KG3I5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/sp%C3%A5nga-mur-puts-ab/sp%C3%A5nga/byggm%C3%A4stare/2KH6KG3I5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53724,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sp%C3%A5nga-mur-puts-ab/sp%C3%A5nga/byggm%C3%A4stare/2KH6KG3I5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/ss-tr%C3%A4dg%C3%A5rdsservice-ab/solna/jordbruk/2K2E380I63IHJ",
+      "normalized_url": "https://www.allabolag.se/foretag/ss-tr%C3%A4dg%C3%A5rdsservice-ab/solna/jordbruk/2K2E380I63IHJ",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53307,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/ss-tr%C3%A4dg%C3%A5rdsservice-ab/solna/jordbruk/2K2E380I63IHJ"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/sskm-ab/jordbro/metaller-legeringar/2K3BTKBI5YGAN",
+      "normalized_url": "https://www.allabolag.se/foretag/sskm-ab/jordbro/metaller-legeringar/2K3BTKBI5YGAN",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53582,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sskm-ab/jordbro/metaller-legeringar/2K3BTKBI5YGAN"
+    }
+  ]
+}

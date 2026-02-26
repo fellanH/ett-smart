@@ -1,0 +1,58 @@
+{
+  "total": 5,
+  "successful": 5,
+  "failed": 0,
+  "blocked": 0,
+  "results": [
+    {
+      "url": "https://www.allabolag.se/foretag/stevos-stork%C3%B6k-aktiebolag/norsborg/hush%C3%A5llsutrustningar-vitvaror/2K1MSDKI5YF83",
+      "normalized_url": "https://www.allabolag.se/foretag/stevos-stork%C3%B6k-aktiebolag/norsborg/hush%C3%A5llsutrustningar-vitvaror/2K1MSDKI5YF83",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 54704,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/stevos-stork%C3%B6k-aktiebolag/norsborg/hush%C3%A5llsutrustningar-vitvaror/2K1MSDKI5YF83"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/sthlm-08-entreprenad-ab/stockholm/uthyrning/2K2TVQNI5YIEZ",
+      "normalized_url": "https://www.allabolag.se/foretag/sthlm-08-entreprenad-ab/stockholm/uthyrning/2K2TVQNI5YIEZ",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53815,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sthlm-08-entreprenad-ab/stockholm/uthyrning/2K2TVQNI5YIEZ"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/sthlm-bil-i-s%C3%A4tra-ab/sk%C3%A4rholmen/bilar/2K3RLLCI5YCZW",
+      "normalized_url": "https://www.allabolag.se/foretag/sthlm-bil-i-s%C3%A4tra-ab/sk%C3%A4rholmen/bilar/2K3RLLCI5YCZW",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 55055,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sthlm-bil-i-s%C3%A4tra-ab/sk%C3%A4rholmen/bilar/2K3RLLCI5YCZW"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/sthlm-byggalliance-ab/skog%C3%A5s/byggm%C3%A4stare/2K3CRCGI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/sthlm-byggalliance-ab/skog%C3%A5s/byggm%C3%A4stare/2K3CRCGI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53499,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sthlm-byggalliance-ab/skog%C3%A5s/byggm%C3%A4stare/2K3CRCGI5YDDT"
+    },
+    {
+      "url": "https://www.allabolag.se/foretag/sthlm-byggnads-och-milj%C3%B6-ab/enh%C3%B6rna/byggm%C3%A4stare/2K31WEWI5YDDT",
+      "normalized_url": "https://www.allabolag.se/foretag/sthlm-byggnads-och-milj%C3%B6-ab/enh%C3%B6rna/byggm%C3%A4stare/2K31WEWI5YDDT",
+      "success": true,
+      "status_code": 200,
+      "error": null,
+      "content_length": 53645,
+      "content_type": "text/html; charset=utf-8",
+      "final_url": "https://www.allabolag.se/foretag/sthlm-byggnads-och-milj%C3%B6-ab/enh%C3%B6rna/byggm%C3%A4stare/2K31WEWI5YDDT"
+    }
+  ]
+}

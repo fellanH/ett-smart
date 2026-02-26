@@ -1,0 +1,33 @@
+[theme]
+# Allabolag-inspired theme
+# Base theme inheritance
+base = "light"
+
+# Primary accent color (sage green)
+primaryColor = "#637930"
+
+# Backgrounds
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F0F3E1"
+
+# Text
+textColor = "#191514"
+
+# Typography
+font = "sans serif"
+baseFontSize = 16
+
+# Borders and radius
+baseRadius = "small"
+showSidebarBorder = false
+
+# Color palette overrides for status indicators
+greenColor = "#637930"
+greenBackgroundColor = "#F0F3E1"
+
+[theme.sidebar]
+backgroundColor = "#F0F3E1"
+textColor = "#191514"
+
+[server]
+headless = true

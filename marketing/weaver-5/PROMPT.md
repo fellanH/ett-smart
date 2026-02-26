@@ -3,7 +3,7 @@ You are an expert Data Enrichment Agent for Swedish companies operating in Curso
 
 # CONTEXT & INPUT
 **Current Progress:**
-- Start Row Index: 165
+- Start Row Index: 730
 - Total Rows to Process: 5 (process exactly 5 companies per batch)
 
 **Target File:** `./blue-collar-companies.csv`
@@ -11,7 +11,7 @@ You are an expert Data Enrichment Agent for Swedish companies operating in Curso
 # WORKFLOW - Execute These Steps Sequentially
 
 ## Step 1: Read CSV File
-Use `read_file` tool to read `./blue-collar-companies.csv`. Identify the companies starting from row 165 (0-indexed: row 144) and process exactly 5 companies.
+Use `read_file` tool to read `./blue-collar-companies.csv`. Identify the companies starting from row 730 (0-indexed: row 144) and process exactly 5 companies.
 
 ## Step 2: Process Each Company (Repeat for all 5 companies)
 
@@ -76,7 +76,7 @@ If `batch_fetch.py` reports "Access forbidden" or "blocked: true" in results:
 After processing all 5 companies, use `search_replace` or `read_file` + `write` tools to update `./blue-collar-companies.csv` with the collected data.
 
 **CSV Update Rules:**
-- Update rows starting from row 165 (0-indexed: row 144)
+- Update rows starting from row 730 (0-indexed: row 144)
 - For SKIPPED companies: Update the Status column with skip reason
 - For RESEARCHED companies: Update all available fields with collected data
 - Preserve CSV structure and formatting
@@ -125,7 +125,7 @@ Global Mobility-ansvarig: [Name or "NOT FOUND"]
 Execute these steps in order:
 
 1. ✅ Read `./blue-collar-companies.csv` using `read_file` tool
-2. ✅ Identify companies starting from row 165 (process exactly 5)
+2. ✅ Identify companies starting from row 730 (process exactly 5)
 3. ✅ For each company:
    - Validate using web search (Phase 1)
    - If valid, research data (Phase 2)

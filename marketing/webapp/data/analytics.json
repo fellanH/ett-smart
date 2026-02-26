@@ -1,0 +1,33 @@
+[
+  {
+    "timestamp": "2026-01-22T15:43:07.795834",
+    "event_type": "single_lookup",
+    "metadata": {
+      "company_name": "Stormfors AB",
+      "status": "success",
+      "input_type": "company_name"
+    }
+  },
+  {
+    "timestamp": "2026-01-22T16:05:09.850666",
+    "event_type": "enrichment_started",
+    "metadata": {
+      "company_count": 5
+    }
+  },
+  {
+    "timestamp": "2026-01-22T16:05:17.752700",
+    "event_type": "enrichment_completed",
+    "metadata": {
+      "company_count": 5,
+      "success_count": 5
+    }
+  },
+  {
+    "timestamp": "2026-01-24T14:59:38.959658",
+    "event_type": "page_view",
+    "metadata": {
+      "page": "analytics"
+    }
+  }
+]
