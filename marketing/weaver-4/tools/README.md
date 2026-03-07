@@ -7,21 +7,25 @@ A tool for generating Google search URLs that can be fetched using web fetch cap
 ### Usage
 
 **Generate all company research URLs:**
+
 ```bash
 python search_url_generator.py "Company Name" --all
 ```
 
 **Generate a single search URL:**
+
 ```bash
 python search_url_generator.py "query text"
 ```
 
 **Generate a site-specific search URL:**
+
 ```bash
 python search_url_generator.py "Company Name" --site allabolag.se
 ```
 
 **Output as JSON (for programmatic use):**
+
 ```bash
 python search_url_generator.py "Company Name" --all --json
 ```
@@ -29,6 +33,7 @@ python search_url_generator.py "Company Name" --all --json
 ### Example Output
 
 When using `--all`, the script generates URLs for:
+
 1. Allabolag.se search (revenue, address, VD info)
 2. Ratsit.se search (verification)
 3. VD email search

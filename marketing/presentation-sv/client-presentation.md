@@ -1,4 +1,5 @@
 # Ett Smart Hotell: Analys av målmarknad
+
 ## Strategi för leadgenerering inom företagsboende
 
 **Framtaget för:** Dag Hellström
@@ -18,16 +19,17 @@ Vi analyserade **6 551 företag** som beviljades arbetstillstånd från Migratio
 
 ### I siffror
 
-| Mätetal | Värde |
-|---------|-------|
-| Totalt antal analyserade företag | 6 551 |
-| Totalt antal arbetstillstånd | 21 785 |
+| Mätetal                           | Värde  |
+| --------------------------------- | ------ |
+| Totalt antal analyserade företag  | 6 551  |
+| Totalt antal arbetstillstånd      | 21 785 |
 | **IT- & techföretag (Stockholm)** | **46** |
-| Arbetstillstånd i målsegmentet | 5 731 |
+| Arbetstillstånd i målsegmentet    | 5 731  |
 
 ### Era idealkunder
 
 Vi identifierade **46 IT- & techföretag i Stockholm** som:
+
 - Aktivt rekryterar internationella medarbetare
 - Är belägna nära era fastigheter (Kista & Sollentuna)
 - Är tillräckligt stora för att ha återkommande boendebehov
@@ -36,24 +38,25 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 
 ## Topp 10 målföretag
 
-| Företag | Arbetstillstånd | Varför de passar |
-|---------|-----------------|------------------|
-| **Ericsson** | 1 290 | Huvudkontor i Kista - granne med er fastighet |
-| **Tata Consultancy** | 1 117 | Konstant rotation av konsulter |
-| **H&M** | 444 | Globalt huvudkontor i Stockholm |
-| **Klarna** | 299 | Snabbväxande fintech |
-| **Capgemini** | 176 | IT-konsulting, projektbaserat |
-| **Swedbank** | 176 | Storbank, etablerade program |
-| **Spotify** | 150 | Techjätte, starkt arbetsgivarvarumärke |
-| **Nordea** | 134 | Nordisk banks huvudkontor |
-| **Electrolux** | 116 | Industriellt huvudkontor |
-| **SEB** | 111 | Storbank |
+| Företag              | Arbetstillstånd | Varför de passar                              |
+| -------------------- | --------------- | --------------------------------------------- |
+| **Ericsson**         | 1 290           | Huvudkontor i Kista - granne med er fastighet |
+| **Tata Consultancy** | 1 117           | Konstant rotation av konsulter                |
+| **H&M**              | 444             | Globalt huvudkontor i Stockholm               |
+| **Klarna**           | 299             | Snabbväxande fintech                          |
+| **Capgemini**        | 176             | IT-konsulting, projektbaserat                 |
+| **Swedbank**         | 176             | Storbank, etablerade program                  |
+| **Spotify**          | 150             | Techjätte, starkt arbetsgivarvarumärke        |
+| **Nordea**           | 134             | Nordisk banks huvudkontor                     |
+| **Electrolux**       | 116             | Industriellt huvudkontor                      |
+| **SEB**              | 111             | Storbank                                      |
 
 ---
 
 ## Fyra kundsegment
 
 ### 1. IT-konsultföretag (Högsta värde)
+
 **Företag:** TCS, Capgemini, Accenture, CGI, Wipro, HCL
 
 **Varför:** De roterar konsulter på 3-12 månaders projekt. Bulkbokningar, återkommande intäkter.
@@ -61,6 +64,7 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 **Volym:** 9 företag, ~600 tillstånd
 
 ### 2. Spel- & techstudios
+
 **Företag:** King, EA DICE, Spotify, Paradox, Embark, Avalanche
 
 **Varför:** Snabb rekrytering av internationella talanger. Behöver boende under omlokalisering.
@@ -68,6 +72,7 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 **Volym:** 12 företag, ~700 tillstånd
 
 ### 3. Banker & fintech
+
 **Företag:** Klarna, Swedbank, Nordea, SEB, PayPal, Tink
 
 **Varför:** Etablerade företagsprogram, högre budgetar.
@@ -75,6 +80,7 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 **Volym:** 8 företag, ~800 tillstånd
 
 ### 4. Telekom (Kista-fokus)
+
 **Företag:** Ericsson (huvudkontor i Kista), Tele2, Hi3G
 
 **Varför:** Er Kista-fastighet är perfekt belägen för Ericsson-anställda.
@@ -85,28 +91,31 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 
 ## Vem fattar bokningsbeslutet?
 
-| Roll | Var de finns | Vad de bryr sig om |
-|------|--------------|-------------------|
-| **Global Mobility Manager** | Stora företag | Leverantörstillförlitlighet, företagspriser |
-| **HR / People Ops** | Tech & spel | Medarbetarupplevelse, enkel process |
-| **Executive Assistant** | Mindre företag | Snabbhet, enkelhet, responsivitet |
-| **Projektledare** | Konsultföretag | Läge, flexibilitet, volympriser |
+| Roll                        | Var de finns   | Vad de bryr sig om                          |
+| --------------------------- | -------------- | ------------------------------------------- |
+| **Global Mobility Manager** | Stora företag  | Leverantörstillförlitlighet, företagspriser |
+| **HR / People Ops**         | Tech & spel    | Medarbetarupplevelse, enkel process         |
+| **Executive Assistant**     | Mindre företag | Snabbhet, enkelhet, responsivitet           |
+| **Projektledare**           | Konsultföretag | Läge, flexibilitet, volympriser             |
 
 ---
 
 ## Rekommenderad marknadsföringsstrategi
 
 ### Tier 1: Direktförsäljning (10 företag)
+
 **Mål:** Företag med 100+ tillstånd
 **Metod:** Personlig kontakt med HR/Mobility-kontakter
 **Syfte:** Bli föredragen leverantör
 
 ### Tier 2: Riktad marknadsföring (13 företag)
+
 **Mål:** Företag med 50-99 tillstånd
 **Metod:** LinkedIn-annonser, e-postkampanjer
 **Syfte:** Generera inkommande leads
 
 ### Tier 3: Synlighet (23 företag)
+
 **Mål:** Företag med <50 tillstånd
 **Metod:** SEO, Google Ads, content marketing
 **Syfte:** Fånga sökefterfrågan
@@ -115,22 +124,24 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 
 ## Nyckelbudskap
 
-| Målgrupp | Budskap |
-|----------|---------|
+| Målgrupp            | Budskap                                                                      |
+| ------------------- | ---------------------------------------------------------------------------- |
 | **Global Mobility** | "Effektivisera era Stockholm-omlokaliseringar med en pålitlig lokal partner" |
-| **HR-team** | "Ge internationella nyanställda en smidig start i Stockholm" |
-| **Konsultföretag** | "Flexibelt företagsboende nära Kista & centrala Stockholm" |
+| **HR-team**         | "Ge internationella nyanställda en smidig start i Stockholm"                 |
+| **Konsultföretag**  | "Flexibelt företagsboende nära Kista & centrala Stockholm"                   |
 
 ---
 
 ## Lägesfördel
 
 ### Kista-fastigheten
+
 - Ericssons huvudkontor ligger i Kista (1 290 arbetstillstånd)
 - Kista Science City techhub
 - Perfekt för telekom- & IT-konsulter
 
 ### Sollentuna-fastigheten
+
 - 12 min till centrala Stockholm
 - Nära Arlanda flygplats
 - Bra för omlokaliserande medarbetare
@@ -139,11 +150,11 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 
 ## Inkluderade leverabler
 
-| Fil | Innehåll |
-|-----|----------|
-| `ett_smart_prospects_it_tech.csv` | 46 företag med utökad data |
-| `ett_smart_prospects_simple.csv` | Förenklad företagslista |
-| `target-audience-profiles.md` | Detaljerat strategi- och personadokument |
+| Fil                               | Innehåll                                 |
+| --------------------------------- | ---------------------------------------- |
+| `ett_smart_prospects_it_tech.csv` | 46 företag med utökad data               |
+| `ett_smart_prospects_simple.csv`  | Förenklad företagslista                  |
+| `target-audience-profiles.md`     | Detaljerat strategi- och personadokument |
 
 ---
 
@@ -169,6 +180,7 @@ Vi identifierade **46 IT- & techföretag i Stockholm** som:
 ## Sammanfattning
 
 **Ni har nu:**
+
 - En prioriterad lista med 46 högpotentialföretag
 - Tydliga kundsegment och personor
 - Rekommenderad marknadsföringsmetod per tier

@@ -21,6 +21,7 @@ The logging system has been enhanced to provide full transparency into how agent
 ### 2. **Per-Agent Context Window Tracking**
 
 Each agent session now logs:
+
 - `context_used`: Actual context window tokens used
 - `context_max`: Maximum context window size (if known)
 - `session_id`: Unique identifier for the session
@@ -29,16 +30,19 @@ Each agent session now logs:
 ### 3. **Enhanced Logging Functions**
 
 #### `extract_context_window(log_file)`
+
 - Returns: `context_used|context_max|agent_type`
 - Automatically detects agent type (main vs sub) from log file names or content
 - Extracts context window usage from Cursor agent logs
 
 #### `update_usage(api_calls, tokens_estimated, companies, context_window_used, agent_type, session_id, context_window_max)`
+
 - Enhanced to track both token spend and context windows separately
 - Supports per-agent and per-session tracking
 - Maintains backward compatibility with old format
 
 #### `log_context_window_details()`
+
 - Displays detailed breakdown of context window utilization
 - Shows max, average, and session counts for main agents and sub-agents
 - Separately displays token spend (API costs) vs context window utilization
@@ -83,6 +87,7 @@ Each agent session now logs:
 ### During Execution
 
 After each session, the script displays:
+
 - Context window utilization breakdown (main agents vs sub-agents)
 - Token spend breakdown (API costs)
 - Clear note differentiating token spend from context window utilization
@@ -90,6 +95,7 @@ After each session, the script displays:
 ### Final Summary
 
 At the end of batch processing, a comprehensive summary shows:
+
 - Total API calls
 - Token spend by agent type
 - Context window statistics (max, average, session counts)
@@ -106,6 +112,7 @@ At the end of batch processing, a comprehensive summary shows:
 ## Migration
 
 Old usage files are automatically migrated to the new format when the script runs. The migration preserves all existing data:
+
 - `tokens_estimated` → `token_spend.total_estimated` and `token_spend.main_agents`
 - `context_window_max` → `context_windows.main_agents.max_used` and `context_windows.overall_max`
 

@@ -7,24 +7,30 @@
 ## Step-by-Step
 
 ### 1. Start Processing Next Company
+
 ```bash
 python process_company.py
 ```
 
 This outputs:
+
 - Company name and row index
 - 8 search URLs ready to fetch
 - Next steps instructions
 
 ### 2. Fetch Each URL
+
 Use `mcp_web_fetch` to fetch each URL:
+
 ```python
 # Example: Fetch first URL
 mcp_web_fetch(url="https://www.google.com/search?q=...")
 ```
 
 ### 3. Parse HTML Content
+
 Extract data from the fetched HTML:
+
 - Revenue (Årlig omsättning)
 - Address (Gatuadress, Postnummer, Ort)
 - CEO info (VD, VD E-post, VD Telefon)
@@ -33,6 +39,7 @@ Extract data from the fetched HTML:
 - Other roles (Projektledare, Administratör, etc.)
 
 ### 4. Update CSV and Progress
+
 ```bash
 python process_company.py --update --row 131 --data '{
   "VD": "John Doe",
@@ -46,6 +53,7 @@ python process_company.py --update --row 131 --data '{
 ```
 
 ## Example JSON Data Format
+
 ```json
 {
   "VD": "Full Name",
@@ -64,16 +72,19 @@ python process_company.py --update --row 131 --data '{
 ## Manual Alternative
 
 If you prefer to update files manually:
+
 1. Edit `blue-collar-companies.csv` - update the row
 2. Edit `PROMPT.md` - update `[PROGRESS_LOG]` section
 
 ## Troubleshooting
 
 **URLs not generating?**
+
 - Check that `search_url_generator.py` is executable: `chmod +x search_url_generator.py`
 - Verify Python 3 is installed: `python --version`
 
 **CSV update failing?**
+
 - Ensure row index matches current `Next_Row_Index` in PROMPT.md
 - Check JSON syntax is valid
 - Verify column names match CSV headers exactly

@@ -1,6 +1,5 @@
 Analyse these companies and define their office location and turnover. Use alla bolag
 
-
 A S Mark Och Trädgårdsentreprenad Ab
 Bergsmark & Energi Ab
 Bks Ab

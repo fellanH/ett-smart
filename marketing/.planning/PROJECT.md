@@ -38,6 +38,7 @@ Users can upload a list of Swedish companies and get back validated, enriched da
 ## Context
 
 **Existing System (weaver-5):**
+
 - Python-based batch processing for Swedish company enrichment
 - Validates companies via Allabolag.se and Ratsit.se
 - Extracts financial data, org numbers, contacts (CEO, HR, etc.)
@@ -45,11 +46,13 @@ Users can upload a list of Swedish companies and get back validated, enriched da
 - Successfully processed 700+ companies
 
 **Target Users:**
+
 - B2B sales teams needing lead enrichment
 - Recruitment agencies finding decision-makers
 - Known beta users who've expressed interest
 
 **Swedish Data Sources:**
+
 - Allabolag.se — company registry, financials, status
 - Ratsit.se — contact information, organizational data
 - Company websites and LinkedIn for additional contact discovery
@@ -64,12 +67,13 @@ Users can upload a list of Swedish companies and get back validated, enriched da
 
 ## Key Decisions
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| PoC before full MVP | Validate concept with real users before building full auth/billing | — Pending |
-| No auth for PoC | Known beta users only; reduces complexity | — Pending |
-| Sync processing | 10-20 companies takes ~30-60s, acceptable wait | — Pending |
-| Reuse weaver-5 logic | Already proven to work on 700+ companies | — Pending |
+| Decision             | Rationale                                                          | Outcome   |
+| -------------------- | ------------------------------------------------------------------ | --------- |
+| PoC before full MVP  | Validate concept with real users before building full auth/billing | — Pending |
+| No auth for PoC      | Known beta users only; reduces complexity                          | — Pending |
+| Sync processing      | 10-20 companies takes ~30-60s, acceptable wait                     | — Pending |
+| Reuse weaver-5 logic | Already proven to work on 700+ companies                           | — Pending |
 
 ---
-*Last updated: 2026-01-22 after initialization*
+
+_Last updated: 2026-01-22 after initialization_

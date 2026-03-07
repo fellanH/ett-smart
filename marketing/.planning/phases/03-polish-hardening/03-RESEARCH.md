@@ -17,26 +17,30 @@ The key insight from research: CSV injection matters most on OUTPUT (downloaded 
 The established libraries/tools for this domain:
 
 ### Core
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| defusedcsv | 3.0.0 | CSV injection prevention | Drop-in replacement for csv module; sanitizes dangerous characters |
-| charset-normalizer | 3.4.4 | Encoding detection | Better performance than chardet; supports Swedish |
-| pandas | existing | CSV/Excel read/write | Already in use; provides `on_bad_lines` for malformed handling |
+
+| Library            | Version  | Purpose                  | Why Standard                                                       |
+| ------------------ | -------- | ------------------------ | ------------------------------------------------------------------ |
+| defusedcsv         | 3.0.0    | CSV injection prevention | Drop-in replacement for csv module; sanitizes dangerous characters |
+| charset-normalizer | 3.4.4    | Encoding detection       | Better performance than chardet; supports Swedish                  |
+| pandas             | existing | CSV/Excel read/write     | Already in use; provides `on_bad_lines` for malformed handling     |
 
 ### Supporting
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| openpyxl | existing | Excel export | Already in use; supports cell type forcing to prevent formula execution |
-| defusedxml | latest | XML attack protection | Install for openpyxl XXE protection |
+
+| Library    | Version  | Purpose               | When to Use                                                             |
+| ---------- | -------- | --------------------- | ----------------------------------------------------------------------- |
+| openpyxl   | existing | Excel export          | Already in use; supports cell type forcing to prevent formula execution |
+| defusedxml | latest   | XML attack protection | Install for openpyxl XXE protection                                     |
 
 ### Alternatives Considered
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
-| defusedcsv | Manual sanitization function | Manual requires maintaining dangerous char list; defusedcsv is maintained |
-| charset-normalizer | chardet | chardet is slower on large files; charset-normalizer is drop-in replacement |
-| Custom encoding logic | pandas encoding parameter | pandas `encoding` param requires knowing encoding upfront |
+
+| Instead of            | Could Use                    | Tradeoff                                                                    |
+| --------------------- | ---------------------------- | --------------------------------------------------------------------------- |
+| defusedcsv            | Manual sanitization function | Manual requires maintaining dangerous char list; defusedcsv is maintained   |
+| charset-normalizer    | chardet                      | chardet is slower on large files; charset-normalizer is drop-in replacement |
+| Custom encoding logic | pandas encoding parameter    | pandas `encoding` param requires knowing encoding upfront                   |
 
 **Installation:**
+
 ```bash
 pip install defusedcsv charset-normalizer defusedxml
 ```
@@ -44,6 +48,7 @@ pip install defusedcsv charset-normalizer defusedxml
 ## Architecture Patterns
 
 ### Recommended Project Structure
+
 ```
 webapp/
   app.py              # Main Streamlit app (add file validation)
@@ -53,9 +58,11 @@ webapp/
 ```
 
 ### Pattern 1: Output Sanitization for CSV Export
+
 **What:** Sanitize all cell values before writing to CSV to prevent formula injection
 **When to use:** Any CSV export that will be opened in Excel/LibreOffice
 **Example:**
+
 ```python
 # Source: defusedcsv PyPI + OWASP CSV Injection guidelines
 from defusedcsv import csv
@@ -71,9 +78,11 @@ def to_csv_safe(df: pd.DataFrame) -> str:
 ```
 
 ### Pattern 2: Manual Sanitization (Alternative)
+
 **What:** Sanitize values without external library
 **When to use:** When you need fine-grained control or can't add dependencies
 **Example:**
+
 ```python
 # Source: OWASP CSV Injection prevention guidelines
 FORMULA_TRIGGERS = ('=', '+', '-', '@', '\t', '\r', '\n', '|', '%')
@@ -96,9 +105,11 @@ def sanitize_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 ```
 
 ### Pattern 3: Encoding Detection for Swedish Data
+
 **What:** Auto-detect file encoding before parsing CSV
 **When to use:** User uploads CSV with unknown encoding (may have Swedish characters)
 **Example:**
+
 ```python
 # Source: charset-normalizer documentation
 from charset_normalizer import detect
@@ -130,9 +141,11 @@ def read_csv_with_encoding(uploaded_file) -> pd.DataFrame:
 ```
 
 ### Pattern 4: Empty File and Header-Only Detection
+
 **What:** Detect files with no data rows (only headers or completely empty)
 **When to use:** Before processing uploaded CSV to give actionable feedback
 **Example:**
+
 ```python
 # Source: pandas documentation + GeeksforGeeks empty CSV detection
 def validate_csv_content(df: pd.DataFrame, filename: str) -> tuple[bool, str]:
@@ -153,9 +166,11 @@ def validate_csv_content(df: pd.DataFrame, filename: str) -> tuple[bool, str]:
 ```
 
 ### Pattern 5: Malformed CSV Handling
+
 **What:** Gracefully handle CSVs with inconsistent row lengths
 **When to use:** Reading user-uploaded CSV files that may have issues
 **Example:**
+
 ```python
 # Source: pandas documentation - on_bad_lines parameter
 def read_csv_tolerant(uploaded_file, encoding: str = 'utf-8') -> tuple[pd.DataFrame, list[str]]:
@@ -187,9 +202,11 @@ def read_csv_tolerant(uploaded_file, encoding: str = 'utf-8') -> tuple[pd.DataFr
 ```
 
 ### Pattern 6: Hide Stack Traces in Production
+
 **What:** Configure Streamlit to hide technical error details from users
 **When to use:** Production deployment where security matters
 **Example:**
+
 ```python
 # Source: Streamlit documentation - client.showErrorDetails
 # In .streamlit/config.toml:
@@ -217,6 +234,7 @@ def safe_process(func, friendly_error: str):
 ```
 
 ### Anti-Patterns to Avoid
+
 - **Sanitizing input files:** User decision - only warn about formulas in input, don't modify
 - **Using st.exception() for user errors:** Exposes stack traces; use st.error() with friendly message
 - **Checking file extension only:** Also validate actual content (e.g., can be parsed as CSV)
@@ -227,48 +245,54 @@ def safe_process(func, friendly_error: str):
 
 Problems that look simple but have existing solutions:
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| CSV formula sanitization | Custom regex to escape dangerous chars | `defusedcsv` library | OWASP-recommended; handles edge cases like mid-cell injection |
-| Encoding detection | Hardcoded encoding or manual BOM check | `charset-normalizer` | Handles Swedish chars; 99.5% accuracy; fast |
-| Excel formula prevention | Custom string manipulation | Set openpyxl cell `data_type='s'` | Forces text interpretation at spreadsheet level |
-| XML attack protection | Custom XML parsing | `defusedxml` with openpyxl | Prevents XXE and billion laughs attacks |
+| Problem                  | Don't Build                            | Use Instead                       | Why                                                           |
+| ------------------------ | -------------------------------------- | --------------------------------- | ------------------------------------------------------------- |
+| CSV formula sanitization | Custom regex to escape dangerous chars | `defusedcsv` library              | OWASP-recommended; handles edge cases like mid-cell injection |
+| Encoding detection       | Hardcoded encoding or manual BOM check | `charset-normalizer`              | Handles Swedish chars; 99.5% accuracy; fast                   |
+| Excel formula prevention | Custom string manipulation             | Set openpyxl cell `data_type='s'` | Forces text interpretation at spreadsheet level               |
+| XML attack protection    | Custom XML parsing                     | `defusedxml` with openpyxl        | Prevents XXE and billion laughs attacks                       |
 
 **Key insight:** CSV injection prevention looks simple (just prefix with quote) but has edge cases: attackers can use separators to start new cells. Using defusedcsv handles these automatically.
 
 ## Common Pitfalls
 
 ### Pitfall 1: Sanitizing URLs breaks clickability
+
 **What goes wrong:** Prefixing URLs with `'` makes them non-clickable in Excel
 **Why it happens:** URL might start with `=HYPERLINK` or be in a cell that gets prefixed
 **How to avoid:** Per user decision, keep Allabolag URLs as-is (they don't start with dangerous chars)
 **Warning signs:** URLs showing as text instead of clickable links
 
 ### Pitfall 2: Encoding detection fails on small files
+
 **What goes wrong:** charset-normalizer returns wrong encoding for very small files
 **Why it happens:** Not enough sample data for statistical analysis
 **How to avoid:** Use at least 10KB sample; have fallback to utf-8
 **Warning signs:** Swedish characters (a, o, a) showing as garbage
 
 ### Pitfall 3: EmptyDataError vs empty DataFrame
+
 **What goes wrong:** Code doesn't distinguish between "file has no content" and "file has headers only"
 **Why it happens:** pandas.EmptyDataError = truly empty; df.empty = has headers but no rows
 **How to avoid:** Check both conditions with different error messages
 **Warning signs:** Generic "empty file" message when user uploaded header-only file
 
 ### Pitfall 4: on_bad_lines silently drops data
+
 **What goes wrong:** Malformed rows are skipped without user awareness
 **Why it happens:** Using `on_bad_lines='skip'` without capturing warnings
 **How to avoid:** Use `on_bad_lines='warn'` and display count of skipped rows to user
 **Warning signs:** Fewer rows in output than expected
 
 ### Pitfall 5: showErrorDetails doesn't hide all traces
+
 **What goes wrong:** Some stack trace information still visible to users
 **Why it happens:** Known Streamlit bug - only partial obfuscation
 **How to avoid:** Wrap entire app logic in try/except; use st.error() not st.exception()
 **Warning signs:** Technical error details visible in UI despite config
 
 ### Pitfall 6: Single quote visible in non-Excel tools
+
 **What goes wrong:** The `'` prefix is visible when opening CSV in text editor or Numbers
 **Why it happens:** Only Excel/LibreOffice hides the leading apostrophe
 **How to avoid:** Document this behavior; it's the standard OWASP approach - accept the tradeoff
@@ -279,6 +303,7 @@ Problems that look simple but have existing solutions:
 Verified patterns from official sources:
 
 ### Complete Export Module with Sanitization
+
 ```python
 # Source: defusedcsv + openpyxl documentation
 """Export module with CSV injection protection."""
@@ -333,6 +358,7 @@ def to_excel(df: pd.DataFrame) -> bytes:
 ```
 
 ### File Validation Module
+
 ```python
 # Source: pandas + charset-normalizer documentation
 """File validation utilities for uploaded CSVs."""
@@ -425,6 +451,7 @@ def check_for_formula_warnings(df: pd.DataFrame) -> list[str]:
 ```
 
 ### Streamlit Config for Production
+
 ```toml
 # .streamlit/config.toml
 # Source: Streamlit documentation
@@ -439,6 +466,7 @@ maxUploadSize = 200
 ```
 
 ### Error Handling Pattern
+
 ```python
 # Source: Streamlit error handling best practices
 import streamlit as st
@@ -479,14 +507,15 @@ def safe_operation(operation, error_message: str, *args, **kwargs):
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| chardet for encoding detection | charset-normalizer | 2021+ | 10x faster on large files, better accuracy |
-| error_bad_lines=False | on_bad_lines='warn' | pandas 1.3+ (2021) | Better API, can use callable |
-| Manual CSV escaping | defusedcsv library | Library created 2018, v3.0.0 Sept 2025 | Handles edge cases automatically |
-| Always show errors | client.showErrorDetails=false | Streamlit config option | Security improvement |
+| Old Approach                   | Current Approach              | When Changed                           | Impact                                     |
+| ------------------------------ | ----------------------------- | -------------------------------------- | ------------------------------------------ |
+| chardet for encoding detection | charset-normalizer            | 2021+                                  | 10x faster on large files, better accuracy |
+| error_bad_lines=False          | on_bad_lines='warn'           | pandas 1.3+ (2021)                     | Better API, can use callable               |
+| Manual CSV escaping            | defusedcsv library            | Library created 2018, v3.0.0 Sept 2025 | Handles edge cases automatically           |
+| Always show errors             | client.showErrorDetails=false | Streamlit config option                | Security improvement                       |
 
 **Deprecated/outdated:**
+
 - `error_bad_lines` and `warn_bad_lines` parameters: Use `on_bad_lines` instead (pandas 1.3+)
 - chardet library: charset-normalizer is the modern replacement with better performance
 
@@ -517,22 +546,26 @@ Things that couldn't be fully resolved:
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - [OWASP CSV Injection](https://owasp.org/www-community/attacks/CSV_Injection) - Dangerous characters, prevention guidelines
 - [defusedcsv PyPI](https://pypi.org/project/defusedcsv/) - v3.0.0, sanitization approach
 - [charset-normalizer GitHub](https://github.com/jawah/charset_normalizer) - v3.4.4, encoding detection
 - [pandas read_csv documentation](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) - on_bad_lines parameter
 
 ### Secondary (MEDIUM confidence)
+
 - [Streamlit file_uploader docs](https://docs.streamlit.io/knowledge-base/deploy/increase-file-uploader-limit-streamlit-cloud) - File size configuration
 - [Streamlit showErrorDetails](https://discuss.streamlit.io/t/security-issue-stack-trace-best-practices/36860) - Error handling config
 - [GeeksforGeeks empty CSV detection](https://www.geeksforgeeks.org/python/how-to-check-if-a-csv-file-is-empty-in-pandas/) - Empty file handling
 
 ### Tertiary (LOW confidence)
+
 - [Streamlit showErrorDetails bug](https://discuss.streamlit.io/t/hiding-tracebacks-and-errors-doesnt-work/50777) - Known partial obfuscation issue
 
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: HIGH - defusedcsv and charset-normalizer are well-documented, actively maintained
 - Architecture: HIGH - Patterns align with OWASP guidelines and existing codebase
 - Pitfalls: MEDIUM - Some based on community discussions and issue trackers

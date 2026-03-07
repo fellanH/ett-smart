@@ -7,11 +7,13 @@
 ## Key Changes
 
 ### Previous Behavior
+
 - Single agent instance processing multiple companies sequentially
 - Context window accumulates across companies
 - One continuous loop until completion
 
 ### New Behavior
+
 - **Fresh agent per company**: Each company gets its own agent instance
 - **Clean context**: Each agent starts with a fresh context window
 - **Per-company logging**: Separate log file for each company
@@ -20,6 +22,7 @@
 ## Usage
 
 ### Basic Usage
+
 ```bash
 ./ralph.sh [PROMPT_FILE]
 ```
@@ -27,6 +30,7 @@
 Default prompt file is `PROMPT.md`.
 
 ### Limit Number of Companies
+
 ```bash
 MAX_COMPANIES=10 ./ralph.sh
 ```
@@ -34,6 +38,7 @@ MAX_COMPANIES=10 ./ralph.sh
 Process only 10 companies, then exit.
 
 ### Set Budget Limit
+
 ```bash
 CURSOR_BUDGET_LIMIT=100 ./ralph.sh
 ```
@@ -41,6 +46,7 @@ CURSOR_BUDGET_LIMIT=100 ./ralph.sh
 Set a budget limit of 100 API calls. The script will stop if the limit is reached.
 
 ### Combined Limits
+
 ```bash
 MAX_COMPANIES=50 CURSOR_BUDGET_LIMIT=200 ./ralph.sh
 ```
@@ -48,6 +54,7 @@ MAX_COMPANIES=50 CURSOR_BUDGET_LIMIT=200 ./ralph.sh
 Process up to 50 companies or until 200 API calls are used, whichever comes first.
 
 ### Process All Remaining Companies
+
 ```bash
 ./ralph.sh
 ```
@@ -66,11 +73,13 @@ Processes all companies from the current `Next_Row_Index` until completion.
 ## Log Files
 
 Each company gets its own log file:
+
 ```
 .logs/company-{ROW_INDEX}-{TIMESTAMP}.json
 ```
 
 Example:
+
 ```
 .logs/company-131-20250115-143022.json
 .logs/company-132-20250115-143145.json
@@ -79,10 +88,11 @@ Example:
 ## Exit Conditions
 
 The script exits when:
+
 - ✅ `Status: COMPLETED` found in `PROMPT.md`
 - ✅ `Next_Row_Index >= total_rows` (reached end of CSV)
 - ✅ `MAX_COMPANIES` limit reached (if set)
-- ⚠️  User interrupts (Ctrl+C)
+- ⚠️ User interrupts (Ctrl+C)
 
 ## Features
 
@@ -126,15 +136,18 @@ Log: .logs/company-132-20250115-143145.json
 ## Troubleshooting
 
 **Progress not updating?**
+
 - Check that the agent is updating `PROMPT.md` correctly
 - Verify CSV file is writable
 - Check log files for errors
 
 **Script exits early?**
+
 - Check if `Status: COMPLETED` was set incorrectly
 - Verify CSV file structure
 - Check `MAX_COMPANIES` environment variable
 
 **Company name not found?**
+
 - Verify CSV file format matches expected structure
 - Check row index calculation (0-based vs 1-based)

@@ -19,24 +19,26 @@ Progress: [██████████] 100%
 ## Performance Metrics
 
 **Velocity:**
+
 - Total plans completed: 9
 - Average duration: 2.1 min
 - Total execution time: 0.3 hours
 
 **By Phase:**
 
-| Phase | Plans | Total | Avg/Plan |
-|-------|-------|-------|----------|
-| 01-core-batch-flow | 3 | 5min | 1.7min |
-| 02-single-lookup-error-handling | 2 | 4min | 2.0min |
-| 03-polish-hardening | 1 | 3min | 3.0min |
-| 04-sales-and-marketing | 3 | 7min | 2.3min |
+| Phase                           | Plans | Total | Avg/Plan |
+| ------------------------------- | ----- | ----- | -------- |
+| 01-core-batch-flow              | 3     | 5min  | 1.7min   |
+| 02-single-lookup-error-handling | 2     | 4min  | 2.0min   |
+| 03-polish-hardening             | 1     | 3min  | 3.0min   |
+| 04-sales-and-marketing          | 3     | 7min  | 2.3min   |
 
 **Recent Trend:**
+
 - Last 5 plans: 03-01 (3min), 04-01 (2min), 04-03 (3min), 04-04 (2min)
 - Trend: Consistent execution speed
 
-*Updated after each plan completion*
+_Updated after each plan completion_
 
 ## Accumulated Context
 

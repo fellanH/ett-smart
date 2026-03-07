@@ -9,9 +9,11 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 ## 1. Product Vision & Value Proposition
 
 ### Core Value Proposition
+
 **"Automatically enrich Swedish company databases with validated financial data, key contacts, and organizational insights - saving hours of manual research per company."**
 
 ### Target Markets
+
 1. **B2B Sales Teams** - Lead enrichment for outbound sales
 2. **Recruitment Agencies** - Finding decision-makers and HR contacts
 3. **Market Research Firms** - Company intelligence and analysis
@@ -19,6 +21,7 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 5. **Financial Services** - Credit risk assessment and company validation
 
 ### Key Differentiators
+
 - ✅ **Swedish Market Specialization** - Deep integration with Allabolag.se, Ratsit.se
 - ✅ **Automated Validation** - Filters bankrupt/inactive companies automatically
 - ✅ **Contact Discovery** - Finds CEO, HR, and role-specific contacts
@@ -56,23 +59,27 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 ### 2.2 Technology Stack
 
 **Frontend:**
+
 - Next.js 14+ (React)
 - Tailwind CSS
 - shadcn/ui components
 - React Query for data fetching
 
 **Backend:**
+
 - FastAPI (Python)
 - PostgreSQL (primary database)
 - Redis (caching + job queue)
 - Celery (async task processing)
 
 **Data Processing:**
+
 - Scrapy/Playwright (web scraping)
 - pandas (data manipulation)
 - openpyxl (Excel export)
 
 **Infrastructure:**
+
 - Docker + Docker Compose
 - AWS/GCP (cloud hosting)
 - GitHub Actions (CI/CD)
@@ -82,9 +89,11 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 ## 3. Feature Roadmap
 
 ### Phase 1: MVP (Months 1-3)
+
 **Goal: Core enrichment functionality as a web service**
 
 **Features:**
+
 - [ ] User authentication & accounts
 - [ ] CSV/Excel file upload
 - [ ] Batch processing (5-100 companies per job)
@@ -94,14 +103,17 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 - [ ] Email notifications on job completion
 
 **Success Metrics:**
+
 - Process 100 companies in < 10 minutes
 - 80%+ data accuracy rate
 - < 5% false positive rate on validation
 
 ### Phase 2: Enhanced Features (Months 4-6)
+
 **Goal: Improve accuracy and add advanced features**
 
 **Features:**
+
 - [ ] Real-time enrichment (single company lookup)
 - [ ] API access for developers
 - [ ] Custom validation rules (revenue thresholds, filters)
@@ -112,14 +124,17 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 - [ ] Data refresh/re-enrichment
 
 **Success Metrics:**
+
 - 90%+ data accuracy
 - API response time < 2s per company
 - 95%+ uptime
 
 ### Phase 3: Enterprise Features (Months 7-12)
+
 **Goal: Scale to enterprise customers**
 
 **Features:**
+
 - [ ] Multi-user teams & permissions
 - [ ] CRM integrations (Salesforce, HubSpot)
 - [ ] Scheduled enrichment jobs
@@ -130,6 +145,7 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 - [ ] Dedicated support
 
 **Success Metrics:**
+
 - Support 10,000+ companies/month
 - Enterprise customer retention > 90%
 - Average revenue per user (ARPU) > $500/month
@@ -141,12 +157,14 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 ### Pricing Tiers
 
 **Starter Plan - $49/month**
+
 - 500 companies/month
 - Basic enrichment (financials, contacts)
 - CSV/Excel export
 - Email support
 
 **Professional Plan - $199/month**
+
 - 2,500 companies/month
 - Advanced enrichment (all fields)
 - API access (1,000 calls/month)
@@ -154,6 +172,7 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 - Webhook notifications
 
 **Enterprise Plan - Custom**
+
 - Unlimited companies
 - Custom integrations
 - Dedicated support
@@ -161,6 +180,7 @@ Transform the current data enrichment automation system into a scalable SaaS pro
 - White-label options
 
 ### Revenue Projections (Year 1)
+
 - Month 3: 10 customers @ $49 = $490/month
 - Month 6: 50 customers (40 @ $49, 10 @ $199) = $3,960/month
 - Month 12: 150 customers (100 @ $49, 40 @ $199, 10 @ $500) = $18,960/month
@@ -220,18 +240,21 @@ GET    /api/v1/usage             # Usage statistics
 ### 6.1 Launch Strategy
 
 **Pre-Launch (Month 1)**
+
 - Build landing page with waitlist
 - Create demo video
 - Write blog posts about Swedish company data
 - Reach out to beta testers
 
 **Launch (Month 2)**
+
 - Product Hunt launch
 - LinkedIn outreach to sales teams
 - Content marketing (SEO)
 - Free tier for first 100 companies
 
 **Growth (Months 3-6)**
+
 - Partner with Swedish business directories
 - Integrate with popular CRMs
 - Case studies & testimonials
@@ -264,12 +287,14 @@ GET    /api/v1/usage             # Usage statistics
 ## 7. Risk Mitigation
 
 ### Technical Risks
+
 - **Web Scraping Blocks**: Use rotating proxies, browser automation
 - **Rate Limiting**: Implement delays, respect robots.txt
 - **Data Accuracy**: Multi-source validation, confidence scoring
 - **Scalability**: Queue-based architecture, horizontal scaling
 
 ### Business Risks
+
 - **Legal/Compliance**: GDPR compliance, terms of service, data usage policies
 - **Competition**: Focus on Swedish market specialization
 - **Market Fit**: Start with beta users, iterate based on feedback
@@ -280,12 +305,14 @@ GET    /api/v1/usage             # Usage statistics
 ## 8. Success Metrics & KPIs
 
 ### Product Metrics
+
 - **Data Accuracy Rate**: % of enriched fields that are correct
 - **Processing Speed**: Companies processed per minute
 - **Job Success Rate**: % of jobs completed without errors
 - **API Uptime**: Target 99.5%+
 
 ### Business Metrics
+
 - **Monthly Recurring Revenue (MRR)**
 - **Customer Acquisition Cost (CAC)**
 - **Lifetime Value (LTV)**
@@ -293,6 +320,7 @@ GET    /api/v1/usage             # Usage statistics
 - **Net Promoter Score (NPS)**: Target > 50
 
 ### User Engagement
+
 - **Active Users**: Daily/weekly/monthly
 - **Jobs Created**: Per user per month
 - **API Calls**: Usage per tier
@@ -303,24 +331,28 @@ GET    /api/v1/usage             # Usage statistics
 ## 9. Development Timeline
 
 ### Month 1: Foundation
+
 - Set up infrastructure (Docker, database, CI/CD)
 - Build authentication system
 - Create basic API endpoints
 - Migrate core enrichment logic
 
 ### Month 2: Core Features
+
 - File upload & processing
 - Job queue system
 - Dashboard UI
 - Export functionality
 
 ### Month 3: Polish & Launch
+
 - Testing & bug fixes
 - Performance optimization
 - Documentation
 - Beta launch
 
 ### Months 4-6: Growth
+
 - API development
 - Advanced features
 - Integrations
@@ -331,6 +363,7 @@ GET    /api/v1/usage             # Usage statistics
 ## 10. Next Steps
 
 ### Immediate Actions (Week 1)
+
 1. ✅ Create product plan document (this file)
 2. [ ] Set up project repository structure
 3. [ ] Design database schema
@@ -338,6 +371,7 @@ GET    /api/v1/usage             # Usage statistics
 5. [ ] Set up development environment
 
 ### Short-term (Month 1)
+
 1. [ ] Build MVP backend (FastAPI + database)
 2. [ ] Create basic frontend (Next.js)
 3. [ ] Migrate enrichment logic to service
@@ -345,6 +379,7 @@ GET    /api/v1/usage             # Usage statistics
 5. [ ] Deploy to staging environment
 
 ### Medium-term (Months 2-3)
+
 1. [ ] Complete MVP features
 2. [ ] Beta testing with 10-20 users
 3. [ ] Iterate based on feedback
@@ -356,11 +391,13 @@ GET    /api/v1/usage             # Usage statistics
 ## 11. Competitive Analysis
 
 ### Direct Competitors
+
 - **Clearbit** (US-focused, expensive)
 - **ZoomInfo** (Enterprise, not Swedish-specific)
 - **Apollo.io** (Sales intelligence, limited Swedish data)
 
 ### Competitive Advantages
+
 - ✅ **Swedish Market Focus** - Deep knowledge of local sources
 - ✅ **Affordable Pricing** - Lower cost than enterprise tools
 - ✅ **Automated Validation** - Built-in filters for quality
@@ -372,12 +409,14 @@ GET    /api/v1/usage             # Usage statistics
 ## 12. Resources Needed
 
 ### Team
+
 - **Full-stack Developer** (1-2 people)
 - **DevOps Engineer** (part-time)
 - **Product Manager** (founder/you)
 - **Designer** (contractor for MVP)
 
 ### Budget (Year 1)
+
 - **Infrastructure**: $200-500/month (AWS/GCP)
 - **Tools & Services**: $100/month (monitoring, email)
 - **Marketing**: $1,000-2,000/month (ads, content)
@@ -391,6 +430,7 @@ GET    /api/v1/usage             # Usage statistics
 This productization plan transforms your data enrichment automation into a scalable SaaS business. The key is starting with a focused MVP, validating with real users, and iterating based on feedback.
 
 **Key Success Factors:**
+
 1. **Focus on Swedish market** - Be the best at this niche
 2. **Deliver value quickly** - Fast processing, accurate data
 3. **Make it easy** - Simple upload → download workflow

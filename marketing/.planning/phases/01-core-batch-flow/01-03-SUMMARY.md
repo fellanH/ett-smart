@@ -18,7 +18,11 @@ affects: [02-single-lookup, 03-polish]
 # Tech tracking
 tech-stack:
   added: [openpyxl for Excel export]
-  patterns: [Data merging pattern preserving original columns, Export with timestamped filenames]
+  patterns:
+    [
+      Data merging pattern preserving original columns,
+      Export with timestamped filenames,
+    ]
 
 key-files:
   created:
@@ -55,6 +59,7 @@ completed: 2026-01-22
 - **Files modified:** 2
 
 ## Accomplishments
+
 - Created export module with merge, CSV, and Excel functions
 - Implemented results display table showing all original columns plus enrichment data
 - Added download functionality with timestamped filenames for both CSV and Excel formats
@@ -69,10 +74,12 @@ Each task was committed atomically:
 3. **Task 3: Add CSV and Excel download buttons** - `30bad65` (feat)
 
 ## Files Created/Modified
+
 - `webapp/export.py` - Export module with merge_results_with_original, to_csv, and to_excel functions
 - `webapp/app.py` - Updated with import statements, merged data display, column config, and download buttons
 
 ## Decisions Made
+
 - **Data alignment strategy:** Filter original_df during merge to match the valid rows logic from processing (no NaN, no duplicates). This ensures results align correctly by index without complex join operations.
 - **Timestamp format:** Use YYYYMMDD_HHMMSS format for filenames to ensure chronological sorting and prevent overwrites.
 - **Column configuration:** Add Streamlit column_config for "Enrichment Status" (TextColumn) and "Fetch Success" (CheckboxColumn) to improve data readability.
@@ -100,5 +107,6 @@ None - no external service configuration required.
 **Blockers/Concerns:** None
 
 ---
-*Phase: 01-core-batch-flow*
-*Completed: 2026-01-22*
+
+_Phase: 01-core-batch-flow_
+_Completed: 2026-01-22_

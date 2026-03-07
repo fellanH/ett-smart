@@ -55,6 +55,7 @@ completed: 2026-01-22
 - **Files modified:** 4
 
 ## Accomplishments
+
 - Formula injection prevention for CSV and Excel exports (prefixes dangerous chars with quote)
 - File validation module with empty file, headers-only, and malformed row detection
 - Automatic encoding detection using charset-normalizer library
@@ -70,12 +71,14 @@ Each task was committed atomically:
 3. **Task 3: Update app.py with validation and error hiding** - `29939c0` (feat)
 
 ## Files Created/Modified
+
 - `webapp/validation.py` - New module: sanitize_cell(), detect_encoding(), validate_csv_file()
 - `webapp/export.py` - Added sanitize_dataframe() and export sanitization
 - `webapp/app.py` - Integrated validation module, added try/except for single lookup
 - `.streamlit/config.toml` - Hide error details from users
 
 ## Decisions Made
+
 - **Sanitize at export time only:** Data is stored clean for display, sanitized only when downloaded. This keeps Allabolag URLs clickable in the UI while protecting exports.
 - **URL exception:** URLs starting with "http" are NOT sanitized so Allabolag links remain clickable when users open downloaded files.
 - **charset-normalizer over chardet:** More accurate encoding detection, actively maintained, and faster.
@@ -93,11 +96,13 @@ None - all tasks completed without issues.
 None - no external service configuration required.
 
 ## Next Phase Readiness
+
 - All 3 phases complete - PoC is production-ready for beta users
 - CSV injection hardening ensures safe downloads
 - File validation provides clear user feedback
 - Error hiding presents professional interface
 
 ---
-*Phase: 03-polish-hardening*
-*Completed: 2026-01-22*
+
+_Phase: 03-polish-hardening_
+_Completed: 2026-01-22_

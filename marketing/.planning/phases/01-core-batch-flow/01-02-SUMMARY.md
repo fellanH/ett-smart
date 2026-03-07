@@ -2,7 +2,8 @@
 phase: 01-core-batch-flow
 plan: 02
 subsystem: enrichment
-tags: [streamlit, batch-processing, rate-limiting, weaver-5, allabolag, progress-ui]
+tags:
+  [streamlit, batch-processing, rate-limiting, weaver-5, allabolag, progress-ui]
 
 # Dependency graph
 requires:
@@ -61,6 +62,7 @@ completed: 2026-01-22
 - **Files modified:** 2
 
 ## Accomplishments
+
 - Created enrichment module wrapping weaver-5 BatchFetcher and search helpers
 - Implemented batch processing workflow with real-time progress indicator
 - Added rate limiting (1.5s between requests) and error handling
@@ -83,26 +85,31 @@ Each task was committed atomically:
 ## Decisions Made
 
 **1. Import weaver-5 as Python modules**
+
 - Added weaver-5 to sys.path and imported batch_fetch/search_helper directly
 - Better than subprocess approach: cleaner error handling, better performance, type safety
 - Follows research recommendation from PROJECT.md
 
 **2. Rate limiting at 1.5 seconds between requests**
+
 - Balances speed vs respectful website access
 - Enforced via time.sleep() in enrich_batch loop
 - BatchFetcher timeout set to 30s for robustness
 
 **3. Session state caching for results**
+
 - Prevents expensive re-processing when user interacts with UI
 - Results persist until "Process Another Batch" clicked
 - Key to good UX in Streamlit (otherwise reruns would reprocess)
 
 **4. Single BatchFetcher instance for batch processing**
+
 - Connection pooling efficiency improvement
 - Passed to enrich_company as optional parameter
 - Reduces overhead of creating new sessions per company
 
 **5. PoC scope: Validate fetch works, not full parsing**
+
 - Plan correctly scoped to prove pipeline works
 - Full HTML parsing is existing weaver-5 agent workflow (out of PoC scope)
 - Returns fetch success status and error messages
@@ -122,12 +129,14 @@ None - all weaver-5 modules imported successfully and batch processing worked as
 **Ready for Phase 1 Plan 3 (Results Display and Export)**
 
 What's in place:
+
 - Enrichment results structure with all necessary fields
 - Results cached in session_state
 - Success/blocked/error status tracking
 - CSV export already implemented (basic version)
 
 What Plan 3 can build on:
+
 - Enhance results display with filtering/sorting
 - Add detailed error message display
 - Improve CSV export with more columns
@@ -136,5 +145,6 @@ What Plan 3 can build on:
 No blockers or concerns.
 
 ---
-*Phase: 01-core-batch-flow*
-*Completed: 2026-01-22*
+
+_Phase: 01-core-batch-flow_
+_Completed: 2026-01-22_

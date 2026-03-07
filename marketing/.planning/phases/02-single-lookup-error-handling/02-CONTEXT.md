@@ -14,11 +14,13 @@ Users can look up individual companies by name or org number and see enriched da
 ## Implementation Decisions
 
 ### Lookup form design
+
 - Single unified input field accepts company name OR org number (auto-detects which)
 - Search triggered by Enter key or button click
 - No autocomplete or type-ahead
 
 ### Results presentation
+
 - Reuse the same table format as batch results (consistency)
 - Single lookup shows one row in the familiar table layout
 - No export button for single lookup — it's for quick viewing only
@@ -26,6 +28,7 @@ Users can look up individual companies by name or org number and see enriched da
 - Empty state: "No company found for [query]" plus helpful tips like "Try the org number instead"
 
 ### Claude's Discretion
+
 - Multiple match handling: Claude decides whether to show selection list or auto-pick best match
 - Search history: Claude decides whether to show recent searches in session (based on implementation simplicity)
 - Exact skeleton placeholder design
@@ -51,5 +54,5 @@ None — discussion stayed within phase scope
 
 ---
 
-*Phase: 02-single-lookup-error-handling*
-*Context gathered: 2026-01-22*
+_Phase: 02-single-lookup-error-handling_
+_Context gathered: 2026-01-22_

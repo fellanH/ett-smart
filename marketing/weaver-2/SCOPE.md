@@ -1,20 +1,20 @@
-  Remaining Work: LinkedIn Contacts
+Remaining Work: LinkedIn Contacts
 
-  The contact columns (contact_name, contact_title, contact_linkedin) are ready to be populated. LinkedIn research requires manual effort due to access restrictions. The research guide provides:
+The contact columns (contact_name, contact_title, contact_linkedin) are ready to be populated. LinkedIn research requires manual effort due to access restrictions. The research guide provides:
 
-  - Target roles in priority order (Global Mobility Manager > HR Manager > Office Manager)
-  - Search strategies for each company tier
-  - Time estimates (~20-25 hours total)
-  - Instructions for the top 17 high-priority companies to start with
+- Target roles in priority order (Global Mobility Manager > HR Manager > Office Manager)
+- Search strategies for each company tier
+- Time estimates (~20-25 hours total)
+- Instructions for the top 17 high-priority companies to start with
 
-  Data Sources Used
+Data Sources Used
 
-  - Migrationsverket: 21,822 work permit records → 238 companies with 10+ permits
-  - Allabolag.se: Company location, employee count, and revenue data
+- Migrationsverket: 21,822 work permit records → 238 companies with 10+ permits
+- Allabolag.se: Company location, employee count, and revenue data
 
 # Project Scope: Corporate Housing Lead Generation
 
-**Client:** Dag Hellström – *Ett Smart Hotell*
+**Client:** Dag Hellström – _Ett Smart Hotell_
 **Goal:** Deliver a prospect list of companies with verified accommodation needs for international workers.
 
 ---
@@ -32,18 +32,19 @@
 
 **One enriched prospect list** (CSV/spreadsheet) containing:
 
-| Field | Source |
-|-------|--------|
-| Company name | Migrationsverket data |
-| Permit count | Migrationsverket data |
-| Location/HQ | Allabolag.se |
-| Company size (employees) | Allabolag.se |
-| Annual revenue | Allabolag.se |
-| Key contact name | LinkedIn research |
-| Contact title | LinkedIn research |
-| Contact LinkedIn URL | LinkedIn research |
+| Field                    | Source                |
+| ------------------------ | --------------------- |
+| Company name             | Migrationsverket data |
+| Permit count             | Migrationsverket data |
+| Location/HQ              | Allabolag.se          |
+| Company size (employees) | Allabolag.se          |
+| Annual revenue           | Allabolag.se          |
+| Key contact name         | LinkedIn research     |
+| Contact title            | LinkedIn research     |
+| Contact LinkedIn URL     | LinkedIn research     |
 
 **Contact prioritization:**
+
 1. Global Mobility Manager / Relocation Specialist
 2. HR Manager / People Operations
 3. Office Manager / Executive Assistant
@@ -61,7 +62,7 @@ The following are **not** part of this project:
 - Ad copy, email templates, or campaign materials
 - Messaging recommendations
 
-*Rationale: The marketing agency will handle strategy. This project delivers the raw prospect list only.*
+_Rationale: The marketing agency will handle strategy. This project delivers the raw prospect list only._
 
 ---
 
@@ -84,6 +85,4 @@ The following are **not** part of this project:
 
 ## Timeline
 
-*To be determined based on LinkedIn research capacity.*
-
-
+_To be determined based on LinkedIn research capacity._

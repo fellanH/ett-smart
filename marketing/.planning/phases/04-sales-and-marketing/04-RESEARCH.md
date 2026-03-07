@@ -17,29 +17,33 @@ GDPR compliance for Swedish lead capture requires explicit, unticked consent che
 The established libraries/tools for this domain:
 
 ### Core
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| streamlit | 1.x | Multi-page app framework | Native support for `st.Page` and `st.navigation` |
-| streamlit-gsheets-connection | latest | Google Sheets integration | Official Streamlit connection for Sheets CRUD operations |
-| gspread | 6.1.2+ | Google Sheets API wrapper | Powers GSheetsConnection, provides `append_row()` method |
-| streamlit-analytics2 | latest | Usage analytics tracking | Actively maintained fork, fixes security issues |
+
+| Library                      | Version | Purpose                   | Why Standard                                             |
+| ---------------------------- | ------- | ------------------------- | -------------------------------------------------------- |
+| streamlit                    | 1.x     | Multi-page app framework  | Native support for `st.Page` and `st.navigation`         |
+| streamlit-gsheets-connection | latest  | Google Sheets integration | Official Streamlit connection for Sheets CRUD operations |
+| gspread                      | 6.1.2+  | Google Sheets API wrapper | Powers GSheetsConnection, provides `append_row()` method |
+| streamlit-analytics2         | latest  | Usage analytics tracking  | Actively maintained fork, fixes security issues          |
 
 ### Supporting
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| pandas | latest | Data manipulation for exports | Formatting enriched data for CRM import |
-| python-dotenv | latest | Secrets management | Local development credentials |
-| re (standard lib) | - | Email validation | Form field validation patterns |
+
+| Library           | Version | Purpose                       | When to Use                             |
+| ----------------- | ------- | ----------------------------- | --------------------------------------- |
+| pandas            | latest  | Data manipulation for exports | Formatting enriched data for CRM import |
+| python-dotenv     | latest  | Secrets management            | Local development credentials           |
+| re (standard lib) | -       | Email validation              | Form field validation patterns          |
 
 ### Alternatives Considered
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
-| Google Sheets | Airtable API | More features but requires paid plan for API access |
-| streamlit-analytics2 | Custom JSON logging | More control but manual implementation |
-| streamlit-analytics2 | Google Analytics | More features but privacy concerns, external dependency |
-| CSV export | Excel export with openpyxl | Already implemented in prior phases |
+
+| Instead of           | Could Use                  | Tradeoff                                                |
+| -------------------- | -------------------------- | ------------------------------------------------------- |
+| Google Sheets        | Airtable API               | More features but requires paid plan for API access     |
+| streamlit-analytics2 | Custom JSON logging        | More control but manual implementation                  |
+| streamlit-analytics2 | Google Analytics           | More features but privacy concerns, external dependency |
+| CSV export           | Excel export with openpyxl | Already implemented in prior phases                     |
 
 **Installation:**
+
 ```bash
 pip install streamlit-gsheets-connection gspread streamlit-analytics2
 ```
@@ -47,6 +51,7 @@ pip install streamlit-gsheets-connection gspread streamlit-analytics2
 ## Architecture Patterns
 
 ### Recommended Project Structure
+
 ```
 app.py                          # Entrypoint with st.navigation
 pages/
@@ -61,9 +66,11 @@ data/
 ```
 
 ### Pattern 1: Multi-Page Navigation with Landing Page
+
 **What:** Use `st.navigation()` to route between landing page and main app
 **When to use:** When you need a marketing entry point separate from the tool itself
 **Example:**
+
 ```python
 # app.py (entrypoint)
 # Source: https://docs.streamlit.io/develop/concepts/multipage-apps/page-and-navigation
@@ -80,9 +87,11 @@ pg.run()
 ```
 
 ### Pattern 2: Hero Section with Centered Content
+
 **What:** Use `st.markdown()` with `unsafe_allow_html=True` for marketing layouts
 **When to use:** Creating landing page hero sections with centered text and CTAs
 **Example:**
+
 ```python
 # pages/landing.py
 # Source: https://discuss.streamlit.io/t/justifying-or-centering-text-on-streamlit/11564
@@ -102,9 +111,11 @@ with col2:
 ```
 
 ### Pattern 3: Lead Capture to Google Sheets
+
 **What:** Append form submissions to Google Sheets using `GSheetsConnection`
 **When to use:** Collecting lead information without database setup
 **Example:**
+
 ```python
 # pages/landing.py - Lead capture form
 # Source: https://docs.streamlit.io/develop/tutorials/databases/private-gsheet
@@ -162,9 +173,11 @@ with st.form("lead_form"):
 ```
 
 ### Pattern 4: CRM-Ready CSV Export
+
 **What:** Format enriched data with standard CRM field headers
 **When to use:** Exporting data for import into HubSpot, Pipedrive, or Salesforce
 **Example:**
+
 ```python
 # Export functionality with CRM-friendly headers
 # Sources:
@@ -221,9 +234,11 @@ st.download_button(
 ```
 
 ### Pattern 5: Usage Analytics with streamlit-analytics2
+
 **What:** Track page views and widget interactions with minimal code
 **When to use:** Monitoring usage without complex analytics setup
 **Example:**
+
 ```python
 # app.py (entrypoint)
 # Source: https://github.com/444B/streamlit-analytics2
@@ -243,9 +258,11 @@ with streamlit_analytics.track(
 ```
 
 ### Pattern 6: Custom Analytics Logging
+
 **What:** Manual event tracking using JSON file storage
 **When to use:** When you need custom metrics beyond widget interactions
 **Example:**
+
 ```python
 # utils/analytics.py
 import json
@@ -290,6 +307,7 @@ if st.download_button("Download Results"):
 ```
 
 ### Anti-Patterns to Avoid
+
 - **Storing credentials in code:** Always use `.streamlit/secrets.toml` for API keys and service account credentials
 - **Pre-ticked consent checkboxes:** GDPR violation for Swedish users; consent must be explicit opt-in
 - **Database over-engineering:** For PoC analytics, file-based storage (JSON/Sheets) is sufficient
@@ -300,73 +318,84 @@ if st.download_button("Download Results"):
 
 Problems that look simple but have existing solutions:
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| Google Sheets integration | Custom OAuth flow + API requests | `streamlit-gsheets-connection` | Official Streamlit connection handles auth, retries, caching, and secrets management |
-| Email validation | Regex-only validation | `re.match()` for format + consider email-validator library | Email validation has many edge cases (international domains, special characters) |
-| Analytics tracking | Custom session tracking system | `streamlit-analytics2` | Already handles widget tracking, session IDs, storage backends, and visualization |
-| Multi-page routing | Session state flags + conditional rendering | `st.navigation()` and `st.Page()` | Native Streamlit feature with proper URL routing and navigation UI |
-| Form validation | Manual field checks scattered throughout code | Centralized validation functions | Maintainability and consistency across forms |
-| CSV encoding issues | Manual encoding handling | pandas `to_csv(encoding='utf-8')` | Handles special characters, ensures CRM compatibility |
+| Problem                   | Don't Build                                   | Use Instead                                                | Why                                                                                  |
+| ------------------------- | --------------------------------------------- | ---------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Google Sheets integration | Custom OAuth flow + API requests              | `streamlit-gsheets-connection`                             | Official Streamlit connection handles auth, retries, caching, and secrets management |
+| Email validation          | Regex-only validation                         | `re.match()` for format + consider email-validator library | Email validation has many edge cases (international domains, special characters)     |
+| Analytics tracking        | Custom session tracking system                | `streamlit-analytics2`                                     | Already handles widget tracking, session IDs, storage backends, and visualization    |
+| Multi-page routing        | Session state flags + conditional rendering   | `st.navigation()` and `st.Page()`                          | Native Streamlit feature with proper URL routing and navigation UI                   |
+| Form validation           | Manual field checks scattered throughout code | Centralized validation functions                           | Maintainability and consistency across forms                                         |
+| CSV encoding issues       | Manual encoding handling                      | pandas `to_csv(encoding='utf-8')`                          | Handles special characters, ensures CRM compatibility                                |
 
 **Key insight:** Streamlit's ecosystem has matured significantly. Most common needs (multi-page apps, external data connections, analytics) have official or well-maintained community solutions. Custom implementations add complexity without benefit for PoC-level projects.
 
 ## Common Pitfalls
 
 ### Pitfall 1: Google Sheets Write Access Confusion
+
 **What goes wrong:** Developers assume `GSheetsConnection.read()` returns a DataFrame, then try to append rows to it
 **Why it happens:** Documentation focuses on read examples; write operations require accessing the underlying `gspread` worksheet object
 **How to avoid:** Use `conn.read(worksheet="SheetName")` to get worksheet object, then call `worksheet.append_row(data)` using gspread API
 **Warning signs:** Errors like "DataFrame object has no attribute 'append_row'"
 
 ### Pitfall 2: GDPR Non-Compliance in Lead Forms
+
 **What goes wrong:** Using pre-ticked consent checkboxes or bundling consent with form submission
 **Why it happens:** Developers unfamiliar with Swedish/EU privacy requirements
 **How to avoid:**
+
 - Use unticked `st.checkbox()` that users must actively select
 - Clearly explain what data is stored and why
 - Make consent validation blocking (form won't submit without explicit consent)
 - Keep marketing consent separate from service agreement
-**Warning signs:** Legal requirements for Swedish market not considered in form design
+  **Warning signs:** Legal requirements for Swedish market not considered in form design
 
 ### Pitfall 3: CSV Export Encoding Issues
+
 **What goes wrong:** Special characters (Swedish ä, ö, å) appear garbled in CRM after import
 **Why it happens:** Not specifying UTF-8 encoding in export
 **How to avoid:** Always use `.to_csv(index=False).encode('utf-8')` in download_button
 **Warning signs:** Test with Swedish company names containing special characters
 
 ### Pitfall 4: Analytics File Locking in Production
+
 **What goes wrong:** Multiple concurrent users cause file write conflicts when using JSON-based analytics
 **Why it happens:** File-based storage doesn't handle concurrent writes well
 **How to avoid:**
+
 - Use `streamlit-analytics2` which handles this internally
 - For custom logging, implement file locking or switch to Firestore for production
 - Accept that local JSON is PoC-only; plan migration path
-**Warning signs:** Occasional analytics events not recorded under load
+  **Warning signs:** Occasional analytics events not recorded under load
 
 ### Pitfall 5: Landing Page Without Clear CTA Path
+
 **What goes wrong:** Users land on marketing page but can't find how to access the actual tool
 **Why it happens:** Focus on content over navigation in design
 **How to avoid:**
+
 - Prominent "Get Started" or "Try Tool" button above the fold
 - Use `st.switch_page()` to navigate from landing to enrichment app
 - Consider sidebar navigation visible even on landing page
-**Warning signs:** High bounce rate from landing page in analytics
+  **Warning signs:** High bounce rate from landing page in analytics
 
 ### Pitfall 6: Overcomplicating Analytics for PoC
+
 **What goes wrong:** Spending time integrating Google Analytics, setting up dashboards, tracking custom events
 **Why it happens:** Wanting "real" analytics infrastructure
 **How to avoid:**
+
 - Start with `streamlit-analytics2` default tracking (page views, button clicks)
 - Log only critical conversions (form submissions, exports)
 - Defer advanced analytics until product-market fit is proven
-**Warning signs:** More time spent on analytics than core features
+  **Warning signs:** More time spent on analytics than core features
 
 ## Code Examples
 
 Verified patterns from official sources:
 
 ### Google Sheets Service Account Setup
+
 ```toml
 # .streamlit/secrets.toml
 # Source: https://docs.streamlit.io/develop/tutorials/databases/private-gsheet
@@ -385,6 +414,7 @@ client_x509_cert_url = "https://www.googleapis.com/robot/v1/metadata/x509/servic
 ```
 
 ### Email Validation Pattern
+
 ```python
 # Source: https://medium.com/@richardhightower/article-streamlit-part-3-19c76303aa5a
 import re
@@ -406,6 +436,7 @@ if submitted:
 ```
 
 ### GDPR-Compliant Consent Checkbox
+
 ```python
 # Source: https://www.mailerlite.com/blog/how-to-create-opt-in-forms-that-still-work-under-gdpr
 consent = st.checkbox(
@@ -418,6 +449,7 @@ if submitted and not consent:
 ```
 
 ### CRM CSV Export with Standard Headers
+
 ```python
 # Sources:
 # - https://knowledge.hubspot.com/import-and-export/set-up-your-import-file
@@ -453,6 +485,7 @@ st.download_button(
 ```
 
 ### Custom Analytics View
+
 ```python
 # pages/analytics_view.py - Admin dashboard
 import streamlit as st
@@ -501,15 +534,16 @@ else:
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| `st.experimental_get_query_params` | `st.navigation()` and `st.Page()` | Streamlit 1.28+ (2023) | Native multi-page apps without URL hacks |
-| Custom OAuth for Google Sheets | `streamlit-gsheets-connection` | 2023 | Official connection with secrets management |
-| `streamlit-analytics` (original) | `streamlit-analytics2` | 2024 fork | Fixes 41 security vulnerabilities, maintains compatibility |
-| Manual page routing with session state | `st.switch_page()` | Streamlit 1.28+ | Cleaner navigation between pages |
-| Separate landing page HTML site | Landing page within Streamlit app | Multi-page support | Single deployment, consistent styling |
+| Old Approach                           | Current Approach                  | When Changed           | Impact                                                     |
+| -------------------------------------- | --------------------------------- | ---------------------- | ---------------------------------------------------------- |
+| `st.experimental_get_query_params`     | `st.navigation()` and `st.Page()` | Streamlit 1.28+ (2023) | Native multi-page apps without URL hacks                   |
+| Custom OAuth for Google Sheets         | `streamlit-gsheets-connection`    | 2023                   | Official connection with secrets management                |
+| `streamlit-analytics` (original)       | `streamlit-analytics2`            | 2024 fork              | Fixes 41 security vulnerabilities, maintains compatibility |
+| Manual page routing with session state | `st.switch_page()`                | Streamlit 1.28+        | Cleaner navigation between pages                           |
+| Separate landing page HTML site        | Landing page within Streamlit app | Multi-page support     | Single deployment, consistent styling                      |
 
 **Deprecated/outdated:**
+
 - **streamlit-analytics (original)**: Archived/unmaintained, use `streamlit-analytics2` fork instead
 - **Pre-GDPR consent patterns**: Pre-ticked checkboxes no longer legal in Sweden/EU since GDPR (May 2018)
 - **Manual multi-page with session state**: Replaced by native `st.navigation()` API
@@ -546,12 +580,14 @@ Things that couldn't be fully resolved:
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - [Streamlit Multi-Page Apps Documentation](https://docs.streamlit.io/develop/concepts/multipage-apps/page-and-navigation) - `st.Page` and `st.navigation` API
 - [Streamlit Private Google Sheets Tutorial](https://docs.streamlit.io/develop/tutorials/databases/private-gsheet) - GSheetsConnection setup
 - [gspread API Documentation](https://docs.gspread.org/en/latest/api/models/worksheet.html) - `append_row()` and `append_rows()` methods
 - [streamlit-analytics2 GitHub](https://github.com/444B/streamlit-analytics2) - Actively maintained fork
 
 ### Secondary (MEDIUM confidence)
+
 - [HubSpot CSV Import Requirements](https://knowledge.hubspot.com/import-and-export/set-up-your-import-file) - CRM field standards
 - [Pipedrive Field Mapping Guide](https://support.pipedrive.com/en/article/importing-mapping-your-fields) - Import format
 - [GDPR Marketing Consent Requirements](https://www.mailerlite.com/blog/how-to-create-opt-in-forms-that-still-work-under-gdpr) - Checkbox compliance
@@ -560,6 +596,7 @@ Things that couldn't be fully resolved:
 - [Streamlit Centering Text/Images](https://discuss.streamlit.io/t/justifying-or-centering-text-on-streamlit/11564) - Hero section layouts
 
 ### Tertiary (LOW confidence - Community/WebSearch only)
+
 - Hero section design best practices (general web design, not Streamlit-specific)
 - CRM standard field conventions (cross-verified with official docs)
 - File-based analytics scalability (extrapolated from general Python practices)
@@ -567,6 +604,7 @@ Things that couldn't be fully resolved:
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: MEDIUM - Streamlit official docs verified, analytics library is maintained fork
 - Architecture: MEDIUM - Multi-page apps and Google Sheets patterns verified with official docs; analytics scaling untested at production volumes
 - Pitfalls: MEDIUM - GDPR requirements verified with legal sources; file locking and encoding issues based on common Python patterns
@@ -576,6 +614,7 @@ Things that couldn't be fully resolved:
 **Valid until:** ~30 days (Streamlit stable, CRM standards stable, GDPR requirements stable)
 
 **Validation needed before production:**
+
 - Test Google Sheets write performance with concurrent users
 - Legal review of consent language and data retention policy
 - CRM import testing with actual HubSpot/Pipedrive accounts

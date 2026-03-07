@@ -5,14 +5,17 @@
 ## Test Framework
 
 **Runner:**
+
 - No formal test framework detected (pytest/unittest not configured)
 - Manual test scripts: `test_tools.py`, `test_tools.sh`
 
 **Assertion Library:**
+
 - None (no `pytest`, `unittest`, or `assertions` library)
 - Tests use subprocess calls and output validation
 
 **Run Commands:**
+
 ```bash
 # Run Python integration tests
 python test_tools.py
@@ -24,15 +27,18 @@ bash test_tools.sh
 ## Test File Organization
 
 **Location:**
+
 - Tests co-located in same directory as source code: `weaver-5/test_tools.py`, `weaver-5/test_tools.sh`
 - Not separated into dedicated `tests/` directory
 
 **Naming:**
+
 - `test_tools.py`: Integration test script
 - `test_tools.sh`: Bash integration test script
 - Both files prefixed with `test_`
 
 **Structure:**
+
 ```
 weaver-5/
 ├── batch_fetch.py          # Main source
@@ -47,6 +53,7 @@ weaver-5/
 **Test Organization:**
 
 Python integration test in `test_tools.py` (lines 1-136):
+
 ```python
 #!/usr/bin/env python3
 """Test script to validate batch_fetch.py and search_helper.py tools"""
@@ -78,11 +85,13 @@ print("-" * 60)
 **Patterns Observed:**
 
 **1. Sequential Test Sections:**
+
 - Clear numbered sections: "Test 1", "Test 2", "Test 3"
 - Separated by visual dividers (dashes and equals)
 - Each section tests a distinct component
 
 **2. Sample Data Setup:**
+
 ```python
 COMPANIES = [
     "Delta Group Ab",
@@ -90,9 +99,11 @@ COMPANIES = [
     # ... 5 test companies
 ]
 ```
+
 Location: `test_tools.py` lines 9-15
 
 **3. Subprocess-based Testing:**
+
 ```python
 try:
     result = subprocess.run(
@@ -102,9 +113,11 @@ try:
         check=True
     )
 ```
+
 Location: `test_tools.py` lines 28-33
 
 **4. Output Validation:**
+
 ```python
 try:
     data = json.loads(json_line)
@@ -117,9 +130,11 @@ try:
 except Exception as e:
     print(f"✗ {company} - Error: {e}")
 ```
+
 Location: `test_tools.py` lines 68-80
 
 **5. Result Assertion via File Inspection:**
+
 ```python
 with open("test_results.json", "r") as f:
     data = json.load(f)
@@ -130,15 +145,18 @@ print(f"  Total: {data['total']}")
 print(f"  Successful: {data['successful']}")
 print(f"  Failed: {data['failed']}")
 ```
+
 Location: `test_tools.py` lines 103-111
 
 ## Mocking
 
 **Framework:**
+
 - No mocking library detected (unittest.mock or pytest-mock not used)
 
 **Patterns:**
 Tests call actual external tools rather than mocking:
+
 ```python
 # Direct subprocess call - no mocking
 result = subprocess.run(
@@ -148,13 +166,16 @@ result = subprocess.run(
     check=False
 )
 ```
+
 Location: `test_tools.py` lines 95-99
 
 **What to Mock:**
+
 - None - codebase does not mock external dependencies
 - All tests use real tool invocations
 
 **What NOT to Mock:**
+
 - External tools (intentionally called for real output)
 - File operations (actual JSON output files created)
 - Subprocess calls (integration tests verify tool behavior)
@@ -164,6 +185,7 @@ Location: `test_tools.py` lines 95-99
 **Test Data:**
 
 Sample company list used for testing:
+
 ```python
 COMPANIES = [
     "Delta Group Ab",
@@ -173,9 +195,11 @@ COMPANIES = [
     "Direktstäd I Stockholm Ab",
 ]
 ```
+
 Location: `test_tools.py` lines 9-15
 
 **Location:**
+
 - Defined at module level in test scripts
 - Hardcoded test data (no factory or fixture pattern)
 - Data represents real Swedish company names from CSV
@@ -183,24 +207,29 @@ Location: `test_tools.py` lines 9-15
 ## Coverage
 
 **Requirements:**
+
 - No test coverage requirement or measurement detected
 - No `coverage.py`, `pytest-cov`, or coverage configuration
 
 **View Coverage:**
+
 - Not applicable (coverage not tracked)
 
 ## Test Types
 
 **Unit Tests:**
+
 - Not formally implemented
 - Tests are integration-style (call actual external tools)
 
 **Integration Tests:**
+
 - `test_tools.py`: Tests pipeline of search_helper → batch_fetch
 - `test_tools.sh`: Bash integration test (1810 bytes, purpose unclear from git status)
 - Validates end-to-end tool functionality with real data
 
 **E2E Tests:**
+
 - `ralph.sh`: Main batch processing loop acts as E2E test harness
 - Processes multiple companies in batches
 - Validates workflow: CSV read → company processing → git commit
@@ -209,6 +238,7 @@ Location: `test_tools.py` lines 9-15
 ## Common Patterns
 
 **Subprocess Testing:**
+
 ```python
 try:
     result = subprocess.run(
@@ -219,10 +249,12 @@ try:
 except Exception as e:
     print(f"✗ Error running batch_fetch: {e}")
 ```
+
 Location: `test_tools.py` lines 95-130
 
 **JSON Output Validation:**
 Tests verify JSON output files are created and parseable:
+
 ```python
 try:
     with open("test_results.json", "r") as f:
@@ -233,10 +265,12 @@ try:
 except json.JSONDecodeError as e:
     print(f"✗ Error parsing results: {e}")
 ```
+
 Location: `test_tools.py` lines 102-127
 
 **Tool Output Parsing:**
 Extract and parse JSON from multi-line subprocess output:
+
 ```python
 # Find JSON object boundaries
 for i, line in enumerate(lines):
@@ -254,9 +288,11 @@ if json_start is not None:
     json_text = '\n'.join(json_lines)
     data = json.loads(json_text)
 ```
+
 Location: `test_tools.py` lines 45-62
 
 **Test Artifact Output:**
+
 ```python
 # Tests write results to file for inspection
 result = subprocess.run(
@@ -268,6 +304,7 @@ result = subprocess.run(
 with open("test_results.json", "r") as f:
     data = json.load(f)
 ```
+
 Location: `test_tools.py` lines 95-96, 103-104
 
 **Bash Testing Pattern:**
@@ -276,17 +313,20 @@ Location: `test_tools.py` lines 95-96, 103-104
 ## Running Tests
 
 **Python Integration Tests:**
+
 ```bash
 python test_tools.py
 ```
 
 **Expected Output:**
+
 - Section headers with test names
 - Checkmark/X indicators for pass/fail
 - Summary statistics
 - File paths to results
 
 **Example Output Structure:**
+
 ```
 ============================================================
 Testing Tools with Sample Companies
@@ -309,4 +349,4 @@ Results Summary:
 
 ---
 
-*Testing analysis: 2026-01-22*
+_Testing analysis: 2026-01-22_

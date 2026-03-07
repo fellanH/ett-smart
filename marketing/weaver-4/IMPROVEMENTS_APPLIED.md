@@ -1,6 +1,7 @@
 # Shell Script Improvements Applied
 
 ## Summary
+
 Applied best practice improvements to `ralph.sh` and `ralph-config.sh` based on the shell script review.
 
 ## Changes Applied
@@ -47,15 +48,18 @@ Applied best practice improvements to `ralph.sh` and `ralph-config.sh` based on 
 ## Code Quality Improvements
 
 ### Variable Declaration
+
 - Separated variable declarations from assignments where appropriate
 - Improved local variable scoping
 
 ### Error Handling
+
 - Added file existence checks before operations
 - Improved error propagation in functions
 - Better cleanup on failures
 
 ### Security
+
 - Improved temporary file handling with `mktemp`
 - Better error handling prevents partial file writes
 
@@ -81,6 +85,7 @@ Applied best practice improvements to `ralph.sh` and `ralph-config.sh` based on 
 ## Next Steps (Optional)
 
 1. Install and run `shellcheck` for additional static analysis:
+
    ```bash
    brew install shellcheck
    shellcheck ralph.sh ralph-config.sh

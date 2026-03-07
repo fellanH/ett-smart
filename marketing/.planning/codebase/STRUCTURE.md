@@ -53,25 +53,30 @@
 ## Directory Purposes
 
 **weaver-5/ (Current Production):**
+
 - Purpose: Automated batch processing of Swedish company data with agent-driven enrichment
 - Contains: Python utilities, shell orchestration, prompts, CSV data, logs
 - Key files: `blue-collar-companies.csv` (state), `PROMPT.md` (agent instructions), `ralph.sh` (orchestration)
 
 **weaver-3/ (Dashboard):**
+
 - Purpose: Web-based visualization and analysis of CSV data
 - Contains: Express server, HTML/CSS/JS frontend, sample data
 - Key files: `server.js` (API + static serving), `src/scripts/app.js` (client logic)
 
 **weaver-4/ (Prototype):**
+
 - Purpose: Earlier iteration of batch processing with Python-first approach
 - Contains: Company processing wrapper, search generators
 - Deprecated in favor of weaver-5's agent-driven approach
 
 **weaver-1, weaver-2/:**
+
 - Purpose: Initial research and foundation work
 - Status: Historical; not actively used
 
 **src/:**
+
 - Purpose: Source data files
 - Contains: CSV/XLSX with Swedish company data from Migrationsverket (work permit database)
 
@@ -141,32 +146,38 @@
 ## Where to Add New Code
 
 **New Data Enrichment Logic:**
+
 - Primary code: `weaver-5/PROMPT.md` (update validation rules or extraction patterns in Phase 1/2)
 - Supporting utilities: New Python scripts in `weaver-5/` (follow naming: `new_feature.py`)
 - Tests: `weaver-5/test_*.py` for utility validation
 
 **New API/Source Integration:**
+
 - Implementation: Create new Python module in `weaver-5/` (e.g., `source_integration.py`)
 - URL generation: Extend `weaver-5/search_helper.py` with new search URL templates
 - Rate limiting: Use `weaver-5/batch_fetch.py` for HTTP calls
 
 **New Dashboard Feature:**
+
 - Frontend: Add to `weaver-3/src/scripts/app.js` (new event handlers, view logic)
 - Styling: Update `weaver-3/src/styles/main.css` or add new stylesheet
 - Server endpoint: Add to `weaver-3/server.js` (new POST/GET route)
 
 **New Batch Processing Integration:**
+
 - Orchestration: Modify `weaver-5/ralph.sh` loop logic (adjust MAX_LOOPS, BATCH_SIZE)
 - State tracking: Update PROMPT.md structure in `weaver-5/PROMPT.md` (if new fields needed)
 - Commit strategy: Ensure new logic commits to git (see git section in PROMPT.md)
 
 **Performance/Utility Scripts:**
+
 - Location: `weaver-5/` directory (no subdirectories for Python utilities)
 - Testing: Add validation to `weaver-5/test_tools.py`
 
 ## Special Directories
 
 **.logs/ (weaver-4, weaver-5):**
+
 - Purpose: Execution logs from batch processing runs
 - Generated: True (created by ralph.sh)
 - Committed: No (git-ignored)
@@ -174,6 +185,7 @@
 - Format: `run-YYYYMMDD-HHMMSS-loopN-rowX.log`
 
 **.planning/ (root):**
+
 - Purpose: Analysis and planning artifacts
 - Generated: True (by orchestrator commands)
 - Committed: Yes (source control for plans)
@@ -182,17 +194,20 @@
   - `intel/`: Strategic/business analysis documents
 
 **.git/ (root):**
+
 - Purpose: Version control history
 - Generated: True (by git init)
 - Committed: Yes (metadata only)
 - Key: Each batch processing run creates a commit with row range (e.g., "Processed companies rows 730-732 (batch of 3)")
 
-**__pycache__/ (weaver-4):**
+\***\*pycache**/ (weaver-4):\*\*
+
 - Purpose: Python bytecode cache
 - Generated: True (by Python interpreter)
 - Committed: No (git-ignored)
 
 **node_modules/ (weaver-3):**
+
 - Purpose: NPM dependencies
 - Generated: True (by npm install)
 - Committed: No (git-ignored)
@@ -201,6 +216,7 @@
 ## CSV Schema (blue-collar-companies.csv)
 
 **Headers (extracted from processing):**
+
 - `Företagsnamn` (Company Name)
 - `Status` (Active/Skipped/Processing status)
 - `Årlig omsättning` (Annual Revenue)
@@ -219,4 +235,4 @@
 
 ---
 
-*Structure analysis: 2026-01-22*
+_Structure analysis: 2026-01-22_

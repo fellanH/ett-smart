@@ -1,111 +1,111 @@
 /* Terminal View Styles */
 .terminal-container {
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
 
 .terminal-container h1 {
-    font-size: 28px;
-    background: linear-gradient(to right, #fff, #bbb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  font-size: 28px;
+  background: linear-gradient(to right, #fff, #bbb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .terminal-container .subtitle {
-    color: var(--color-text-muted);
-    font-size: 16px;
-    margin-top: -16px;
+  color: var(--color-text-muted);
+  font-size: 16px;
+  margin-top: -16px;
 }
 
 .terminal-window {
-    background: #1e1e1e;
-    border-radius: var(--radius-md);
-    border: 1px solid var(--glass-border);
-    padding: 24px;
-    box-shadow: var(--shadow-lg);
-    font-family: 'Fira Code', monospace;
-    /* Fallback to monospace */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    min-height: 400px;
+  background: #1e1e1e;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--glass-border);
+  padding: 24px;
+  box-shadow: var(--shadow-lg);
+  font-family: "Fira Code", monospace;
+  /* Fallback to monospace */
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 400px;
 }
 
 .terminal-output {
-    flex: 1;
-    overflow-y: auto;
-    color: #d4d4d4;
-    font-size: 14px;
-    line-height: 1.5;
-    white-space: pre-wrap;
-    max-height: 500px;
-    padding-right: 10px;
+  flex: 1;
+  overflow-y: auto;
+  color: #d4d4d4;
+  font-size: 14px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  max-height: 500px;
+  padding-right: 10px;
 }
 
 .terminal-output .line {
-    margin-bottom: 4px;
+  margin-bottom: 4px;
 }
 
 .terminal-output .line.system {
-    color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .terminal-output .line.error {
-    color: #ff5555;
+  color: #ff5555;
 }
 
 .terminal-output .line.success {
-    color: #50fa7b;
+  color: #50fa7b;
 }
 
 .terminal-output .line.command {
-    color: #f1fa8c;
-    margin-top: 12px;
+  color: #f1fa8c;
+  margin-top: 12px;
 }
 
 .terminal-input-area {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    border-top: 1px solid #333;
-    padding-top: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border-top: 1px solid #333;
+  padding-top: 16px;
 }
 
 .terminal-input-area .prompt {
-    color: var(--color-secondary);
-    font-weight: bold;
+  color: var(--color-secondary);
+  font-weight: bold;
 }
 
 .terminal-input-area input {
-    background: transparent;
-    border: none;
-    color: white;
-    font-family: monospace;
-    font-size: 14px;
-    flex: 1;
-    outline: none;
+  background: transparent;
+  border: none;
+  color: white;
+  font-family: monospace;
+  font-size: 14px;
+  flex: 1;
+  outline: none;
 }
 
 .terminal-input-area .primary-btn.small {
-    padding: 8px 16px;
-    font-size: 13px;
+  padding: 8px 16px;
+  font-size: 13px;
 }
 
 .quick-actions {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .quick-actions h3 {
-    font-size: 16px;
-    color: var(--color-text-main);
-    margin-bottom: 12px;
+  font-size: 16px;
+  color: var(--color-text-main);
+  margin-bottom: 12px;
 }
 
 .action-buttons {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
 }

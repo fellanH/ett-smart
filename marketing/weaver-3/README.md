@@ -28,5 +28,6 @@ This is a static web application designed to analyze and visualize CSV data, spe
 ## Sample Data
 
 You can test the application with:
+
 - `data/anlaggningsarbetare_company_analysis.csv`
 - `data/Migrationsverket_företag-med-arbetstillstånd_2024_25.csv`

@@ -17,25 +17,29 @@ The existing `enrichment.py` module already has `enrich_company()` which can be 
 The established libraries/tools for this domain:
 
 ### Core
-| Library | Version | Purpose | Why Standard |
-|---------|---------|---------|--------------|
-| streamlit | 1.44+ | UI framework | Already in use; has `st.badge` and `st.form` |
-| pandas | existing | Data tables | Already in use for dataframe display |
+
+| Library   | Version  | Purpose      | Why Standard                                 |
+| --------- | -------- | ------------ | -------------------------------------------- |
+| streamlit | 1.44+    | UI framework | Already in use; has `st.badge` and `st.form` |
+| pandas    | existing | Data tables  | Already in use for dataframe display         |
 
 ### Supporting
-| Library | Version | Purpose | When to Use |
-|---------|---------|---------|-------------|
-| organisationsnummer | 1.0.1 | Validate Swedish org numbers | When auto-detecting if input is org number vs company name |
-| re (stdlib) | N/A | Regex for quick org number format check | Lightweight alternative to full validation library |
+
+| Library             | Version | Purpose                                 | When to Use                                                |
+| ------------------- | ------- | --------------------------------------- | ---------------------------------------------------------- |
+| organisationsnummer | 1.0.1   | Validate Swedish org numbers            | When auto-detecting if input is org number vs company name |
+| re (stdlib)         | N/A     | Regex for quick org number format check | Lightweight alternative to full validation library         |
 
 ### Alternatives Considered
-| Instead of | Could Use | Tradeoff |
-|------------|-----------|----------|
-| `organisationsnummer` library | Regex pattern `^\d{6}-?\d{4}$` | Regex is simpler for format detection; library validates checksum too |
-| `st.form` for search | Direct `st.text_input` with button | Form enables Enter key submission natively |
-| Custom CSS skeleton | `st.spinner` | Spinner is simpler but doesn't reserve layout space |
+
+| Instead of                    | Could Use                          | Tradeoff                                                              |
+| ----------------------------- | ---------------------------------- | --------------------------------------------------------------------- |
+| `organisationsnummer` library | Regex pattern `^\d{6}-?\d{4}$`     | Regex is simpler for format detection; library validates checksum too |
+| `st.form` for search          | Direct `st.text_input` with button | Form enables Enter key submission natively                            |
+| Custom CSS skeleton           | `st.spinner`                       | Spinner is simpler but doesn't reserve layout space                   |
 
 **Installation:**
+
 ```bash
 # Optional - only if you want Luhn checksum validation
 pip install organisationsnummer
@@ -44,6 +48,7 @@ pip install organisationsnummer
 ## Architecture Patterns
 
 ### Recommended Project Structure
+
 ```
 webapp/
   app.py              # Main Streamlit app with tabs/sections
@@ -53,9 +58,11 @@ webapp/
 ```
 
 ### Pattern 1: Unified Search Input with Auto-Detection
+
 **What:** Single text input that detects whether user entered org number or company name
 **When to use:** When same action can be triggered by different input types
 **Example:**
+
 ```python
 # Source: Project convention + regex validation
 import re
@@ -75,9 +82,11 @@ def detect_input_type(query: str) -> str:
 ```
 
 ### Pattern 2: Form-Based Search with Enter Key Support
+
 **What:** Wrap search input in `st.form` to enable Enter key submission
 **When to use:** Single lookup where user types and hits Enter
 **Example:**
+
 ```python
 # Source: https://docs.streamlit.io/develop/concepts/architecture/forms
 with st.form(key="single_lookup_form"):
@@ -94,9 +103,11 @@ if submitted and query:
 ```
 
 ### Pattern 3: Skeleton Placeholder with st.empty()
+
 **What:** Reserve layout space during loading with styled placeholder
 **When to use:** When you want to prevent layout shift during data fetch
 **Example:**
+
 ```python
 # Source: https://docs.streamlit.io/develop/api-reference/layout/st.empty
 def show_skeleton_placeholder():
@@ -134,9 +145,11 @@ if searching:
 ```
 
 ### Pattern 4: Status Badges with st.badge
+
 **What:** Colored badges for success/partial/failed status
 **When to use:** Per-row status indicators in batch results
 **Example:**
+
 ```python
 # Source: https://docs.streamlit.io/develop/api-reference/text/st.badge
 # Available in Streamlit 1.44+
@@ -158,9 +171,11 @@ st.markdown(get_status_badge(row["status"]))
 ```
 
 ### Pattern 5: Error Message Mapping
+
 **What:** Translate technical errors to human-readable messages
 **When to use:** Any user-facing error display
 **Example:**
+
 ```python
 # Source: Project error handling pattern from CONVENTIONS.md
 ERROR_MESSAGES = {
@@ -183,6 +198,7 @@ def get_friendly_error(status: str, raw_error: str = None) -> str:
 ```
 
 ### Anti-Patterns to Avoid
+
 - **Showing HTTP status codes to users:** "HTTP 404" should become "Company not found"
 - **Showing stack traces:** Use st.error() with friendly message, not st.exception()
 - **Not reserving space for results:** Use st.empty() to prevent layout shift
@@ -193,42 +209,47 @@ def get_friendly_error(status: str, raw_error: str = None) -> str:
 
 Problems that look simple but have existing solutions:
 
-| Problem | Don't Build | Use Instead | Why |
-|---------|-------------|-------------|-----|
-| Swedish org number validation | Custom regex + Luhn check | `organisationsnummer` library or basic regex for format detection | Library handles edge cases (samordningsnummer, coordination numbers) |
-| Loading animation | Custom JavaScript | `st.spinner` or CSS animation in st.markdown | Browser compatibility, Streamlit quirks |
-| Form Enter-key handling | on_change callbacks with key detection | `st.form` with `st.form_submit_button` | Native behavior, fewer bugs |
-| Status indicator colors | Custom CSS classes | `st.badge` with built-in colors | Consistent with Streamlit theme |
+| Problem                       | Don't Build                            | Use Instead                                                       | Why                                                                  |
+| ----------------------------- | -------------------------------------- | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Swedish org number validation | Custom regex + Luhn check              | `organisationsnummer` library or basic regex for format detection | Library handles edge cases (samordningsnummer, coordination numbers) |
+| Loading animation             | Custom JavaScript                      | `st.spinner` or CSS animation in st.markdown                      | Browser compatibility, Streamlit quirks                              |
+| Form Enter-key handling       | on_change callbacks with key detection | `st.form` with `st.form_submit_button`                            | Native behavior, fewer bugs                                          |
+| Status indicator colors       | Custom CSS classes                     | `st.badge` with built-in colors                                   | Consistent with Streamlit theme                                      |
 
 **Key insight:** Streamlit 1.44+ has `st.badge` which handles status indicators well. Don't build custom components.
 
 ## Common Pitfalls
 
 ### Pitfall 1: Form Callback Limitations
+
 **What goes wrong:** Trying to use callbacks inside forms doesn't work as expected
 **Why it happens:** Only `st.form_submit_button` can have callbacks in forms; other widgets cannot
 **How to avoid:** Process form results after the form block, not inside callbacks
 **Warning signs:** "Widget X cannot be used in a form" errors
 
 ### Pitfall 2: Layout Shift on Data Load
+
 **What goes wrong:** UI jumps around when results appear
 **Why it happens:** `st.empty()` doesn't reserve space by default
 **How to avoid:** Use skeleton placeholder with fixed height, or use `st.container` with min-height CSS
 **Warning signs:** Content jumping when search completes
 
 ### Pitfall 3: Session State Key Conflicts
+
 **What goes wrong:** Single lookup and batch results overwrite each other
 **Why it happens:** Using same session_state key for different features
 **How to avoid:** Use namespaced keys: `single_lookup_result`, `batch_results`
 **Warning signs:** Data appearing in wrong section of UI
 
 ### Pitfall 4: st.badge Not Available
+
 **What goes wrong:** `st.badge` throws AttributeError
 **Why it happens:** Using Streamlit version < 1.44
 **How to avoid:** Check Streamlit version; use markdown badges as fallback
 **Warning signs:** `AttributeError: module 'streamlit' has no attribute 'badge'`
 
 ### Pitfall 5: Org Number Format Variations
+
 **What goes wrong:** User enters "556012 3456" or "SE5560123456" and validation fails
 **Why it happens:** Not normalizing input before validation
 **How to avoid:** Strip whitespace, remove common prefixes (SE, VAT), handle both dash and no-dash formats
@@ -239,6 +260,7 @@ Problems that look simple but have existing solutions:
 Verified patterns from official sources:
 
 ### Single Lookup Form (Complete Implementation)
+
 ```python
 # Source: Streamlit docs + project patterns
 import streamlit as st
@@ -286,6 +308,7 @@ def detect_input_type(query: str) -> str:
 ```
 
 ### Status Indicators for Batch Results
+
 ```python
 # Source: Streamlit 1.44+ st.badge documentation
 def display_status_column(df):
@@ -310,6 +333,7 @@ def display_status_column(df):
 ```
 
 ### Empty State with Helpful Tips
+
 ```python
 # Source: Project UX decision from CONTEXT.md
 def display_empty_state(query: str):
@@ -325,6 +349,7 @@ def display_empty_state(query: str):
 ```
 
 ### Error Message Translation
+
 ```python
 # Source: Project CONVENTIONS.md error handling patterns
 ERROR_MAP = {
@@ -359,13 +384,14 @@ def show_error(status: str, technical_error: str = None):
 
 ## State of the Art
 
-| Old Approach | Current Approach | When Changed | Impact |
-|--------------|------------------|--------------|--------|
-| Custom colored text for status | `st.badge` component | Streamlit 1.44 (Jan 2025) | Native themed badges, less CSS |
-| `st.spinner` only for loading | Skeleton placeholders | Growing pattern | Better UX, no layout shift |
-| Multiple input fields | Single unified input | UX best practice | Simpler interface |
+| Old Approach                   | Current Approach      | When Changed              | Impact                         |
+| ------------------------------ | --------------------- | ------------------------- | ------------------------------ |
+| Custom colored text for status | `st.badge` component  | Streamlit 1.44 (Jan 2025) | Native themed badges, less CSS |
+| `st.spinner` only for loading  | Skeleton placeholders | Growing pattern           | Better UX, no layout shift     |
+| Multiple input fields          | Single unified input  | UX best practice          | Simpler interface              |
 
 **Deprecated/outdated:**
+
 - `st.beta_*` containers: Use stable versions (`st.container`, `st.columns`)
 - Custom emoji badges: Use `st.badge` with Material icons
 
@@ -391,6 +417,7 @@ Things that couldn't be fully resolved:
 ## Sources
 
 ### Primary (HIGH confidence)
+
 - [Streamlit st.text_input docs](https://docs.streamlit.io/develop/api-reference/widgets/st.text_input) - Form input parameters and usage
 - [Streamlit st.form docs](https://docs.streamlit.io/develop/concepts/architecture/forms) - Enter key submission, form batching
 - [Streamlit st.badge docs](https://docs.streamlit.io/develop/api-reference/text/st.badge) - Status indicator badges (v1.44+)
@@ -398,17 +425,20 @@ Things that couldn't be fully resolved:
 - [organisationsnummer Python package](https://github.com/organisationsnummer/python) - v1.0.1, Swedish org number validation
 
 ### Secondary (MEDIUM confidence)
+
 - [Streamlit status display docs](https://docs.streamlit.io/develop/api-reference/status) - st.spinner, st.progress, callout messages
 - [Streamlit dataframe column config](https://docs.streamlit.io/develop/concepts/design/dataframes) - Column configuration options
 - [Swedish org number format](https://organisationsnummer.dev/) - Format specification
 
 ### Tertiary (LOW confidence)
+
 - [st.skeleton() proposal (GitHub #8032)](https://github.com/streamlit/streamlit/issues/8032) - Native skeleton API (not yet released)
 - [Error boundary pattern](https://github.com/K-dash/st-error-boundary) - Third-party error handling decorator
 
 ## Metadata
 
 **Confidence breakdown:**
+
 - Standard stack: HIGH - All components verified in official Streamlit docs
 - Architecture: HIGH - Patterns align with existing codebase conventions
 - Pitfalls: MEDIUM - Based on documentation limitations sections and community discussions

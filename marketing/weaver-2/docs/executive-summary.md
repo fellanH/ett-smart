@@ -1,28 +1,31 @@
 # Executive Summary: Ett Smart Target Market Analysis
 
 ## The Ask
+
 Identify companies with temporary accommodation needs for marketing outreach.
 
 ## What We Did
+
 Analyzed 6,551 companies with approved work permits from Migrationsverket (2024-25).
 
 ## Key Finding
+
 **46 IT & Tech companies in Stockholm** are your primary target market, representing **5,700+ work permits**.
 
 ## Top 10 Targets
 
-| Rank | Company | Permits | Segment |
-|------|---------|---------|---------|
-| 1 | Ericsson | 1,290 | Telecom (Kista HQ) |
-| 2 | TCS | 1,117 | IT Consulting |
-| 3 | H&M | 444 | Retail HQ |
-| 4 | Klarna | 299 | Fintech |
-| 5 | Capgemini | 176 | IT Consulting |
-| 6 | Swedbank | 176 | Banking |
-| 7 | Spotify | 150 | Tech |
-| 8 | Nordea | 134 | Banking |
-| 9 | Electrolux | 116 | Industrial |
-| 10 | SEB | 111 | Banking |
+| Rank | Company    | Permits | Segment            |
+| ---- | ---------- | ------- | ------------------ |
+| 1    | Ericsson   | 1,290   | Telecom (Kista HQ) |
+| 2    | TCS        | 1,117   | IT Consulting      |
+| 3    | H&M        | 444     | Retail HQ          |
+| 4    | Klarna     | 299     | Fintech            |
+| 5    | Capgemini  | 176     | IT Consulting      |
+| 6    | Swedbank   | 176     | Banking            |
+| 7    | Spotify    | 150     | Tech               |
+| 8    | Nordea     | 134     | Banking            |
+| 9    | Electrolux | 116     | Industrial         |
+| 10   | SEB        | 111     | Banking            |
 
 ## Four Customer Segments
 
@@ -39,11 +42,11 @@ Analyzed 6,551 companies with approved work permits from Migrationsverket (2024-
 
 ## Recommended Approach
 
-| Tier | Companies | Strategy |
-|------|-----------|----------|
-| Tier 1 | 10 (100+ permits) | Direct sales outreach |
-| Tier 2 | 13 (50-99 permits) | LinkedIn ads + email |
-| Tier 3 | 23 (<50 permits) | SEO / Google Ads |
+| Tier   | Companies          | Strategy              |
+| ------ | ------------------ | --------------------- |
+| Tier 1 | 10 (100+ permits)  | Direct sales outreach |
+| Tier 2 | 13 (50-99 permits) | LinkedIn ads + email  |
+| Tier 3 | 23 (<50 permits)   | SEO / Google Ads      |
 
 ## Deliverables
 

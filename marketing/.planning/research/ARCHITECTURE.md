@@ -57,19 +57,20 @@ This architecture wraps existing Python CLI scripts (batch_fetch.py, search_help
 
 ### Component Boundaries
 
-| Component | Responsibility | Communicates With |
-|-----------|---------------|-------------------|
-| **Flask App** | HTTP routing, request handling, response rendering | All components (orchestrator) |
-| **Upload Handler** | Validate CSV, save to disk, create job record | Flask routes, SQLite, File System |
-| **Script Orchestrator** | Call existing Python scripts via subprocess.run() | Existing scripts (one-way) |
-| **Result Aggregator** | Collect script outputs, format for display | Script Orchestrator, Templates |
-| **SQLite Database** | Track jobs, status, file paths (metadata only) | Flask app (via sqlite3 module) |
-| **File System** | Store uploaded CSVs, generated results, Excel files | All layers (read/write) |
-| **Templates** | Render HTML for forms, results, error pages | Flask app (Jinja2) |
+| Component               | Responsibility                                      | Communicates With                 |
+| ----------------------- | --------------------------------------------------- | --------------------------------- |
+| **Flask App**           | HTTP routing, request handling, response rendering  | All components (orchestrator)     |
+| **Upload Handler**      | Validate CSV, save to disk, create job record       | Flask routes, SQLite, File System |
+| **Script Orchestrator** | Call existing Python scripts via subprocess.run()   | Existing scripts (one-way)        |
+| **Result Aggregator**   | Collect script outputs, format for display          | Script Orchestrator, Templates    |
+| **SQLite Database**     | Track jobs, status, file paths (metadata only)      | Flask app (via sqlite3 module)    |
+| **File System**         | Store uploaded CSVs, generated results, Excel files | All layers (read/write)           |
+| **Templates**           | Render HTML for forms, results, error pages         | Flask app (Jinja2)                |
 
 ### Data Flow
 
 #### Batch Upload Flow
+
 ```
 1. User uploads CSV via /upload
    ↓
@@ -92,6 +93,7 @@ This architecture wraps existing Python CLI scripts (batch_fetch.py, search_help
 ```
 
 #### Single Lookup Flow
+
 ```
 1. User enters company name in /lookup form
    ↓
@@ -117,6 +119,7 @@ This architecture wraps existing Python CLI scripts (batch_fetch.py, search_help
 **Why:** Preserves existing scripts unchanged, simplest integration path, easy to debug.
 
 **Example:**
+
 ```python
 import subprocess
 import json
@@ -148,6 +151,7 @@ def fetch_company_data(urls: list[str], job_id: str) -> dict:
 ```
 
 **Security considerations:**
+
 - NEVER pass unsanitized user input directly to subprocess
 - Use list form (not shell=True) to avoid shell injection
 - Validate all inputs before passing to scripts
@@ -160,6 +164,7 @@ def fetch_company_data(urls: list[str], job_id: str) -> dict:
 **When:** Managing job records, file paths, status tracking.
 
 **Example:**
+
 ```python
 from dataclasses import dataclass
 from datetime import datetime
@@ -250,6 +255,7 @@ class JobRepository:
 **When:** Accepting CSV uploads from users.
 
 **Example:**
+
 ```python
 from flask import Flask, request, abort
 from werkzeug.utils import secure_filename
@@ -310,52 +316,68 @@ def upload_file():
 **When:** Displaying enriched company data, job status, error messages.
 
 **Example structure:**
+
 ```html
 <!-- templates/results.html -->
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Results for Job {{ job.id }}</title>
     <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #366092; color: white; }
-        .status-completed { color: green; }
-        .status-failed { color: red; }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #366092;
+        color: white;
+      }
+      .status-completed {
+        color: green;
+      }
+      .status-failed {
+        color: red;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Job {{ job.id }}</h1>
     <p>Status: <span class="status-{{ job.status }}">{{ job.status }}</span></p>
 
     {% if job.status == 'completed' %}
-        <a href="/download/{{ job.id }}" download>Download Excel Results</a>
+    <a href="/download/{{ job.id }}" download>Download Excel Results</a>
 
-        <h2>Preview (First 10 rows)</h2>
-        <table>
-            <thead>
-                <tr>
-                    {% for header in results.headers %}
-                    <th>{{ header }}</th>
-                    {% endfor %}
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in results.rows[:10] %}
-                <tr>
-                    {% for cell in row %}
-                    <td>{{ cell }}</td>
-                    {% endfor %}
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <h2>Preview (First 10 rows)</h2>
+    <table>
+      <thead>
+        <tr>
+          {% for header in results.headers %}
+          <th>{{ header }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in results.rows[:10] %}
+        <tr>
+          {% for cell in row %}
+          <td>{{ cell }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% elif job.status == 'failed' %}
-        <p class="error">Error: {{ job.error_message }}</p>
+    <p class="error">Error: {{ job.error_message }}</p>
     {% else %}
-        <p>Processing... <a href="/results/{{ job.id }}">Refresh</a></p>
+    <p>Processing... <a href="/results/{{ job.id }}">Refresh</a></p>
     {% endif %}
-</body>
+  </body>
 </html>
 ```
 
@@ -366,6 +388,7 @@ def upload_file():
 **What:** Processing entire CSV upload synchronously within HTTP request handler.
 
 **Why bad:**
+
 - Request timeouts (most web servers timeout after 30-60 seconds)
 - Poor UX (user sees loading spinner for minutes)
 - Can't handle concurrent requests
@@ -376,6 +399,7 @@ For PoC: Accept upload, return immediately with job_id, redirect to status page 
 For Production: Use Celery + Redis for background processing.
 
 **PoC Example:**
+
 ```python
 @app.route('/upload', methods=['POST'])
 def upload_file():
@@ -404,6 +428,7 @@ def show_results(job_id):
 **What:** Storing entire CSV contents or fetched HTML in SQLite BLOBs.
 
 **Why bad:**
+
 - Database bloat (SQLite performs poorly with large BLOBs)
 - Memory issues when loading results
 - Slow queries
@@ -433,6 +458,7 @@ job = {
 **What:** Editing batch_fetch.py, search_helper.py to add web-specific logic.
 
 **Why bad:**
+
 - Breaks CLI usage (existing workflows)
 - Mixes concerns (web logic in data fetching)
 - Harder to test independently
@@ -466,6 +492,7 @@ def fetch_companies():
 **What:** Passing user input to subprocess with shell=True enabled.
 
 **Why bad:**
+
 - Shell injection vulnerability
 - User could execute arbitrary commands
 - Example: company name "; rm -rf /" would delete files
@@ -496,6 +523,7 @@ subprocess.run(
 **Rationale:** For a PoC wrapping existing scripts, Flask's simplicity outweighs FastAPI's performance benefits.
 
 **Flask advantages for this use case:**
+
 - Simpler mental model (routes, templates, forms)
 - Better template integration (Jinja2 built-in)
 - Synchronous by default (matches subprocess pattern)
@@ -511,6 +539,7 @@ subprocess.run(
 **Rationale:** SQLite provides zero-setup storage for job metadata without requiring a database server.
 
 **SQLite advantages for PoC:**
+
 - No setup, no server, just a file
 - Perfect for single-writer scenarios (one user uploads at a time)
 - Fast for simple queries (job lookups by ID)
@@ -518,6 +547,7 @@ subprocess.run(
 - Included in Python standard library
 
 **Limitations to know:**
+
 - Database-level locking (only one writer at a time)
 - If you need 10+ concurrent uploads, migrate to PostgreSQL
 
@@ -545,6 +575,7 @@ def process_job_async(job_id):
 ```
 
 **For Production:** Migrate to Celery + Redis when you need:
+
 - Reliable job queues
 - Job retry logic
 - Distributed workers
@@ -574,6 +605,7 @@ def process_job_async(job_id):
 **Goal:** Prove Flask can call existing scripts and display results.
 
 **Build:**
+
 1. Flask app with single route: /test
 2. Route calls batch_fetch.py with hardcoded URL
 3. Display JSON results in browser
@@ -588,6 +620,7 @@ def process_job_async(job_id):
 **Goal:** User can enter company name, see enriched data.
 
 **Build:**
+
 1. HTML form accepting company name
 2. Form handler validates input
 3. Calls search_helper.py to generate URLs
@@ -605,6 +638,7 @@ def process_job_async(job_id):
 **Goal:** User can upload CSV, get results.
 
 **Build:**
+
 1. SQLite database with jobs table
 2. File upload form
 3. Upload handler (save file, create job record)
@@ -621,6 +655,7 @@ def process_job_async(job_id):
 **Goal:** Handle edge cases gracefully.
 
 **Build:**
+
 1. Input validation (CSV structure, company name format)
 2. Error pages (404, 400, 500)
 3. Timeout handling for hung subprocess calls
@@ -634,16 +669,17 @@ def process_job_async(job_id):
 
 ## Scalability Considerations
 
-| Concern | At 1 user (PoC) | At 10 users | At 100+ users |
-|---------|----------------|-------------|---------------|
-| **Web Server** | Flask dev server | Gunicorn (4 workers) | Gunicorn + Nginx + multiple instances |
-| **Database** | SQLite | SQLite (still OK) | PostgreSQL with connection pooling |
-| **File Storage** | Local disk | Local disk | S3/Azure Blob Storage |
-| **Background Jobs** | Threading | Threading (risky) | Celery + Redis with multiple workers |
-| **Rate Limiting** | None | IP-based limits | Redis-backed rate limiter |
-| **Deployment** | Local machine | Single VPS | Kubernetes/Cloud Run with autoscaling |
+| Concern             | At 1 user (PoC)  | At 10 users          | At 100+ users                         |
+| ------------------- | ---------------- | -------------------- | ------------------------------------- |
+| **Web Server**      | Flask dev server | Gunicorn (4 workers) | Gunicorn + Nginx + multiple instances |
+| **Database**        | SQLite           | SQLite (still OK)    | PostgreSQL with connection pooling    |
+| **File Storage**    | Local disk       | Local disk           | S3/Azure Blob Storage                 |
+| **Background Jobs** | Threading        | Threading (risky)    | Celery + Redis with multiple workers  |
+| **Rate Limiting**   | None             | IP-based limits      | Redis-backed rate limiter             |
+| **Deployment**      | Local machine    | Single VPS           | Kubernetes/Cloud Run with autoscaling |
 
 **PoC to Production Migration Path:**
+
 1. Replace SQLite with PostgreSQL (change connection string in Repository)
 2. Add Celery for background jobs (extract processing logic to tasks)
 3. Deploy with Gunicorn + Nginx
@@ -653,6 +689,7 @@ def process_job_async(job_id):
 ## Deployment Architecture (PoC vs Production)
 
 ### PoC Deployment (Single Server)
+
 ```
 ┌────────────────────────────────────┐
 │     VPS / Local Machine            │
@@ -673,11 +710,13 @@ def process_job_async(job_id):
 ```
 
 **Command to run:**
+
 ```bash
 gunicorn -w 4 -b 0.0.0.0:8000 app:app
 ```
 
 ### Production Deployment (Scalable)
+
 ```
                     ┌──────────────┐
                     │  Load Balancer│
@@ -711,24 +750,28 @@ gunicorn -w 4 -b 0.0.0.0:8000 app:app
 ### Current Script Analysis
 
 **batch_fetch.py:**
+
 - **Input:** URLs as CLI arguments or stdin
 - **Output:** JSON to stdout or file (--output flag)
 - **Integration:** Call via subprocess.run(), parse JSON output
 - **Modification needed:** None
 
 **search_helper.py:**
+
 - **Input:** Company name as CLI argument
 - **Output:** JSON with search URLs
 - **Integration:** Call via subprocess.run(), parse JSON output
 - **Modification needed:** None
 
 **csv_to_excel.py:**
+
 - **Input:** CSV file path (hardcoded: 'blue-collar-companies.csv')
 - **Output:** Excel file (hardcoded: 'blue-collar-companies.xlsx')
 - **Integration:** Requires modification to accept file paths as arguments
 - **Modification needed:** Add argparse for --input and --output paths
 
 **Recommended modification to csv_to_excel.py:**
+
 ```python
 # Add to main() function
 import argparse
@@ -817,31 +860,38 @@ This maintains backward compatibility (same defaults) while enabling web app to 
 ## Sources
 
 ### Framework Comparisons
+
 - [FastAPI vs Flask: Performance and Use Cases](https://strapi.io/blog/fastapi-vs-flask-python-framework-comparison)
 - [FastAPI vs Flask comparison (Medium, 2026)](https://medium.com/@muhammadshakir4152/fastapi-vs-flask-the-deep-comparison-every-python-developer-needs-in-2026-334ccf9abfa8)
 - [Flask vs FastAPI for file uploads](https://betterstack.com/community/guides/scaling-python/flask-vs-fastapi/)
 
 ### Architecture Patterns
+
 - [Architecture Patterns with Python](https://www.oreilly.com/library/view/architecture-patterns-with/9781492052197/)
 - [Web Application Architecture (2026)](https://www.clickittech.com/software-development/web-application-architecture/)
 - [Modern Web App Architectures (2026)](https://tech-stack.com/blog/modern-application-development/)
 
 ### Database Selection
+
 - [SQLite vs PostgreSQL for web apps](https://dev.to/sqldocs/sqlite-vs-postgresql-choose-the-right-database-for-your-app-4hch)
 - [PostgreSQL vs SQLite comparison](https://www.selecthub.com/relational-database-solutions/postgresql-vs-sqlite/)
 
 ### Background Jobs
+
 - [Celery with Redis for Python](https://blog.naveenpn.com/implementing-task-queues-in-python-using-celery-and-redis-scalable-background-jobs)
 - [Task Queues in Python](https://www.fullstackpython.com/task-queues.html)
 
 ### Subprocess Best Practices
+
 - [Python subprocess documentation](https://docs.python.org/3/library/subprocess.html)
 - [Subprocess security guide (Real Python)](https://realpython.com/python-subprocess/)
 
 ### File Upload Patterns
+
 - [Flask file upload handling](https://blog.miguelgrinberg.com/post/handling-file-uploads-with-flask)
 - [Flask file uploads documentation](https://flask.palletsprojects.com/en/stable/patterns/fileuploads/)
 
 ### PoC vs Production Architecture
+
 - [Building Production-Grade Web Apps (2026)](https://dev.to/art_light/building-a-production-grade-ai-web-app-in-2026-architecture-trade-offs-and-hard-won-lessons-4llg)
 - [Azure Basic Web App Architecture](https://learn.microsoft.com/en-us/azure/architecture/web-apps/app-service/architectures/basic-web-app)
